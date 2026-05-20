@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Heart, Eye, EyeOff, Loader2, X} from 'lucide-react'
-
+import logo from '../assets/Logo.jpg'
 
 function LoginPage() {
     const navigate = useNavigate()
@@ -31,8 +31,8 @@ function LoginPage() {
             <div className="relative z-10 w-full max-w-md">
                 <div className="text-center mb-8">
                     <Link to="/" className="inline-flex items-center gap-2.5 mb-8">
-                        <div className="w-9 h-9 bg-green-500 rounded-xl flex items-center justify-center">
-                            <Heart className="w-4.5 h-4.5 text-white" />
+                        <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
+                           <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
                         </div>
                         <span className="font-logo text-xl  text-white">MediLocker</span>
                     </Link>
@@ -57,7 +57,7 @@ function LoginPage() {
                                 value={form.email}
                                 onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
                                 placeholder="you@example.com"
-                                className="w-full bg-surface-800/80 border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
+                                className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
                                 required
                             />
                         </div>
@@ -70,7 +70,7 @@ function LoginPage() {
                                     value={form.password}
                                     onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
                                     placeholder="Enter your password"
-                                    className="w-full bg-surface-800/80 border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 pr-11"
+                                    className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 pr-11"
                                     required
                                 />
                                 <button
@@ -86,7 +86,7 @@ function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full  bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-5  rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 flex items-center justify-center gap-2 py-3 mt-2 cursor-pointer"
+                            className="w-full  bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-5  rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 flex items-center justify-center gap-2 py-3 mt-8 cursor-pointer"
                         >
                             {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in...</> : 'Sign In'}
                         </button>
