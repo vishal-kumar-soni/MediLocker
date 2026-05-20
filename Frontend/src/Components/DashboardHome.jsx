@@ -17,11 +17,12 @@ function DashboardHome() {
 
     return (
         <div className="space-y-7">
+
             {/* Header */}
             <div className="flex items-start justify-between">
                 <div>
                     <p className="text-white/40 text-sm mb-1">{greeting} 👋</p>
-                    <h1 className="font-display text-3xl font-bold text-white">{firstName}</h1>
+                    <h1 className="font-ss text-3xl font-bold text-white">{firstName}</h1>
                 </div>
                 <div className=" bg-[#181f2a] backdrop-blur-md border border-white/8 rounded-2xl px-4 py-2.5 flex items-center gap-2 text-sm">
                     <Shield className="w-4 h-4 text-cyan-400" />
@@ -55,6 +56,7 @@ function DashboardHome() {
                         <p className="text-white/30 text-xs mt-2">Blood Group</p>
                     </div>
                 </div>
+
                 {/* Progress bar */}
                 <div className="mt-4 h-1.5 bg-white/5 rounded-full overflow-hidden">
                     <div className="h-full  bg-cyan-500  rounded-full transition-all duration-1000" style={{ width: `${82}%` }} />
@@ -65,8 +67,8 @@ function DashboardHome() {
             <div className="grid  grid-cols-2 lg:grid-cols-4 gap-4">
                 {statCards.map(card => (
                     <Link key={card.label} to={card.link} className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5  hover:border-white/30 transition-all duration-300  cursor-default">
-                        <div className={'w-10 h-10 bg-[#142f69] rounded-xl flex items-center justify-center mb-3'}>
-                            <card.icon className=' text-cyan-500 rounded-2xl p0' />
+                        <div className={`${card.bg}  w-10 h-10 rounded-xl flex items-center justify-center mb-3`}>
+                            <card.icon className={`${card.color} text-cyan-500 rounded-2xl p-0 `} />
                         </div>
                         <div className="font-display text-2xl font-bold text-white mb-0.5">{card.value}</div>
                         <div className="text-xs text-white/40">{card.label}</div>
@@ -84,7 +86,7 @@ function DashboardHome() {
                         <Link to="/dashboard/documents" className="text-cyan-400 text-xs hover:text-cyan-300">View all</Link>
                     </div>
                     <div className="space-y-2 ">
-                        {AllDocument.map(doc => (
+                        {AllDocument.filter(item => item.id <= 4).map(doc => (
                             <div key={doc.id} className=" bg-white/3 border border-white/5 hover:border-white/30 transition-colors flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 mb-4  cursor-pointer group">
                                 <div className="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
                                     <FileText className="w-4 h-4 text-cyan-400" />

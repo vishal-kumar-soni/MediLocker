@@ -6,7 +6,7 @@ const AllDocuments = [
         hospital: "AIIMS Patna",
         doctor: "Dr. Rajesh Kumar",
         type: "Lab Report",
-        date: "2024-11-10",
+        date: "13-05-2026",
         size: "2.4 MB",
         tags: ["blood", "routine"],
         format: "PDF"
@@ -17,7 +17,7 @@ const AllDocuments = [
         hospital: "Max Healthcare",
         doctor: "Dr. Sunita Rao",
         type: "Radiology",
-        date: "2024-10-22",
+        date: "09-05-2026",
         size: "5.1 MB",
         tags: ["xray", "lungs"],
         format: "DICOM"
@@ -28,7 +28,7 @@ const AllDocuments = [
         hospital: "Apollo Clinic",
         doctor: "Dr. Alok Mishra",
         type: "Prescription",
-        date: "2024-09-30",
+        date: "02-05-2026",
         size: "0.8 MB",
         tags: ["prescription", "hypertension"],
         format: "PDF"
@@ -39,7 +39,7 @@ const AllDocuments = [
         hospital: "Fortis Hospital",
         doctor: "Dr. Priya Singh",
         type: "Cardiology",
-        date: "2024-08-15",
+        date: "12-04-2026",
         size: "1.2 MB",
         tags: ["ecg", "heart"],
         format: "PDF"
@@ -50,7 +50,7 @@ const AllDocuments = [
         hospital: "AIIMS Patna",
         doctor: "Dr. Vikram Patel",
         type: "Radiology",
-        date: "2024-08-20",
+        date: "03-04-2026",
         size: "48.2 MB",
         tags: ["mri", "brain"],
         format: "PDF"
@@ -61,7 +61,7 @@ const AllDocuments = [
         hospital: "NMC Hospital",
         doctor: "Dr. Anand Kumar",
         type: "Orthopedic",
-        date: "2024-07-12",
+        date: "21-03-2026",
         size: "3.7 MB",
         tags: ["bones", "dxa"],
         format: "PDF"

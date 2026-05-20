@@ -9,8 +9,8 @@ let statCards = [
         label: 'Documents',
         value: recentDocument.length,
         icon: FileText,
-        color: 'text-accent-cyan',
-        bg: 'bg-accent-cyan/10',
+        color: 'text-cyan-500',
+        bg: 'bg-cyan-500/10',
         link: '/dashboard/documents'
     },
 
@@ -18,8 +18,8 @@ let statCards = [
         label: 'Medications',
         value: Medications.length,
         icon: Pill,
-        color: 'text-accent-violet',
-        bg: 'bg-accent-violet/10',
+        color: 'text-violet-500',
+        bg: 'bg-violet-500/10',
         link: '/dashboard/medications'
     },
 
@@ -27,8 +27,8 @@ let statCards = [
         label: 'Upcoming Visits',
         value: noOfUpcomingAppointments,
         icon: Calendar,
-        color: 'text-accent-amber',
-        bg: 'bg-accent-amber/10',
+        color: 'text-yellow-600',
+        bg: 'bg-amber-500/10',
         link: '/dashboard/appointments'
     },
 
