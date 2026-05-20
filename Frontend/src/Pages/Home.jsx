@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import logo from '../assets/Logo.jpg'
 import { Shield, Upload, Share2, Activity, Lock, ArrowRight, CheckCircle2, Zap, Heart, ChevronRight } from 'lucide-react'
 import Footer from '../Components/Footer.jsx'
 
@@ -25,8 +26,8 @@ function Home() {
             {/* Navbar */}
             <nav className="relative z-10  flex items-center justify-between px-6 md:px-12 py-5 border-b border-white/5">
                 <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                        <Heart className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                        <img src={logo} alt="logo" className='w-[90%] h-[90%] ' />
                     </div>
                     <span className="font-logo text-xl font-bold text-white">MediLocker</span>
                 </div>
