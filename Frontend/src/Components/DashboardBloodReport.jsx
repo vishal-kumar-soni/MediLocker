@@ -2,70 +2,14 @@ import { Droplets, TrendingUp, TrendingDown, Minus, Info } from 'lucide-react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line } from 'recharts'
 import clsx from 'clsx'
 import { useState, useEffect } from 'react'
+import BloodComponents from './assets/BloodComponents'
+
 
 const labels = {
     hemoglobin: 'Hemoglobin', rbc: 'RBC', wbc: 'WBC', platelets: 'Platelets',
     hematocrit: 'Hematocrit', glucose: 'Glucose', cholesterol: 'Cholesterol', triglycerides: 'Triglycerides',
 }
 
-const bloodComponents = [
-    {
-        name: "Hemoglobin",
-        value: "14.2",
-        min: 13.8,
-        max: 17.2,
-        unit: "g/dL"
-    },
-    {
-        name: "RBC",
-        value: 4.6,
-        min: 4.7,
-        max: 6.1,
-        unit: "million/µL",
-    },
-    {
-        name: "Platelets",
-        value: 245000,
-        min: 150000,
-        max: 450000,
-        unit: "platelets/µL",
-    },
-    {
-        name: "WBC",
-        value: 8200,
-        min: 4500,
-        max: 11000,
-        unit: "cells/µL",
-    },
-    {
-        name: "Hematocrit",
-        value: 42,
-        min: 40,
-        max: 50,
-        unit: "%",
-    },
-    {
-        name: "Glucose",
-        value: 89,
-        min: 70,
-        max: 99,
-        unit: "mg/dL",
-    },
-    {
-        name: "Cholesterol",
-        value: 211,
-        min: 0,
-        max: 200,
-        unit: "mg/µL",
-    },
-    {
-        name: "Triglycerides",
-        value: 145,
-        min: 0,
-        max: 150,
-        unit: "mg/µL",
-    },
-];
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload?.length) {
@@ -90,7 +34,7 @@ function DashboardBloodReport() {
 
         let normalCount = 0;
         let warningCount = 0;
-        bloodComponents.forEach((item) => {
+        BloodComponents.forEach((item) => {
 
             if (item.value >= item.min && item.value <= item.max) {
                 normalCount++;
@@ -103,12 +47,12 @@ function DashboardBloodReport() {
         setCountNormal(normalCount);
         setCountWarning(warningCount);
 
-    }, [bloodComponents]);
+    }, [BloodComponents]);
 
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="font-display text-2xl font-bold text-white">Blood Report</h1>
+                <h1 className=" text-2xl font-bold text-white">Blood Report</h1>
                 <p className="text-white/40 text-sm mt-1">Know all About your Blood</p>
             </div>
 
@@ -119,7 +63,7 @@ function DashboardBloodReport() {
                         <Droplets className="w-5 h-5 text-red-500" />
                     </div>
                     <div>
-                        <h2 className="font-display font-semibold text-white">Blood Analysis Summary</h2>
+                        <h2 className="font-ss font-semibold text-white">Blood Analysis Summary</h2>
                         <p className="text-white/40 text-xs">{countNormal} normal · {countWarning} needs attention</p>
                     </div>
                 </div>
@@ -140,7 +84,7 @@ function DashboardBloodReport() {
             {/* Metrics grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-                {bloodComponents.map(item => {
+                {BloodComponents.map(item => {
 
                     const isNormal =
                         item.value >= item.min &&
@@ -172,7 +116,7 @@ function DashboardBloodReport() {
                 <div className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5 mb-5">
                     <h2 className="text-xl font-semibold text-white mb-4">Blood Parameters</h2>
                     <ResponsiveContainer width="100%" height={220}>
-                        <BarChart data={bloodComponents} barSize={28}>
+                        <BarChart data={BloodComponents} barSize={28}>
                             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
                             <XAxis dataKey="name" tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 11 }} axisLine={false} tickLine={false} />
                             <YAxis tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 11 }} axisLine={false} tickLine={false} />
@@ -186,7 +130,7 @@ function DashboardBloodReport() {
             {/* Note */}
             <div className="flex items-start gap-3 px-4 py-3.5 rounded-xl bg-amber-500/5 border border-amber-500/10 text-sm">
                 <Info className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                <p className="text-white/50">Triglycerides are slightly elevated (145 mg/dL vs recommended &lt;150 mg/dL). Consider reducing saturated fats. Consult your doctor at next visit.</p>
+                <p className="text-white/50">Triglycerides are slightly elevated (145 mg/dL , recommended &lt;150 mg/dL). Consider reducing saturated fats. Consult your doctor at next visit.</p>
             </div>
         </div>
     )
