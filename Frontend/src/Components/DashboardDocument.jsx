@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Upload, Search, Filter, FileText, Download, Eye, Trash2, Tag, X, CheckCircle2 } from 'lucide-react'
 import clsx from 'clsx'
+import AllDocuments from './assets/AllDocument'
+
 
 const docTypes = ['All', 'Lab Report', 'Radiology', 'Prescription', 'Cardiology', 'Orthopedic']
 
@@ -11,75 +13,6 @@ const typeColors = {
     'Cardiology': 'bg-rose-500/10 text-rose-500 border-rose-500/20',
     'Orthopedic': 'bg-amber-500/10 text-amber-500 border-amber-500/20',
 }
-
-const AllDocuments = [
-    {
-        id: 1,
-        name: "Blood Test Report — Nov 2024",
-        hospital: "AIIMS Patna",
-        doctor: "Dr. Rajesh Kumar",
-        type: "Lab Report",
-        date: "2024-11-10",
-        size: "2.4 MB",
-        tags: ["blood", "routine"],
-        format: "PDF"
-    },
-    {
-        id: 2,
-        name: "Chest X-Ray",
-        hospital: "Max Healthcare",
-        doctor: "Dr. Sunita Rao",
-        type: "Radiology",
-        date: "2024-10-22",
-        size: "5.1 MB",
-        tags: ["xray", "lungs"],
-        format: "DICOM"
-    },
-    {
-        id: 3,
-        name: "Prescription — Hypertension",
-        hospital: "Apollo Clinic",
-        doctor: "Dr. Alok Mishra",
-        type: "Prescription",
-        date: "2024-09-30",
-        size: "0.8 MB",
-        tags: ["prescription", "hypertension"],
-        format: "PDF"
-    },
-    {
-        id: 4,
-        name: "ECG Report",
-        hospital: "Fortis Hospital",
-        doctor: "Dr. Priya Singh",
-        type: "Cardiology",
-        date: "2024-08-15",
-        size: "1.2 MB",
-        tags: ["ecg", "heart"],
-        format: "PDF"
-    },
-    {
-        id: 5,
-        name: "MRI Brain Scan",
-        hospital: "AIIMS Patna",
-        doctor: "Dr. Vikram Patel",
-        type: "Radiology",
-        date: "2024-08-20",
-        size: "48.2 MB",
-        tags: ["mri", "brain"],
-        format: "PDF"
-    },
-    {
-        id: 6,
-        name: "Bone Density Scan",
-        hospital: "NMC Hospital",
-        doctor: "Dr. Anand Kumar",
-        type: "Orthopedic",
-        date: "2024-07-12",
-        size: "3.7 MB",
-        tags: ["bones", "dxa"],
-        format: "PDF"
-    },
-];
 
 
 function DashboardDocument() {
@@ -130,18 +63,17 @@ function DashboardDocument() {
                 onDragOver={e => { e.preventDefault(); setDragOver(true) }}
                 onDragLeave={() => setDragOver(false)}
                 onDrop={handleDrop}
-                className={clsx(
-                    'border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-200 cursor-pointer',
-                    dragOver ? 'border-cyan-500 bg-cyan-500/5' : 'border-white/10 hover:border-white/20'
-                )}
+                className={` border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-200 cursor-pointer ${(dragOver) ? 'border-cyan-500 bg-cyan-500/5' : 'border-white/10'} hover:border-white/20 `}
             >
-                <Upload className={clsx('w-8 h-8 mx-auto mb-3 transition-colors', dragOver ? 'text-cyan-400' : 'text-white/20')} />
+                <Upload className={`w-8 h-8 mx-auto mb-3 transition-colors ${(dragOver) ? 'text-cyan-400' : 'text-white/20'} `} />
                 <p className="text-white/50 text-sm">Drag & drop files here, or <span className="text-cyan-400">browse</span></p>
                 <p className="text-white/25 text-xs mt-1">PDF, DICOM, JPG, PNG — max 100MB</p>
             </div>
 
             {/* Search & Filters */}
             <div className="flex flex-col sm:flex-row gap-3">
+
+                {/* Search */}
                 <div className="relative flex-1">
                     <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
                     <input
@@ -152,17 +84,15 @@ function DashboardDocument() {
                         className="w-full bg-[#141f2e] border border-white/10 focus:border-primary-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-primary-500/20 pl-10 text-sm"
                     />
                 </div>
+
+                {/* Filter */}
                 <div className="flex gap-2 overflow-x-auto pb-1">
                     {docTypes.map(t => (
                         <button
                             key={t}
                             onClick={() => setFilter(t)}
-                            className={clsx(
-                                'px-3.5 py-2 rounded-xl text-sm font-medium whitespace-nowrap border transition-all',
-                                filter === t
-                                    ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400'
-                                    : 'bg-white/5 border-white/10 text-white/40 hover:text-white hover:border-white/20'
-                            )}
+                            className={`px-3.5 py-2 rounded-xl text-sm font-medium whitespace-nowrap border transition-all ${(filter === t) ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400' : "bg-white/5 border-white/10 text-white/40 hover:text-white hover:border-white/20"}
+                            `}
                         >
                             {t}
                         </button>

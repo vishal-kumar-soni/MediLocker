@@ -1,12 +1,10 @@
 import { FileText, Calendar, Pill, Activity, TrendingUp, Clock, ChevronRight, Shield } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import clsx from 'clsx'
 import appointments from './assets/Appointments'
 import features from './assets/features'
 import Medications from './assets/Medications'
 import AllDocument from './assets/AllDocument'
 import statCards from './assets/statCards'
-
 
 
 function DashboardHome() {
