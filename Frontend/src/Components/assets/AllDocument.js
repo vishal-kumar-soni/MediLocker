@@ -3,8 +3,8 @@ const AllDocuments = [
     {
         id: 1,
         name: "Blood Test Report — Nov 2024",
-        hospital: "AIIMS Patna",
-        doctor: "Dr. Rajesh Kumar",
+        hospital: "RIMS Ranchi",
+        doctor: "Dr. Rajesh Mehta",
         type: "Lab Report",
         date: "13-05-2026",
         size: "2.4 MB",
@@ -14,7 +14,7 @@ const AllDocuments = [
     {
         id: 2,
         name: "Chest X-Ray",
-        hospital: "Max Healthcare",
+        hospital: "Pulse Hospital",
         doctor: "Dr. Sunita Rao",
         type: "Radiology",
         date: "09-05-2026",
@@ -36,7 +36,7 @@ const AllDocuments = [
     {
         id: 4,
         name: "ECG Report",
-        hospital: "Fortis Hospital",
+        hospital: "Santevita Hospital",
         doctor: "Dr. Priya Singh",
         type: "Cardiology",
         date: "12-04-2026",
@@ -47,7 +47,7 @@ const AllDocuments = [
     {
         id: 5,
         name: "MRI Brain Scan",
-        hospital: "AIIMS Patna",
+        hospital: "RIMS Ranchi",
         doctor: "Dr. Vikram Patel",
         type: "Radiology",
         date: "03-04-2026",
@@ -58,7 +58,7 @@ const AllDocuments = [
     {
         id: 6,
         name: "Bone Density Scan",
-        hospital: "NMC Hospital",
+        hospital: "Samford Hospital",
         doctor: "Dr. Anand Kumar",
         type: "Orthopedic",
         date: "21-03-2026",

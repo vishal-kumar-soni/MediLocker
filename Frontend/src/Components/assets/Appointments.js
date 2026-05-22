@@ -17,7 +17,7 @@ const appointments = [
         specialty: "Pulmonologist",
         date: "13-06-2026",
         time: "2:00 PM",
-        hospital: "Max Healthcare",
+        hospital: "Pulse Hospital",
         type: "Routine Checkup",
     },
     {
@@ -37,7 +37,7 @@ const appointments = [
         specialty: "General Physician",
         date: "22-04-2026",
         time: "11:00 AM",
-        hospital: "RIIMS Ranchi",
+        hospital: "RIMS Ranchi",
         type: "Blood Test Review",
     },
 ]
