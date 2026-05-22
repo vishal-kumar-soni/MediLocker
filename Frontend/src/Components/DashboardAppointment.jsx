@@ -1,48 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Calendar, Clock, MapPin, Plus, CheckCircle2, Stethoscope, X } from 'lucide-react'
-import clsx from 'clsx'
+import appointments from './assets/Appointments'
 
-const appointments = [
-    {
-        id: 1,
-        status: "upcoming",
-        doctor: "Dr. Alok Mishra",
-        specialty: "Cardiologist",
-        date: "20-06-2026",
-        time: "10:30 AM",
-        hospital: "Apollo Clinic",
-        type: "Follow-up",
-    },
-    {
-        id: 2,
-        status: "upcoming",
-        doctor: "Dr. Sunita Rao",
-        specialty: "Pulmonologist",
-        date: "13-06-2026",
-        time: "2:00 PM",
-        hospital: "Max Healthcare",
-        type: "Routine Checkup",
-    },
-    {
-        id: 3,
-        status: "upcoming",
-        doctor: "Dr. Aditya Swarankar",
-        specialty: "Immunologists",
-        date: "10-07-2026",
-        time: "11:00 AM",
-        hospital: "Manipal Hospital",
-        type: "Blood Test Review",
-    }, {
-        id: 4,
-        status: "completed",
-        doctor: "Dr. Rajesh Mehta",
-        specialty: "General Physician",
-        date: "22-04-2026",
-        time: "11:00 AM",
-        hospital: "RIIMS Ranchi",
-        type: "Blood Test Review",
-    },
-]
 
 function AppointmentsPage() {
 
@@ -104,7 +63,7 @@ function AppointmentsPage() {
         <div className="space-y-6">
             <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                    <h1 className="font-display text-2xl font-bold text-white">Appointments</h1>
+                    <h1 className=" text-2xl font-bold text-white">Appointments</h1>
                     <p className="text-white/40 text-sm mt-1">{countUpcoming} upcoming visits</p>
                 </div>
                 <button onClick={() => setShowForm(true)} className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm flex items-center gap-2">
@@ -117,7 +76,7 @@ function AppointmentsPage() {
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                     <div className=" bg-[#17202b] backdrop-blur-md border border-white/8 rounded-2xl p-7 w-full max-w-md animate-in">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="font-display text-lg font-bold text-white">New Appointment</h2>
+                            <h2 className="text-lg font-bold text-white">New Appointment</h2>
                             <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white"><X className="w-5 h-5" /></button>
                         </div>
                         <form onSubmit={addAppointment} className="space-y-4">
@@ -164,10 +123,9 @@ function AppointmentsPage() {
                     <button
                         key={f}
                         onClick={() => setFilter(f)}
-                        className={clsx(
-                            'px-4 py-2 cursor-pointer rounded-xl text-sm font-medium capitalize border transition-all',
-                            filter === f ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-400' : 'bg-white/5 border-white/10 text-white/40 hover:text-white'
-                        )}
+                        className={`
+                            px-4 py-2 cursor-pointer rounded-xl text-sm font-medium capitalize border transition-all 
+                           ${(filter === f) ? "bg-cyan-500/20 border-cyan-500/40 text-cyan-400" : "bg-white/5 border-white/10 text-white/40 hover:text-white"} `}
                     >{f === 'all' ? `All (${appointments.length})` : f}</button>
                 ))}
             </div>
