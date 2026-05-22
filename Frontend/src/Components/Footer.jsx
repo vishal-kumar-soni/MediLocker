@@ -49,7 +49,6 @@ export default function Footer() {
                     </div>
                     <div className="flex items-center gap-2 text-sm mb-2">
                         <Phone size={16} /> +91 98765 43210
-                        +91 98765 43210
                     </div>
 
                     {/* Social Icons */}
@@ -63,7 +62,7 @@ export default function Footer() {
 
             {/* Bottom */}
             <div className="border-t font-logo border-gray-700 mt-8 pt-4 text-center text-sm text-gray-400">
-                © {new Date().getFullYear()} MediLocker. All rights reserved.
+                © 2026 MediLocker. All rights reserved.
             </div>
         </footer>
     );

@@ -22,7 +22,7 @@ function Dashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
     const handleLogout = () => {
-        logout()
+        // logout()
         navigate('/')
     }
 
