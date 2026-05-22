@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Pill, Clock, Plus, CheckCircle2, Calendar, X, ToggleLeft, ToggleRight } from 'lucide-react'
 import clsx from 'clsx'
+import Medications from './assets/Medications'
+
 
 const timeColors = {
     Morning: 'text-amber-500 bg-amber-500/10',
@@ -9,44 +11,6 @@ const timeColors = {
     Afternoon: 'text-emerald-500 bg-emerald-500/10',
 }
 
-const Medications = [
-    {
-        id: 1,
-        name: "Amlodipine ",
-        dose: "5mg",
-        for: "Hypertension",
-        time: "Morning",
-    },
-    {
-        id: 2,
-        name: "Vitamin D3 ",
-        dose: "60000 IU",
-        for: "Vitamin D deficiency",
-        time: "Sunday",
-    },
-    {
-        id: 3,
-        name: "Aspirin",
-        dose: "75mg",
-        for: "Prevention",
-        time: "Night",
-    },
-    {
-        id: 4,
-        name: "Levocetirizine",
-        dose: "5mg",
-        for: "Allergy",
-        time: "Afternoon",
-    },
-    {
-        id: 5,
-        name: "Pantoprazole",
-        dose: "40mg",
-        for: "Acidity",
-        time: "Morning",
-    },
-
-]
 
 function DashboardMedication() {
 
@@ -87,7 +51,7 @@ function DashboardMedication() {
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                     <div className=" bg-[#151e29] backdrop-blur-md border border-white/8 rounded-2xl  hover:border-cyan-500/30 transition-all duration-300 hover:glow-teal-sm cursor-default p-7 w-full max-w-md animate-in">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="font-display text-lg font-bold text-white">Add Medication</h2>
+                            <h2 className="text-lg font-bold text-white">Add Medication</h2>
                             <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white"><X className="w-5 h-5" /></button>
                         </div>
                         <form onSubmit={addMed} className="space-y-4">
