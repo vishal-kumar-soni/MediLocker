@@ -44,7 +44,7 @@ function Home() {
                     <span className=" bg-gradient-to-r from-emerald-300 to-cyan-500 bg-clip-text text-transparent">One Secure Vault</span>
                 </h1>
                 <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Store all your medical records, track health vitals, and share instantly with any doctor — no more carrying physical files or repeating your history at every visit.
+                    Store all your medical records, track health vitals — no more carrying physical files or repeating your history at every visit.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <Link to="/register" className="bg-emerald-500 flex items-center gap-2 bg-primary-500 hover:bg-primary-400 text-white font-semibold px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-xl hover:shadow-primary-500/25">

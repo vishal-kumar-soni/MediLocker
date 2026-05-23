@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Outlet, NavLink, useNavigate } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate, Link } from 'react-router-dom'
 import logo from '../assets/Logo.png'
 import {
     LayoutDashboard, User, FileText, Droplets, Activity, Calendar,
-    Pill, Share2,  LogOut, Menu, X, Bell, ChevronRight
+    Pill, Share2, LogOut, Menu, X, Bell, ChevronRight
 } from 'lucide-react'
 import clsx from 'clsx'
+
 
 const navItems = [
     { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -32,16 +33,15 @@ function Dashboard() {
         <div className="min-h-screen bg-[#0d1117] flex">
 
             {/* Sidebar */}
-            <aside className={clsx(
-                'fixed top-0 left-0 h-full w-64 bg-[#0d1117] border-r border-white/5 z-30 flex flex-col transition-transform duration-300',
-                'lg:translate-x-0 lg:static lg:z-auto',
-                sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-            )} style={{ background: '#070c12' }}>
+            <aside className={`
+                fixed top-0 left-0 h-full w-64 bg-[#0d1117] border-r border-white/5 z-30 flex flex-col transition-transform duration-300 lg:translate-x-0 lg:static lg:z-auto
+                ${(sidebarOpen) ? 'translate-x-0' : '-translate-x-full'
+                } `} style={{ background: '#070c12' }}>
                 {/* Logo */}
                 <div className="flex items-center justify-between px-5 py-5 border-b border-white/5">
                     <div className="flex items-center gap-2.5">
                         <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-                          <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
+                            <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
                         </div>
                         <span className="font-logo text-xl font-bold text-white">MediLocker</span>
                     </div>
@@ -96,7 +96,7 @@ function Dashboard() {
                             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-cyan-500 rounded-full" />
                         </button>
                         <div className="w-9 h-9 rounded-full  bg-cyan-500  flex items-center justify-center text-sm font-bold text-white">
-                            {initials}
+                            <Link to='/dashboard/profile'>{initials}</Link>
                         </div>
                     </div>
                 </header>
@@ -104,7 +104,6 @@ function Dashboard() {
                 {/* Page content */}
                 <main className="flex-1 p-5 md:p-7 overflow-y-auto animate-in">
                     <Outlet />
-                    
 
                 </main>
             </div>
