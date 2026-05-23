@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Heart, Eye, EyeOff, Loader2 } from 'lucide-react'
-import logo from '../assets/Logo.jpg'
+import logo from '../assets/Logo.png'
 
 const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
 

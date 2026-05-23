@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../assets/Logo.jpg'
+import logo from '../assets/Logo.png'
 import { Shield, Upload, Share2, Activity, Lock, ArrowRight, CheckCircle2, Zap, ChevronRight } from 'lucide-react'
 import Footer from '../Components/Footer.jsx'
 import features from '../Components/assets/features.js'

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
-import logo from '../assets/Logo.jpg'
+import logo from '../assets/Logo.png'
 import {
     LayoutDashboard, User, FileText, Droplets, Activity, Calendar,
     Pill, Share2,  LogOut, Menu, X, Bell, ChevronRight

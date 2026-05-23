@@ -1,5 +1,5 @@
 import { Facebook, Twitter, Linkedin, Mail, Phone } from "react-feather";
-import logo from '../assets/Logo.jpg'
+import logo from '../assets/Logo.png'
 
 export default function Footer() {
     return (
