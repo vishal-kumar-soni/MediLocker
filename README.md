@@ -74,13 +74,18 @@ The platform provides an elegant dashboard for monitoring health data, appointme
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/medilocker.git
+git clone https://github.com/vishalkumar2024/MediLocker.git
 ```
 
 Move into project folder:
 
 ```bash
 cd medilocker
+```
+Move into project Frotnend Folder:
+
+```bash
+cd Frotnend
 ```
 
 Install dependencies:
