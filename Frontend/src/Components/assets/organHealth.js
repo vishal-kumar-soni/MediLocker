@@ -1,45 +1,50 @@
-
+import heart from './heart.png'
+import lungs from './lungs.png'
+import liver from './liver.png'
+import kidney from './kidney.png'
+import brain from './brain.png'
+import bones from './bones.png'
 
 const organHealth = [
     {
         status: "Healthy",
         name: "Heart",
-        icon: "❤️",
+        image: heart,
         note: "Normal sinus rhythm, no anomalies",
         lastCheck: " 2024-11-10",
     },
     {
         status: "Healthy",
         name: "Lungs",
-        icon: "🫁",
+        image: lungs,
         note: "Clear, no congestion detected",
         lastCheck: "2024-10-22",
     },
     {
         status: "Healthy",
         name: "Liver",
-        icon: "🫁",
+        image: liver,
         note: "Enzyme levels within normal range",
         lastCheck: "2024-09-15",
     },
     {
         status: "Healthy",
         name: "Kidney",
-        icon: "🫁",
+        image: kidney,
         note: "Creatinine normal, GFR 95",
         lastCheck: "2025-02-15",
     },
     {
         status: "Healthy",
         name: "Brain",
-        icon: "🧠",
+        image: brain,
         note: "No abnormalities on MRI",
         lastCheck: "2024-02-25",
     },
     {
         status: "Need Attention",
         name: "Bones",
-        icon: "🦴",
+        image: bones,
         note: "Mild vitamin D deficiency noted",
         lastCheck: "2025-08-02",
     },

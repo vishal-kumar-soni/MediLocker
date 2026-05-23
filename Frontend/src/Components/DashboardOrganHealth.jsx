@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import bodyImage from '../assets/body.png'
 import organHealth from './assets/organHealth'
 
-
 function DashboardOrganHealth() {
 
     const [countHealthy, setCountHealthy] = useState(0);
@@ -71,7 +70,9 @@ function DashboardOrganHealth() {
                             <div />
                             <div className="relative">
                                 <div className="flex items-start justify-between mb-4 ">
-                                    <div className="text-3xl ">{organ.icon}</div>
+                                    <div className=" h-12 w-12 ">
+                                        <img src={organ.image} alt="organ-image" />
+                                    </div>
 
                                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${(isHealthy) ? "border-cyan-500/90 text-cyan-500  bg-cyan-500/5" : "border-orange-500/90 text-orange-500 bg-orange-500/5"}  text-xs`}>
                                         <CircleCheck className="w-3 h-3" />
