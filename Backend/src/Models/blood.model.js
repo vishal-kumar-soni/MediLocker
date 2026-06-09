@@ -1,28 +1,23 @@
 import mongoose from "mongoose";
 
-const bloodSchema = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-
-    name: {
-      type: String,
-      required: true,
-    },
-
-    value: String,
-
-    min: Number,
-
-    max: Number,
-
-    unit: String,
+const bloodSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   },
+  hemoglobin: Number,
+  rbc: Number,
+  wbc: Number,
+  platelets: Number,
+  hematocrit: Number,
+  glucose: Number,
+  cholesterol: Number,
+  triglycerides: Number
+},
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
-export default mongoose.model("Blood", bloodSchema);
+export const BloodModel = mongoose.model("Blood", bloodSchema);

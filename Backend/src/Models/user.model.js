@@ -102,7 +102,7 @@ const userSchema = new Schema(
         bloodRecords: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "BloodRecord",
+                ref: "Blood",
             },
         ],
 
