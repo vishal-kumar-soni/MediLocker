@@ -22,6 +22,35 @@ function DashboardDocument() {
     const [dragOver, setDragOver] = useState(false)
     const [uploaded, setUploaded] = useState(false)
     const [docs, setDocs] = useState(AllDocuments)
+    const [newDocument, setNewDocument] = useState(AllDocuments)
+    const [showForm, setShowForm] = useState(false)
+    const [form, setForm] = useState({ name: '', hospital: '', doctor: '', type: '', size: '', format: '', doc: '' })
+
+    const addAppointment = (e) => {
+        e.preventDefault()
+
+        setNewAppointment(prev => [
+            {
+                id: `apt_${Date.now()}`,
+                ...form,
+                status: 'upcoming'
+            },
+            ...prev,
+        ])
+
+        setShowForm(false)
+
+        setForm({
+            name: '',
+            hospital: '',
+            doctor: '',
+            type: '',
+            size: '',
+            format: '',
+            doc: ''
+        })
+    }
+
 
     const filtered = docs.filter(d =>
         (filter === 'All' || d.type === filter) &&
@@ -33,6 +62,7 @@ function DashboardDocument() {
         setDragOver(false)
         setUploaded(true)
         setTimeout(() => setUploaded(false), 3000)
+        setForm(p => ({ ...p, doc: e.target.value }))
     }
 
 
@@ -43,32 +73,149 @@ function DashboardDocument() {
                     <h1 className=" text-2xl font-bold text-white">Documents</h1>
                     <p className="text-white/40 text-sm mt-1">{docs.length} records stored securely</p>
                 </div>
+
                 <label className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm flex items-center gap-2 cursor-pointer">
                     <Upload className="w-4 h-4" />
                     Upload Document
-                    <input type="file" className="hidden" multiple accept=".pdf,.jpg,.png,.dicom" onChange={() => { setUploaded(true); setTimeout(() => setUploaded(false), 3000) }} />
+                    <button onClick={() => { setShowForm(true) }} />
                 </label>
             </div>
 
-            {/* Upload success toast */}
-            {uploaded && (
-                <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm animate-in">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    Document uploaded successfully!
+
+            {/* Book form modal */}
+            {showForm && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className=" bg-[#17202b] backdrop-blur-md border border-white/8 rounded-2xl p-7 w-full max-w-md animate-in">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-lg font-bold text-white">New Document</h2>
+                            <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white"><X className="w-5 h-5" /></button>
+                        </div>
+                        <form onSubmit={addAppointment} className="space-y-4">
+
+                            <div >
+                                <div>
+                                    <label className="block text-xs text-white/40 mb-1.5">Test Name</label>
+                                    <input
+                                        value={form.doctor}
+                                        onChange={e => setForm(p => ({
+                                            ...p,
+                                            name: e.target.value
+                                        }))}
+                                        className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
+                                        placeholder="MRI Brain Scan"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-xs text-white/40 mb-1.5">Hospital / Clinic</label>
+                                    <input
+                                        value={form.doctor}
+                                        onChange={e => setForm(p => ({
+                                            ...p,
+                                            hospital: e.target.value
+                                        }))}
+                                        className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
+                                        placeholder="Hospital name"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs text-white/40 mb-1.5">Doctor</label>
+                                    <input
+                                        value={form.specialty}
+                                        onChange={e => setForm(p => ({ ...p, doctor: e.target.value }))}
+                                        className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
+                                        placeholder="Doctor name"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-3 gap-4 ">
+                                <div>
+                                    <label className="block text-xs text-white/40 mb-1.5">Document Type</label>
+                                    <input
+                                        type="text"
+                                        value={form.date}
+                                        onChange={e => setForm(p => ({ ...p, type: e.target.value }))}
+
+                                        className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
+                                        required
+                                        placeholder='Cardiology'
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs text-white/40 mb-1.5">Size</label>
+                                    <input
+                                        type="text"
+                                        value={form.time}
+                                        onChange={e => setForm(p => ({ ...p, size: e.target.value }))}
+                                        className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm "
+                                        required
+                                        placeholder='1.2 MB'
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs text-white/40 mb-1.5">Format</label>
+                                    <input
+                                        type="text"
+                                        value={form.date}
+                                        onChange={e => setForm(p => ({ ...p, format: e.target.value }))}
+
+                                        className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
+                                        required
+                                        placeholder='PDF'
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Upload success toast */}
+                            {uploaded && (
+                                <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm animate-in">
+                                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                                    Document uploaded successfully!
+                                </div>
+                            )}
+
+
+                            {/* Drop zone */}
+                            <div
+                                onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+                                onDragLeave={() => setDragOver(false)}
+                                onDrop={handleDrop}
+                                className={` border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-200 cursor-pointer ${(dragOver) ? 'border-cyan-500 bg-cyan-500/5' : 'border-white/10'} hover:border-white/20 `}
+                            >
+                                <Upload className={`w-8 h-8 mx-auto mb-3 transition-colors ${(dragOver) ? 'text-cyan-400' : 'text-white/20'} `} />
+                                <p className="text-white/50 text-sm">Drag & drop files here, or <span className="text-cyan-400">browse</span></p>
+                                <p className="text-white/25 text-xs mt-1">PDF, DICOM, JPG, PNG — max 100MB</p>
+
+                                <label className=" border-dashed border border-gray-600 hover:border-gray-300 mt-2 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-95 text-sm flex items-center justify-center gap-2 cursor-pointer">
+                                    <Upload className="w-4 h-4" />
+                                    Upload Document
+                                    <input type="file" className="hidden" multiple accept=".pdf,.jpg,.png,.dicom" onChange={(e) => { setUploaded(true); setForm(p => ({ ...p, doc: e.target.value })); setTimeout(() => setUploaded(false), 3000) }} />
+                                </label>
+                            </div>
+
+
+                            <div className="flex gap-3 pt-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowForm(false)}
+                                    className="flex-1  bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-5  rounded-xl transition-all duration-200 active:scale-95 text-sm py-3">Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    className="flex-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Add Document
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             )}
-
-            {/* Drop zone */}
-            <div
-                onDragOver={e => { e.preventDefault(); setDragOver(true) }}
-                onDragLeave={() => setDragOver(false)}
-                onDrop={handleDrop}
-                className={` border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-200 cursor-pointer ${(dragOver) ? 'border-cyan-500 bg-cyan-500/5' : 'border-white/10'} hover:border-white/20 `}
-            >
-                <Upload className={`w-8 h-8 mx-auto mb-3 transition-colors ${(dragOver) ? 'text-cyan-400' : 'text-white/20'} `} />
-                <p className="text-white/50 text-sm">Drag & drop files here, or <span className="text-cyan-400">browse</span></p>
-                <p className="text-white/25 text-xs mt-1">PDF, DICOM, JPG, PNG — max 100MB</p>
-            </div>
 
             {/* Search & Filters */}
             <div className="flex flex-col md:flex-row gap-8 md:gap-3 ">
@@ -116,14 +263,6 @@ function DashboardDocument() {
                                     <span className="text-xs text-white/25">{doc.date}</span>
                                     <span className="text-xs text-white/25">{doc.size}</span>
                                 </div>
-                                {doc.tags?.length > 0 && (
-                                    <div className="flex items-center gap-1 mt-2">
-                                        <Tag className="w-3 h-3 text-white/20" />
-                                        {doc.tags.map(tag => (
-                                            <span key={tag} className="text-xs text-white/25">#{tag}</span>
-                                        ))}
-                                    </div>
-                                )}
                             </div>
                         </div>
                         <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-white/5">

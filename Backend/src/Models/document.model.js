@@ -24,7 +24,11 @@ const documentSchema = new mongoose.Schema(
 
         format: String,
 
-        tags: [String],
+        doc: {
+            type: String,
+            required: true,
+        },
+
     },
     {
         timestamps: true,
