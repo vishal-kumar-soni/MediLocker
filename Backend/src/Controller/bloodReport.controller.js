@@ -1,4 +1,4 @@
-import { BloodModel } from "../models/blood.model.js";
+import { BloodModel } from "../Models/blood.model.js";
 import { UserModel } from "../Models/user.model.js";
 
 const saveBloodValues = async (req, res) => {

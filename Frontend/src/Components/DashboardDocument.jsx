@@ -26,14 +26,13 @@ function DashboardDocument() {
     const [showForm, setShowForm] = useState(false)
     const [form, setForm] = useState({ name: '', hospital: '', doctor: '', type: '', size: '', format: '', doc: '' })
 
-    const addAppointment = (e) => {
+    const addDocument = (e) => {
         e.preventDefault()
 
-        setNewAppointment(prev => [
+        setNewDocument(prev => [
             {
                 id: `apt_${Date.now()}`,
-                ...form,
-                status: 'upcoming'
+                ...form, active: true
             },
             ...prev,
         ])
@@ -49,8 +48,8 @@ function DashboardDocument() {
             format: '',
             doc: ''
         })
+        console.log(form)
     }
-
 
     const filtered = docs.filter(d =>
         (filter === 'All' || d.type === filter) &&
@@ -90,13 +89,13 @@ function DashboardDocument() {
                             <h2 className="text-lg font-bold text-white">New Document</h2>
                             <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white"><X className="w-5 h-5" /></button>
                         </div>
-                        <form onSubmit={addAppointment} className="space-y-4">
+                        <form onSubmit={addDocument} className="space-y-4">
 
                             <div >
                                 <div>
                                     <label className="block text-xs text-white/40 mb-1.5">Test Name</label>
                                     <input
-                                        value={form.doctor}
+                                        value={form.name}
                                         onChange={e => setForm(p => ({
                                             ...p,
                                             name: e.target.value
@@ -112,7 +111,7 @@ function DashboardDocument() {
                                 <div>
                                     <label className="block text-xs text-white/40 mb-1.5">Hospital / Clinic</label>
                                     <input
-                                        value={form.doctor}
+                                        value={form.hospital}
                                         onChange={e => setForm(p => ({
                                             ...p,
                                             hospital: e.target.value
@@ -125,7 +124,7 @@ function DashboardDocument() {
                                 <div>
                                     <label className="block text-xs text-white/40 mb-1.5">Doctor</label>
                                     <input
-                                        value={form.specialty}
+                                        value={form.doctor}
                                         onChange={e => setForm(p => ({ ...p, doctor: e.target.value }))}
                                         className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
                                         placeholder="Doctor name"
@@ -139,7 +138,7 @@ function DashboardDocument() {
                                     <label className="block text-xs text-white/40 mb-1.5">Document Type</label>
                                     <input
                                         type="text"
-                                        value={form.date}
+                                        value={form.type}
                                         onChange={e => setForm(p => ({ ...p, type: e.target.value }))}
 
                                         className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
@@ -151,7 +150,7 @@ function DashboardDocument() {
                                     <label className="block text-xs text-white/40 mb-1.5">Size</label>
                                     <input
                                         type="text"
-                                        value={form.time}
+                                        value={form.size}
                                         onChange={e => setForm(p => ({ ...p, size: e.target.value }))}
                                         className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm "
                                         required
@@ -162,7 +161,7 @@ function DashboardDocument() {
                                     <label className="block text-xs text-white/40 mb-1.5">Format</label>
                                     <input
                                         type="text"
-                                        value={form.date}
+                                        value={form.format}
                                         onChange={e => setForm(p => ({ ...p, format: e.target.value }))}
 
                                         className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
