@@ -1,17 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/Logo.png'
-import { Shield, Upload, Share2, Activity, Lock, ArrowRight, CheckCircle2, Zap, ChevronRight } from 'lucide-react'
+import {
+    Plus, Lock, CheckCircle2, ChevronRight, Star, ShieldCheck, Globe2, FileText, UserPlus, PlayCircle, Building2, Users, Camera,
+} from 'lucide-react'
 import Footer from '../Components/Footer.jsx'
 import features from '../Components/assets/features.js'
+import heroPhoto from '../Components/assets/HomeBanner.png'
+
+
+const trustPoints = [
+    { icon: ShieldCheck, label: "100% Secure\n& Private" },
+    { icon: Globe2, label: "Access\nAnywhere" },
+    { icon: FileText, label: "Paperless\nHealthcare" },
+];
 
 
 const stats = [
-    { value: '50K+', label: 'Patients' },
-    { value: '200+', label: 'Hospitals' },
-    { value: '99.9%', label: 'Uptime' },
-    { value: '0', label: 'Data Breaches' },
-]
+    { icon: Users, value: "10K+", label: "Happy Patients" },
+    { icon: Building2, value: "50+", label: "Partner Hospitals" },
+    { icon: ShieldCheck, value: "99.9%", label: "System Uptime" },
+    { icon: Lock, value: "0", label: "Data Breaches" },
+];
 
 function Home() {
 
@@ -34,39 +44,116 @@ function Home() {
             </nav>
 
             {/* Hero */}
-            <section className="relative z-10 text-center px-6 pt-16 pb-20">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-8">
-                    <Zap className="w-3.5 h-3.5" />
-                    Your complete health record, always accessible
-                </div>
-                <h1 className="font-title text-5xl md:text-7xl font-bold text-white leading-tight mb-6 max-w-4xl mx-auto">
-                    Your Health Data,{' '}
-                    <span className=" bg-gradient-to-r from-emerald-300 to-cyan-500 bg-clip-text text-transparent">One Secure Vault</span>
-                </h1>
-                <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-                    Store all your medical records, track health vitals — no more carrying physical files or repeating your history at every visit.
-                </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Link to="/register" className="bg-emerald-500 flex items-center gap-2 bg-primary-500 hover:bg-primary-400 text-white font-semibold px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-xl hover:shadow-primary-500/25">
-                        Create Free Account
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                    <Link to="/dashboard" className="flex items-center gap-2 text-white/60 hover:text-white font-medium px-7 py-3.5 transition-colors">
-                        <Lock className="w-4 h-4" />
-                        Demo Login
-                    </Link>
-                </div>
+            <main className=" relative overflow-hidden">
+                {/* ambient glow accents */}
+                <div className="pointer-events-none absolute -top-40 left-1/3 h-[520px] w-[520px] rounded-full bg-cyan-500/10 blur-[120px]" />
+                <div className="pointer-events-none absolute top-40 right-0 h-[420px] w-[420px] rounded-full bg-indigo-500/10 blur-[120px]" />
 
-                {/* Stats row */}
-                <div className="flex flex-wrap  justify-center gap-8 mt-16 pt-16 border-t border-white/5">
-                    {stats.map(s => (
-                        <div key={s.label} className="text-center">
-                            <div className="bg-gradient-to-r from-emerald-300 to-cyan-500 bg-clip-text text-transparent font-numberText text-3xl font-bold gradient-text">{s.value}</div>
-                            <div className="text-white/40 text-sm mt-1">{s.label}</div>
+                <section className="relative mx-auto max-w-7xl px-6 pt-12 pb-16 lg:px-10 lg:pt-16">
+                    <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-2 lg:gap-10">
+                        {/* Left column */}
+                        <div className="relative z-10">
+
+                            <h1 className="mt-6 text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl">
+                                One Platform for
+                                <br />
+                                All Your
+                                <br />
+                                <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-500 bg-clip-text text-transparent">
+                                    Medical Records
+                                </span>
+                            </h1>
+
+                            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
+                                Store all your medical reports safely in one place. Access them
+                                anytime, anywhere with your unique Patient ID. Secure OTP
+                                verification ensures your health data stays protected.
+                            </p>
+
+                            <div className="mt-8 flex flex-wrap gap-x-10 gap-y-5">
+                                {trustPoints.map(({ icon: Icon, label }) => (
+                                    <div key={label} className="flex items-center gap-3">
+                                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-700 bg-slate-800/60 text-cyan-300">
+                                            <Icon className="h-4.5 w-4.5" strokeWidth={1.8} />
+                                        </span>
+                                        <span className="whitespace-pre-line text-sm leading-tight text-slate-300">
+                                            {label}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="mt-9 flex flex-wrap gap-4">
+                                <Link to='/register' className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-500 to-indigo-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 transition-transform hover:scale-[1.02] active:scale-[0.99]">
+                                    <UserPlus className="h-5 w-5" />
+                                    Create Free Account
+                                </Link>
+                                <Link to='/dashboard' className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/40 px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-slate-800/60">
+                                    <PlayCircle className="h-5 w-5" />
+                                    Demo Login
+                                </Link>
+                            </div>
                         </div>
-                    ))}
-                </div>
-            </section>
+
+                        {/* Right column - hero visual */}
+                        <div className="relative z-10 lg:mt-2">
+                            <div className="relative rounded-[28px] border border-slate-700/60 bg-slate-900/40 p-3 shadow-2xl shadow-black/40 backdrop-blur-sm">
+                                <div className="relative overflow-hidden rounded-2xl">
+                                    <img
+                                        src={heroPhoto}
+                                        alt="Patients reviewing medical records with doctors on MediLocker"
+                                        className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[420px]"
+                                    />
+                                </div>
+
+                                {/* Info bar under image */}
+                                <div className="mt-3 flex flex-col gap-4 rounded-2xl border border-white/5 bg-slate-950/60 p-4 sm:flex-row sm:items-center sm:justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-600">
+                                            <ShieldCheck className="h-4.5 w-4.5 text-white" strokeWidth={2} />
+                                        </span>
+                                        <span className="font-bold text-white">
+                                            Medi<span className="text-cyan-300">Locker</span>
+                                        </span>
+                                    </div>
+
+                                    <p className="text-sm leading-snug text-slate-300">
+                                        Tension-free care for your medical reports — anytime,
+                                        anywhere{" "}
+                                        <span className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-slate-800/80 px-2.5 py-1 text-xs font-medium text-slate-300">
+                                            <Camera className="h-3 w-3" />
+                                            News &amp; Updates
+                                        </span>
+                                    </p>
+
+                                    <Link
+                                    to="/login"
+                                        aria-label="Next"
+                                        className="flex  h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-800 text-white transition-colors hover:bg-slate-700"
+                                    >
+                                        <ChevronRight className="h-4.5 w-4.5" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Stats bar */}
+                    <div className="relative z-10 mt-16 grid grid-cols-2 gap-8 rounded-2xl border border-slate-800  transition-all duration-300 bg-slate-900/40 px-8 py-8 sm:grid-cols-4 hover:border-cyan-500/40 sm:gap-6">
+                        {stats.map(({ icon: Icon, value, label }) => (
+                            <div key={label} className="flex items-center gap-4">
+                                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-700 bg-slate-800/60 text-sky-400">
+                                    <Icon className="h-5 w-5" strokeWidth={1.8} />
+                                </span>
+                                <div className="leading-tight">
+                                    <p className="text-2xl font-extrabold text-white">{value}</p>
+                                    <p className="text-sm text-slate-400">{label}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </main>
 
             {/* Features */}
             <section className="relative z-10 px-6 md:px-12 pb-24">
