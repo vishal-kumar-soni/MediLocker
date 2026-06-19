@@ -66,12 +66,6 @@ const userSchema = new Schema(
             type: String,
         },
 
-        emergencyContact: {
-            name: String,
-            relation: String,
-            phone: String,
-        },
-
         allergies: [
             {
                 type: String,
