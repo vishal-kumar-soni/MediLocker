@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import Footer from '../Components/Footer.jsx'
 import features from '../Components/assets/features.js'
-import heroPhoto from '../Components/assets/HomeBanner.png'
+import heroPhoto from '../Components/assets/hero-2.png'
 
 
 const trustPoints = [
@@ -34,7 +34,9 @@ function Home() {
                     <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
                         <img src={logo} alt="logo" className='w-[90%] h-[90%] ' />
                     </div>
-                    <span className="font-logo text-xl font-bold text-white">MediLocker</span>
+                    <span className="font-logo text-xl font-bold text-white">
+                        Medi<span className="text-cyan-300">Locker</span>
+                    </span>
                 </div>
                 <div className="flex items-center gap-3">
                     <Link to="/login" className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Sign in</Link>
@@ -51,8 +53,9 @@ function Home() {
 
                 <section className="relative mx-auto max-w-7xl px-6 pt-12 pb-16 lg:px-10 lg:pt-16">
                     <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-2 lg:gap-10">
+
                         {/* Left column */}
-                        <div className="relative z-10">
+                        <div className="relative z-10 md:pl-20 ">
 
                             <h1 className="mt-6 text-5xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-6xl">
                                 One Platform for
@@ -84,7 +87,7 @@ function Home() {
                             </div>
 
                             <div className="mt-9 flex flex-wrap gap-4">
-                                <Link to='/register' className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 via-sky-500 to-indigo-600 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 transition-transform hover:scale-[1.02] active:scale-[0.99]">
+                                <Link to='/register' className="inline-flex items-center gap-2 rounded-xl  bg-cyan-400  px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 transition-transform hover:scale-[1.02] active:scale-[0.99]">
                                     <UserPlus className="h-5 w-5" />
                                     Create Free Account
                                 </Link>
@@ -96,7 +99,7 @@ function Home() {
                         </div>
 
                         {/* Right column - hero visual */}
-                        <div className="relative z-10 lg:mt-2">
+                        <div className="relative z-10 lg:mt-2 px-4">
                             <div className="relative rounded-[28px] border border-slate-700/60 bg-slate-900/40 p-3 shadow-2xl shadow-black/40 backdrop-blur-sm">
                                 <div className="relative overflow-hidden rounded-2xl">
                                     <img
@@ -109,10 +112,10 @@ function Home() {
                                 {/* Info bar under image */}
                                 <div className="mt-3 flex flex-col gap-4 rounded-2xl border border-white/5 bg-slate-950/60 p-4 sm:flex-row sm:items-center sm:justify-between">
                                     <div className="flex items-center gap-3">
-                                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-indigo-600">
-                                            <ShieldCheck className="h-4.5 w-4.5 text-white" strokeWidth={2} />
-                                        </span>
-                                        <span className="font-bold text-white">
+                                        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                                            <img src={logo} alt="logo" className='w-[90%] h-[90%] ' />
+                                        </div>
+                                        <span className="font-logo font-bold text-white">
                                             Medi<span className="text-cyan-300">Locker</span>
                                         </span>
                                     </div>
@@ -127,7 +130,7 @@ function Home() {
                                     </p>
 
                                     <Link
-                                    to="/login"
+                                        to="/login"
                                         aria-label="Next"
                                         className="flex  h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-800 text-white transition-colors hover:bg-slate-700"
                                     >
