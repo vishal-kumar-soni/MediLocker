@@ -26,7 +26,6 @@ function RegisterPage() {
     e.preventDefault()
     setLoading(true)
     try {
-      await register(form)
       navigate('/dashboard')
     } finally {
       setLoading(false)
@@ -48,8 +47,7 @@ function RegisterPage() {
           <h1 className="font-separated text-2xl font-bold text-white mb-2">Create your account</h1>
           <p className="text-white/40 text-sm">Step {step} of 2 — {step === 1 ? 'Account Info' : 'Health Profile'}</p>
         </div>
-
-        {/* Step{1,2} color */}
+ 
         <div className="flex gap-2 mb-6">
           <div className="flex-1 h-1 rounded-full bg-cyan-500" />
           <div className={`flex-1 h-1 rounded-full transition-all ${step === 2 ? 'bg-cyan-500' : 'bg-white/10'}`} />
@@ -67,7 +65,8 @@ function RegisterPage() {
                   type="text"
                   value={form.name}
                   onChange={e => update('name', e.target.value)} placeholder="Arjun Sharma"
-                  className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20" required
+                  className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
+                   required
                 />
               </div>
               <div>
@@ -76,7 +75,8 @@ function RegisterPage() {
                   type="email"
                   value={form.email}
                   onChange={e => update('email', e.target.value)} placeholder="you@example.com"
-                  className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20" required
+                  className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
+                   required
                 />
               </div>
               <div>
@@ -86,6 +86,7 @@ function RegisterPage() {
                   value={form.phone}
                   onChange={e => update('phone', e.target.value)} placeholder="+91 98765 43210"
                   className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
+                  required
                 />
               </div>
               <div>
@@ -97,7 +98,8 @@ function RegisterPage() {
                     onChange={e => update('password', e.target.value)}
                     placeholder="Create a strong password"
                     className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 pr-11"
-                    required minLength={6}
+                    required 
+                    minLength={6}
                   />
                   <button
                     type="button"

@@ -40,7 +40,6 @@ const userSchema = new Schema(
         },
 
         bloodGroup: {
-            required: true,
             type: String,
             enum: [
                 "A+",

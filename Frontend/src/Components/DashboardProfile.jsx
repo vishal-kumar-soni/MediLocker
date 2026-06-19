@@ -6,7 +6,7 @@ import upload from './assets/profile.jpg'
 function DashboardProfile() {
 
     const user = {
-        name: "Arjun Sharma",
+        userName: "Arjun Sharma",
         email: "arjun@gmail.com",
         bloodGroup: "B+",
         gender: "Male",
@@ -17,11 +17,11 @@ function DashboardProfile() {
         address: "Ratu Road, Ranchi",
         allergies: ["Penicillin", "dust"],
         conditions: ["Mild Hypertension"],
-        profileImage:''
+        profileImage: ''
     }
 
     const fields = [
-        { label: 'Full Name', key: 'name', icon: User },
+        { label: 'Full Name', key: 'userName', icon: User },
         { label: 'Email', key: 'email', icon: User },
         { label: 'Phone', key: 'phone', icon: Phone },
         { label: 'Date of Birth', key: 'dob', icon: Calendar, type: 'date' },
@@ -63,7 +63,7 @@ function DashboardProfile() {
     }
 
 
-    const initials = user?.name?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
+    const initials = user?.userName?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
 
     return (
         <div className="space-y-6 max-w-5xl ">
@@ -89,17 +89,15 @@ function DashboardProfile() {
                         {/* Form */}
                         <form onSubmit={setProfileHandler} className="space-y-4">
 
+                            {/* Profile image */}
                             <div id="objectPicture" className="w-[70px] h-[60px] flex items-baseline justify-center rounded-sm border-2 border-gray-400 cursor-pointer  mb-5">
-
                                 <label htmlFor="file-input">
-
                                     <img
                                         id="objectPicture-image"
                                         src={image ? URL.createObjectURL(image) : upload}
                                         className="w-[80px] h-[58px] cursor-pointer"
                                         alt="upload"
                                     />
-
                                 </label>
 
                                 <input
@@ -111,51 +109,42 @@ function DashboardProfile() {
                                 />
 
                             </div>
-
                             <div className="grid grid-cols-2 gap-4">
-                                {/* Blood group */}
-                                <div>
-                                    <label className="block text-xs text-white/40 mb-1.5 ">
-                                        Blood Group
-                                    </label>
-                                    <select
-                                        name="bloodGroup"
-                                        value={form.bloodGroup}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
-                                    >
-                                        <option value="">Select Blood Group</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
-                                    </select>
-                                </div>
 
-                                {/* Gender */}
+                                {/* Full name */}
                                 <div>
                                     <label className="block text-xs text-white/40 mb-1.5">
-                                        Gender
+                                        Full Name
                                     </label>
-                                    <select
-                                        name="gender"
-                                        value={form.gender}
+                                    <input
+                                        type="text"
+                                        name="userName"
+                                        value={form.userName}
                                         onChange={handleChange}
                                         required
                                         className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
-                                    >
-                                        <option value="">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Other">Other</option>
-                                    </select>
+                                    />
                                 </div>
+
+                                {/* Phone */}
+                                <div>
+                                    <label className="block text-xs text-white/40 mb-1.5 ">
+                                        Phone Number
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        name="phone"
+                                        value={form.phone}
+                                        onChange={handleChange}
+                                        pattern="[0-9]{10}"
+                                        required
+                                        className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
+                                    />
+                                </div>
+
                             </div>
+
+
 
                             <div className="grid grid-cols-2 gap-4">
                                 {/* Height */}
@@ -195,38 +184,6 @@ function DashboardProfile() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                {/* Phone */}
-                                <div>
-                                    <label className="block text-xs text-white/40 mb-1.5 ">
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        name="phone"
-                                        value={form.phone}
-                                        onChange={handleChange}
-                                        pattern="[0-9]{10}"
-                                        required
-                                        className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
-                                    />
-                                </div>
-
-                                {/* Date of birth */}
-                                <div>
-                                    <label className="block text-xs text-white/40 mb-1.5">
-                                        Date Of Birth
-                                    </label>
-                                    <input
-                                        type="date"
-                                        name="dob"
-                                        value={form.dob}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
-                                    />
-                                </div>
-                            </div>
 
                             <div className="grid grid-cols-2 gap-4">
                                 {/* Allergies */}
@@ -246,11 +203,11 @@ function DashboardProfile() {
                                 {/* Conditions */}
                                 <div>
                                     <label className="block text-xs text-white/40 mb-1.5">
-                                        Medical Conditions
+                                        Chronic Conditions
                                     </label>
                                     <input
                                         type="text"
-                                        name="conditions"
+                                        name="chronicConditions"
                                         placeholder="Diabetes, Asthma, Hypertension"
                                         onChange={handleArrayChange}
                                         className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
@@ -264,7 +221,7 @@ function DashboardProfile() {
                                     name="address"
                                     value={form.address}
                                     onChange={handleChange}
-                                    rows="1"
+                                    rows="2"
                                     required
                                     className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
                                 />

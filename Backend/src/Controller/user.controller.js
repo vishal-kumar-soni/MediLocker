@@ -5,14 +5,7 @@ import jwt from 'jsonwebtoken'
 // Function to login a user
 const login = async (req, res) => {
 
-    // 1. Get user details from frontend ( or from postman).
-    // 3. check if email or userName is correct or not.
-    // 4. if email is correct, then check the password.
-    // 5. assign a jwt token, send it to the client's browser
-    // 6. set cookie
-    // 7. return the data
-
-    const { email, password } = req.body; 
+    const { email, password } = req.body;
 
     try {
 
@@ -67,7 +60,7 @@ const login = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            error:error.message,
+            error: error.message,
             message: "user could not be logged in",
         })
     }
@@ -75,72 +68,100 @@ const login = async (req, res) => {
 
 // Function to Register a user
 const register = async (req, res) => {
-
-    // 1. Get user details from frontend ( or from postman).
-    // 2. Check if user already exist.
-    // 4. Creating user by userModel.create (CRUD) to store in database.
-    // 5. Generate the cookie
-    // 6. Remove password and refresh token field from response. 
-    // 7. Check for user creation- if true then return res.
-
-
-    const {userName, email, password, phone, dob, gender, bloodGroup } = req.body; 
+    const { userName, email, password, phone, dob, gender, bloodGroup } = req.body;
 
     try {
-    const existedUser = await UserModel.findOne({ email })
-    if (existedUser) {
-        return res.status(400).json({
-            success: false,
-            message: "User already exist with this email ",
+        const existedUser = await UserModel.findOne({ email })
+        if (existedUser) {
+            return res.status(400).json({
+                success: false,
+                message: "User already exist with this email ",
+            })
+        }
+
+        const user = await UserModel.create({
+            email,
+            password,
+            userName,
+            phone,
+            dob,
+            gender,
+            bloodGroup,
         })
-    }
 
-    const user = await UserModel.create({ 
-        email,
-        password,
-        userName,
-        phone, 
-        dob, 
-        gender, 
-        bloodGroup,
-    })
+        const token = jwt.sign(
+            { userId: user.id, emailId: user.email },
+            process.env.SECRET,
+            { expiresIn: "1d" }
+        )
 
-    const token = jwt.sign(
-        { userId: user.id, emailId: user.email },
-        process.env.SECRET,
-        { expiresIn: "1d" }
-    )
-
-    res.cookie('token', token, {
-        httpOnly: false,
-        secure: process.env.SECRET === 'production',
-        sameSite: "lax",
-        path: '/',
-        maxAge: 24 * 60 * 60 * 1000 // 1 day
-    })
-
-    const createdUser = await UserModel.findById(user.id).select(
-        "-password "
-    )
-
-    if (!createdUser) {
-        return res.status(500).json({
-            success: false,
-            message: "user could not be created",
+        res.cookie('token', token, {
+            httpOnly: false,
+            secure: process.env.SECRET === 'production',
+            sameSite: "lax",
+            path: '/',
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
         })
-    }
 
-    return res.status(200).json({
-        success: true,
-        message: "User created successfully",
-        user: createdUser
-    })
+        const createdUser = await UserModel.findById(user.id).select(
+            "-password "
+        )
+
+        if (!createdUser) {
+            return res.status(500).json({
+                success: false,
+                message: "user could not be created",
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "User created successfully",
+            user: createdUser
+        })
 
     } catch (error) {
         return res.status(500).json({
             error: error.message,
             success: false,
             message: "Something went wrong while registering user",
+        })
+    }
+}
+
+// Function to Edit a user
+const editUser = async (req, res) => {
+    const { profileImage, userName, phone, height, weight, allergies, chronicConditions, address } = req.body;
+
+    try {
+        const user = req.user;
+
+        const updateUser = await UserModel.findOneAndUpdate({ _id: user._id }, {
+            profileImage,
+            userName,
+            phone,
+            height,
+            weight,
+            allergies,
+            chronicConditions,
+            address,
+        })
+
+        const updatedUser = await UserModel.findById(updateUser.id).select(
+            "-password "
+        )
+
+        return res.status(200).json({
+            success: true,
+            message: "User profile updated successfully",
+            user: updatedUser
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message,
+            success: false,
+            message: "Something went wrong while updating user",
         })
     }
 }
@@ -156,10 +177,10 @@ const logout = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             success: false,
-            error:error.message,
+            error: error.message,
             message: "user could not be logged out",
         })
     }
 }
 
-export {login, register, logout}
+export { login, register, logout, editUser }
