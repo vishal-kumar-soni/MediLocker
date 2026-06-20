@@ -26,7 +26,6 @@ const documentSchema = new mongoose.Schema(
 
         doc: {
             type: String,
-            required: true,
         },
 
     },

@@ -3,15 +3,7 @@ import { UserModel } from "../Models/user.model.js";
 
 const addDocument = async (req, res) => {
     try {
-        const {
-            userId,
-            name,
-            hospital,
-            doctor,
-            type,
-            size,
-            format,
-            doc,
+        const { userId, name, hospital, doctor, type, size, format, doc,
         } = req.body;
 
         const newDocument = await DocumentModel.create({
@@ -37,7 +29,7 @@ const addDocument = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Document created successfully",
-            bloodReport,
+            newDocument,
         });
     } catch (error) {
         res.status(500).json({
