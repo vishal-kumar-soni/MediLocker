@@ -1,25 +1,52 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Heart, Eye, EyeOff, Loader2, X} from 'lucide-react'
+import { Heart, Eye, EyeOff, Loader2, X } from 'lucide-react'
 import logo from '../assets/Logo.png'
+import axios from 'axios'
+import { UserContext } from '../Context/UserContext'
+
 
 function LoginPage() {
+
     const navigate = useNavigate()
-    const [form, setForm] = useState({ email: 'demo@medivault.in', password: 'demo123' })
+
+    const {token, setToken} = useContext(UserContext)
+    const [form, setForm] = useState({ email: '', password: '' })
     const [showPass, setShowPass] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const { email, password } = form;
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setLoading(true)
-        setError('')
+
         try {
-            await login(form)
-            navigate('/dashboard')
-        } catch {
-            setError( "Invalid credentials. Please try again.")
-        } finally {
+            setLoading(true)
+            setError('')
+
+            const response = await axios.post(
+                `http://localhost:5000/api/user/login`,
+                { email, password },
+                { withCredentials: true }
+            );
+
+
+            if (response.data.success) {
+
+                setToken(response.data.token);
+                alert("✅ " + response.data.message);
+                navigate('/')
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
+        finally{
             setLoading(false)
         }
     }
@@ -32,7 +59,7 @@ function LoginPage() {
                 <div className="text-center mb-8">
                     <Link to="/" className="inline-flex items-center gap-2.5 mb-8">
                         <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
-                           <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
+                            <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
                         </div>
                         <span className="font-logo text-xl  text-white">MediLocker</span>
                     </Link>
@@ -45,7 +72,7 @@ function LoginPage() {
                     {error && (
                         <div className="flex justify-between mb-5 px-4 py-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm">
                             {error}
-                            <X className='cursor-pointer' onClick={()=>setError('')}/>
+                            <X className='cursor-pointer' onClick={() => setError('')} />
                         </div>
                     )}
 
@@ -55,7 +82,8 @@ function LoginPage() {
                             <input
                                 type="email"
                                 value={form.email}
-                                onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
+                                name='email'
+                                onChange={handleChange}
                                 placeholder="you@example.com"
                                 className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
                                 required
@@ -67,8 +95,9 @@ function LoginPage() {
                             <div className="relative">
                                 <input
                                     type={showPass ? 'text' : 'password'}
+                                    name='password'
                                     value={form.password}
-                                    onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
+                                    onChange={handleChange}
                                     placeholder="Enter your password"
                                     className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 pr-11"
                                     required
@@ -101,7 +130,7 @@ function LoginPage() {
                 </div>
 
                 <p className="text-center text-xs text-white/20 mt-5">
-                    Demo credentials are pre-filled. Just click Sign In.
+                    Your Login credentials are safe & sucure
                 </p>
             </div>
         </div>
