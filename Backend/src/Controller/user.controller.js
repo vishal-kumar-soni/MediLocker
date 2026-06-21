@@ -137,11 +137,16 @@ const getMe = async (req, res) => {
         const user = req.user
 
         const thisUser = await UserModel.findById(user._id)
+            .populate("documents")
+            .populate("appointments")
+            .populate("medications")
+            .populate("bloodRecords")
+            .populate("organHealthRecords")
             .select("-password");
 
         return res.status(200).json({
             success: true,
-            user:thisUser,
+            user: thisUser,
         });
 
     } catch (error) {
@@ -206,4 +211,4 @@ const logout = async (req, res) => {
     }
 }
 
-export { login, register,getMe, logout, editUser }
+export { login, register, getMe, logout, editUser }

@@ -13,6 +13,9 @@ import axios from 'axios'
 function DashboardHome() {
 
     const [loggedInUser, setLoggedInUser] = useState({})
+    const [allDocument, setAllDocument] = useState([])
+    const [medications, setMedications] = useState([])
+
 
     useEffect(() => {
         async function checkLoggedIn() {
@@ -25,13 +28,13 @@ function DashboardHome() {
             if (response.data.success) {
                 const user = response.data.user;
                 setLoggedInUser(user);
+                setAllDocument(response.data.user.documents)
+                setMedications(response.data.user.medications)
             }
         }
 
         checkLoggedIn();
     }, []);
-
-
 
     const firstName = loggedInUser.userName
     const hour = new Date().getHours()
@@ -125,6 +128,7 @@ function DashboardHome() {
 
             {/* Recent docs + medications */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
                 {/* Recent Documents */}
                 <div className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5">
                     <div className="flex items-center justify-between mb-4">
@@ -132,16 +136,16 @@ function DashboardHome() {
                         <Link to="/dashboard/documents" className="text-cyan-400 text-xs hover:text-cyan-300">View all</Link>
                     </div>
                     <div className="space-y-2 ">
-                        {AllDocument.filter(item => item.id <= 4).map(doc => (
-                            <div key={doc.id} className=" bg-white/3 border border-white/5 hover:border-white/30 transition-colors flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 mb-4  cursor-pointer group">
+                        {allDocument.map(document => (
+                            <div key={document._id} className=" bg-white/3 border border-white/5 hover:border-white/30 transition-colors flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 mb-4  cursor-pointer group">
                                 <div className="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
                                     <FileText className="w-4 h-4 text-cyan-400" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm text-white truncate">{doc.name}</p>
-                                    <p className="text-xs text-white/30">{doc.date} · {doc.size}</p>
+                                    <p className="text-sm text-white truncate">{document.name}</p>
+                                    <p className="text-xs text-white/30">{document.createdAt.split("T")[0]} · {document.size}</p>
                                 </div>
-                                <span className="p-2 rounded-xl bg-white/5 text-white/40 text-xs shrink-0">{doc.format}</span>
+                                <span className="p-2 rounded-xl bg-white/5 text-white/40 text-xs shrink-0">{document.format}</span>
                             </div>
                         ))}
                     </div>
@@ -154,14 +158,15 @@ function DashboardHome() {
                         <Link to="/dashboard/medications" className="text-cyan-400 text-xs hover:text-cyan-300">View all</Link>
                     </div>
                     <div className="space-y-2">
-                        {Medications.filter(a => a.id <= 4).map(med => (
+                        {/* {medications.filter(a => a.id <= 4).map(med => ( */}
+                        {medications.map(med => (
                             <div key={med.id} className=" bg-white/3 border border-white/5 hover:border-white/30  mb-4 flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 transition-colors cursor-pointer">
                                 <div className="w-9 h-9 rounded-xl bg-violet-500/10 flex items-center justify-center shrink-0">
                                     <Pill className="w-4 h-4 text-violet-400" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm text-white font-medium">{med.name} <span className="text-white/40 font-normal">{med.dose}</span></p>
-                                    <p className="text-xs text-white/30">{med.frequency} · {med.time}</p>
+                                    <p className="text-sm text-white capitalize font-medium mb-1">{med.name} <span className="text-white/90 font-normal">. {med.dose}</span></p>
+                                    <p className="text-xs text-white/50">For - {med.PrescribedFor} · {med.time}</p>
                                 </div>
                                 <span className="p-2 rounded-xl bg-white/5 text-white/40 text-xs shrink-0">Active</span>
                             </div>
