@@ -1,33 +1,65 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Heart, Eye, EyeOff, Loader2 } from 'lucide-react'
 import logo from '../assets/Logo.png'
+import axios from 'axios'
+import { UserContext } from '../Context/UserContext'
+import { } from 'react'
+
+
 
 const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
 
 function RegisterPage() {
 
   const navigate = useNavigate()
+  const { token, setToken } = useContext(UserContext)
+
   const [step, setStep] = useState(1)
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
-    name: '', email: '', password: '', phone: '', dob: '', gender: 'Male', bloodGroup: 'B+',
+    userName: '', email: '', password: '', phone: '', dob: '', gender: 'Male', bloodGroup: 'B+',
   })
 
   const update = (k, v) => setForm(p => ({ ...p, [k]: v }))
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  }
 
   const handleNext = (e) => {
     e.preventDefault()
     setStep(2)
   }
 
+  const { userName, email, password, dob, phone, gender, bloodGroup } = form
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
     setLoading(true)
+    e.preventDefault()
+
     try {
-      navigate('/dashboard')
-    } finally {
+
+      const response = await axios.post(
+        `http://localhost:5000/api/user/signup`,
+        { userName, email, password, dob, phone, gender, bloodGroup },
+        { withCredentials: true }
+      );
+
+
+      if (response.data.success) {
+
+        setToken(response.data.token);
+        alert("✅ " + response.data.message);
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error.response?.data?.message || error.message);
+    }
+    finally {
       setLoading(false)
     }
   }
@@ -47,7 +79,7 @@ function RegisterPage() {
           <h1 className="font-separated text-2xl font-bold text-white mb-2">Create your account</h1>
           <p className="text-white/40 text-sm">Step {step} of 2 — {step === 1 ? 'Account Info' : 'Health Profile'}</p>
         </div>
- 
+
         <div className="flex gap-2 mb-6">
           <div className="flex-1 h-1 rounded-full bg-cyan-500" />
           <div className={`flex-1 h-1 rounded-full transition-all ${step === 2 ? 'bg-cyan-500' : 'bg-white/10'}`} />
@@ -63,10 +95,11 @@ function RegisterPage() {
                 <label className="block text-sm text-white/60 mb-2 font-medium">Full Name</label>
                 <input
                   type="text"
-                  value={form.name}
-                  onChange={e => update('name', e.target.value)} placeholder="Arjun Sharma"
+                  value={form.userName}
+                  name='userName'
+                  onChange={handleChange} placeholder="Arjun Sharma"
                   className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
-                   required
+                  required
                 />
               </div>
               <div>
@@ -74,9 +107,10 @@ function RegisterPage() {
                 <input
                   type="email"
                   value={form.email}
-                  onChange={e => update('email', e.target.value)} placeholder="you@example.com"
+                  name='email'
+                  onChange={handleChange} placeholder="you@example.com"
                   className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
-                   required
+                  required
                 />
               </div>
               <div>
@@ -84,7 +118,8 @@ function RegisterPage() {
                 <input
                   type="tel"
                   value={form.phone}
-                  onChange={e => update('phone', e.target.value)} placeholder="+91 98765 43210"
+                  name='phone'
+                  onChange={handleChange} placeholder="+91 98765 43210"
                   className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
                   required
                 />
@@ -95,10 +130,11 @@ function RegisterPage() {
                   <input
                     type={showPass ? 'text' : 'password'}
                     value={form.password}
-                    onChange={e => update('password', e.target.value)}
+                    name='password'
+                    onChange={handleChange}
                     placeholder="Create a strong password"
                     className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 pr-11"
-                    required 
+                    required
                     minLength={6}
                   />
                   <button
@@ -120,7 +156,8 @@ function RegisterPage() {
                 <input
                   type="date"
                   value={form.dob}
-                  onChange={e => update('dob', e.target.value)} className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
+                  name='dob'
+                  onChange={handleChange} className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
                   required
                 />
               </div>
