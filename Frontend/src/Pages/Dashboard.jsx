@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Outlet, NavLink, useNavigate, Link } from 'react-router-dom'
 import logo from '../assets/Logo.png'
 import {
@@ -6,6 +6,8 @@ import {
     Pill, Share2, LogOut, Menu, X, Bell, ChevronRight
 } from 'lucide-react'
 import clsx from 'clsx'
+import axios from 'axios'
+import profileImage from '../Components/assets/profile.jpg'
 
 
 const navItems = [
@@ -21,13 +23,42 @@ const navItems = [
 function Dashboard() {
     const navigate = useNavigate()
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const [loggedInUser, setLoggedInUser] = useState({})
 
-    const handleLogout = () => {
-        // logout()
-        navigate('/')
+    useEffect(() => {
+        async function checkLoggedIn() {
+            const response = await axios.get(
+                'http://localhost:5000/api/user/getme',
+                {
+                    withCredentials: true
+                })
+
+            if (response.data.success) {
+                const user = response.data.user;
+                setLoggedInUser(user);
+            }
+        }
+
+        checkLoggedIn();
+    }, []);
+
+
+    const handleLogout = async () => {
+        try {
+            await axios.post(
+                "http://localhost:5000/api/user/logout",
+                {},
+                {
+                    withCredentials: true,
+                }
+            );
+
+            window.location.reload();
+            navigate('/')
+        } catch (error) {
+            console.log(error);
+        }
     }
-
-    const initials = 'AS'
 
     return (
         <div className="min-h-screen bg-[#0d1117] flex">
@@ -70,7 +101,9 @@ function Dashboard() {
                 <div className="p-3 border-t border-white/5">
                     <div className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-3.5 flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full  bg-cyan-500  flex items-center justify-center text-sm font-bold text-white shrink-0">
-                            {initials}
+                            <Link to='/dashboard/profile'>
+                                <img src={loggedInUser.profileImage ? loggedInUser.profileImage : profileImage} alt="profile Image" className='rounded-full' />
+                            </Link>
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-white truncate">{"Arjun"}</p>
@@ -95,8 +128,10 @@ function Dashboard() {
                             <Bell className="w-4 h-4" />
                             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-cyan-500 rounded-full" />
                         </button>
-                        <div className="w-9 h-9 rounded-full  bg-cyan-500  flex items-center justify-center text-sm font-bold text-white">
-                            <Link to='/dashboard/profile'>{initials}</Link>
+                        <div className="w-9 h-9 rounded-full  bg-white  flex items-center justify-center text-sm font-bold text-white">
+                            <Link to='/dashboard/profile'>
+                                <img src={loggedInUser.profileImage ? loggedInUser.profileImage : profileImage} alt="profile Image" className='rounded-full' />
+                            </Link>
                         </div>
                     </div>
                 </header>
