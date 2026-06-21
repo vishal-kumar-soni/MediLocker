@@ -41,7 +41,7 @@ const login = async (req, res) => {
         )
 
         res.cookie('token', token, {
-            httpOnly: false,
+            httpOnly: true,
             secure: false,
             sameSite: "lax",
             path: '/',
@@ -130,6 +130,28 @@ const register = async (req, res) => {
     }
 }
 
+// Function to get user
+const getMe = async (req, res) => {
+    try {
+
+        const user = req.user
+
+        const thisUser = await UserModel.findById(user._id)
+            .select("-password");
+
+        return res.status(200).json({
+            success: true,
+            user:thisUser,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
 // Function to Edit a user
 const editUser = async (req, res) => {
     const { profileImage, userName, phone, height, weight, allergies, chronicConditions, address } = req.body;
@@ -184,4 +206,4 @@ const logout = async (req, res) => {
     }
 }
 
-export { login, register, logout, editUser }
+export { login, register,getMe, logout, editUser }

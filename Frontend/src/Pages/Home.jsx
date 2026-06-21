@@ -23,6 +23,8 @@ const stats = [
     { icon: Lock, value: "0", label: "Data Breaches" },
 ];
 
+
+
 function Home() {
 
     return (
