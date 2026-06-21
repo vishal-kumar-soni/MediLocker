@@ -2,8 +2,6 @@ import { FileText, Calendar, Pill, Activity, TrendingUp, Clock, ChevronRight, Sh
 import { Link } from 'react-router-dom'
 import appointments from './assets/Appointments'
 import features from './assets/features'
-import Medications from './assets/Medications'
-import AllDocument from './assets/AllDocument'
 import statCards from './assets/statCards'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -15,6 +13,7 @@ function DashboardHome() {
     const [loggedInUser, setLoggedInUser] = useState({})
     const [allDocument, setAllDocument] = useState([])
     const [medications, setMedications] = useState([])
+    const [appointments, setAppointments] = useState([])
 
 
     useEffect(() => {
@@ -30,6 +29,7 @@ function DashboardHome() {
                 setLoggedInUser(user);
                 setAllDocument(response.data.user.documents)
                 setMedications(response.data.user.medications)
+                setAppointments(response.data.user.appointments)
             }
         }
 
@@ -160,7 +160,7 @@ function DashboardHome() {
                     <div className="space-y-2">
                         {/* {medications.filter(a => a.id <= 4).map(med => ( */}
                         {medications.map(med => (
-                            <div key={med.id} className=" bg-white/3 border border-white/5 hover:border-white/30  mb-4 flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 transition-colors cursor-pointer">
+                            <div key={med._id} className=" bg-white/3 border border-white/5 hover:border-white/30  mb-4 flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 transition-colors cursor-pointer">
                                 <div className="w-9 h-9 rounded-xl bg-violet-500/10 flex items-center justify-center shrink-0">
                                     <Pill className="w-4 h-4 text-violet-400" />
                                 </div>
@@ -183,8 +183,8 @@ function DashboardHome() {
                         <Link to="/dashboard/appointments" className="text-cyan-400 text-xs hover:text-cyan-300">View all</Link>
                     </div>
                     <div className="space-y-3">
-                        {appointments.filter(a => a.status === 'upcoming').map(apt => (
-                            <div key={apt.id} className="p-3.5 rounded-xl bg-white/3 border border-white/5 hover:border-white/10 transition-colors">
+                        {appointments.map(apt => (
+                            <div key={apt._id} className="p-3.5 rounded-xl bg-white/3 border border-white/5 hover:border-white/10 transition-colors">
                                 <div className="flex items-start gap-3">
                                     <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center shrink-0">
                                         <Calendar className="w-4 h-4 text-amber-500" />
@@ -194,7 +194,7 @@ function DashboardHome() {
                                         <p className="text-xs text-white/40">{apt.specialty}</p>
                                         <div className="flex items-center gap-1 mt-1.5 text-xs text-white/30">
                                             <Clock className="w-3 h-3" />
-                                            {apt.date} · {apt.time}
+                                            {apt.date.split('T')[0]} · {apt.time}
                                         </div>
                                     </div>
                                 </div>
