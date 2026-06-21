@@ -5,13 +5,38 @@ import features from './assets/features'
 import Medications from './assets/Medications'
 import AllDocument from './assets/AllDocument'
 import statCards from './assets/statCards'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
 
 
 function DashboardHome() {
 
-    const firstName = "Arjun"
+    const [loggedInUser, setLoggedInUser] = useState({})
+
+    useEffect(() => {
+        async function checkLoggedIn() {
+            const response = await axios.get(
+                'http://localhost:5000/api/user/getme',
+                {
+                    withCredentials: true
+                })
+
+            if (response.data.success) {
+                const user = response.data.user;
+                setLoggedInUser(user);
+            }
+        }
+
+        checkLoggedIn();
+    }, []);
+
+
+
+    const firstName = loggedInUser.userName
     const hour = new Date().getHours()
     const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+
 
     return (
         <div className="space-y-7">
@@ -49,7 +74,7 @@ function DashboardHome() {
                             <div
                                 className="absolute inset-0 rounded-full border-4 border-cyan-500"
                             />
-                            <span className="font-display text-xl font-bold text-cyan-400">B+</span>
+                            <span className="font-display text-xl font-bold text-cyan-400">{loggedInUser.bloodGroup}</span>
                         </div>
                         <p className="text-white/30 text-xs mt-2">Blood Group</p>
                     </div>
@@ -63,16 +88,39 @@ function DashboardHome() {
 
             {/* Stat cards */}
             <div className="grid  grid-cols-2 lg:grid-cols-4 gap-4">
-                {statCards.map(card => (
-                    <Link key={card.label} to={card.link} className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5  hover:border-white/30 transition-all duration-300  cursor-default">
-                        <div className={`${card.bg}  w-10 h-10 rounded-xl flex items-center justify-center mb-3`}>
-                            <card.icon className={`${card.color} text-cyan-500 rounded-2xl p-0 `} />
-                        </div>
-                        <div className="font-display text-2xl font-bold text-white mb-0.5">{card.value}</div>
-                        <div className="text-xs text-white/40">{card.label}</div>
-                        <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/50 mt-2 transition-colors" />
-                    </Link>
-                ))}
+                <Link to="/dashboard/documents" className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5  hover:border-white/30 transition-all duration-300  cursor-default">
+                    <div className={`bg-pink-500/10 w-10 h-10 rounded-xl flex items-center justify-center mb-3`}>
+                        <ChevronRight className={`text-pink-500 rounded-2xl p-0 `} />
+                    </div>
+                    <div className="font-display text-2xl font-bold text-white mb-0.5">{loggedInUser.documents?.length}</div>
+                    <div className="text-xs text-white/40 capitalize">documents</div>
+                    <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/50 mt-2 transition-colors" />
+                </Link>
+                <Link to="/dashboard/medications" className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5  hover:border-white/30 transition-all duration-300  cursor-default">
+                    <div className={`bg-violet-500/10 w-10 h-10 rounded-xl flex items-center justify-center mb-3`}>
+                        <Pill className={`text-violet-500 rounded-2xl p-0 `} />
+                    </div>
+                    <div className="font-display text-2xl font-bold text-white mb-0.5">{loggedInUser.medications?.length}</div>
+                    <div className="text-xs text-white/40 capitalize">medications</div>
+                    <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/50 mt-2 transition-colors" />
+                </Link>
+                <Link to="/dashboard/appointments" className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5  hover:border-white/30 transition-all duration-300  cursor-default">
+                    <div className={`bg-amber-500/10 w-10 h-10 rounded-xl flex items-center justify-center mb-3`}>
+                        <Calendar className={`text-yellow-600 rounded-2xl p-0 `} />
+                    </div>
+                    <div className="font-display text-2xl font-bold text-white mb-0.5">{loggedInUser.appointments?.length}</div>
+                    <div className="text-xs text-white/40 capitalize">appointments</div>
+                    <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/50 mt-2 transition-colors" />
+                </Link>
+                <Link to="/dashboard/organs" className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5  hover:border-white/30 transition-all duration-300  cursor-default">
+                    <div className={`bg-cyan-500/10 w-10 h-10 rounded-xl flex items-center justify-center mb-3`}>
+                        <Activity className={`text-cyan-400 rounded-2xl p-0 `} />
+                    </div>
+                    <div className="font-display text-2xl font-bold text-white mb-0.5">82%</div>
+                    <div className="text-xs text-white/40 capitalize">Health Score</div>
+                    <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/50 mt-2 transition-colors" />
+                </Link>
+
             </div>
 
             {/* Recent docs + medications */}
