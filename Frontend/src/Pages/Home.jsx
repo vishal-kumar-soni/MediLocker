@@ -82,7 +82,7 @@ function Home() {
                         <Link to="/login"
                             onClick={handleLogOut}
 
-                            className=" bg-red-500 hover:bg-red-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Logout
+                            className=" bg-red-600 hover:bg-red-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Logout
                         </Link>
                     ) : (
                         <Link to="/login"

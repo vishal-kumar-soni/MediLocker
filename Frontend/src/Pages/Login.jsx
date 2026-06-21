@@ -40,7 +40,7 @@ function LoginPage() {
 
                 setToken(response.data.token);
                 alert("✅ " + response.data.message);
-                navigate('/')
+                navigate('/dashboard')
             }
         } catch (error) {
             console.log(error);
