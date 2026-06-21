@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/Logo.png'
 import {
@@ -7,6 +7,7 @@ import {
 import Footer from '../Components/Footer.jsx'
 import features from '../Components/assets/features.js'
 import heroPhoto from '../Components/assets/hero-2.png'
+import axios from 'axios'
 
 
 const trustPoints = [
@@ -14,7 +15,6 @@ const trustPoints = [
     { icon: Globe2, label: "Access\nAnywhere" },
     { icon: FileText, label: "Paperless\nHealthcare" },
 ];
-
 
 const stats = [
     { icon: Users, value: "10K+", label: "Happy Patients" },
@@ -24,8 +24,44 @@ const stats = [
 ];
 
 
-
 function Home() {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        async function checkLoggedIn() {
+            const response = await axios.get(
+                'http://localhost:5000/api/user/getme',
+                {
+                    withCredentials: true
+                })
+
+            if (response.data.success) {
+                setIsLoggedIn(true);
+            } else {
+                setIsLoggedIn(false);
+            }
+        }
+
+        checkLoggedIn();
+
+    }, []);
+
+    const handleLogOut = async () => {
+        try {
+            await axios.post(
+                "http://localhost:5000/api/user/logout",
+                {},
+                {
+                    withCredentials: true,
+                }
+            );
+
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-[#0d1117] overflow-x-hidden">
@@ -41,7 +77,21 @@ function Home() {
                     </span>
                 </div>
                 <div className="flex items-center gap-3">
-                    <Link to="/login" className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Sign in</Link>
+                    {isLoggedIn ? (
+
+                        <Link to="/login"
+                            onClick={handleLogOut}
+
+                            className=" bg-red-500 hover:bg-red-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Logout
+                        </Link>
+                    ) : (
+                        <Link to="/login"
+                            onClick={window.scrollTo(0, 0)}
+
+                            className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Sign in
+                        </Link>
+                    )}
+
 
                     <Link to="/body_organs" className=" bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-95; text-sm sm:px-5 sm:py-2.5">Human Organs</Link>
                 </div>
