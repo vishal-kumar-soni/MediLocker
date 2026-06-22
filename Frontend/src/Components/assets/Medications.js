@@ -1,6 +1,6 @@
 
 
-const Medications = [
+const mockMedications = [
     {
         id: 1,
         name: "Amlodipine ",
@@ -39,4 +39,4 @@ const Medications = [
 
 ]
 
-export default Medications
+export default mockMedications

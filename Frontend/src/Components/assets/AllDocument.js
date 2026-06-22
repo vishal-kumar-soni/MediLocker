@@ -1,5 +1,5 @@
 
-const AllDocuments = [
+const MockDocuments = [
     {
         id: 1,
         name: "Blood Test Report — Nov 2024",
@@ -68,4 +68,4 @@ const AllDocuments = [
     },
 ];
 
-export default AllDocuments
+export default MockDocuments

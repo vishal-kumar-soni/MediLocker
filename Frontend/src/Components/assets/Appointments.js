@@ -1,5 +1,5 @@
 
-const appointments = [
+const mockAppointments = [
     {
         id: 1,
         status: "upcoming",
@@ -43,7 +43,7 @@ const appointments = [
 ]
 
 let noOfUpcomingAppointments = 0;
-appointments.filter(item => {
+mockAppointments.filter(item => {
     if (item.status === 'upcoming') {
         noOfUpcomingAppointments++;
     }
@@ -51,4 +51,4 @@ appointments.filter(item => {
 
 
 export { noOfUpcomingAppointments }
-export default appointments;
+export default mockAppointments;
