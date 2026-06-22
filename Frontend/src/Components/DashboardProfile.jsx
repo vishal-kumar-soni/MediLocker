@@ -1,24 +1,47 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { User, Phone, Plus, MapPin, UserRoundPen, Calendar, Droplets, Edit3, Save, X, AlertTriangle, Heart } from 'lucide-react'
 import upload from './assets/profile.jpg'
+import axios from 'axios'
 
 
 function DashboardProfile() {
+
+    const [loggedInUser, setLoggedInUser] = useState({})
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     const user = {
         userName: "Arjun Sharma",
         email: "arjun@gmail.com",
         bloodGroup: "B+",
         gender: "Male",
-        height: "172cm",
-        weight: "72kg",
-        phone: "+91 9876543210",
+        height: "172",
+        weight: "72",
+        phone: "9876543210",
         dob: "29-02-1998",
         address: "Ratu Road, Ranchi",
         allergies: ["Penicillin", "dust"],
-        conditions: ["Mild Hypertension"],
+        chronicConditions: ["Mild Hypertension", "Hypertension"],
         profileImage: ''
     }
+
+    useEffect(() => {
+        async function checkLoggedIn() {
+            const response = await axios.get(
+                'http://localhost:5000/api/user/getme',
+                {
+                    withCredentials: true
+                })
+
+            if (response.data.success) {
+                const user = response.data.user;
+                setLoggedInUser(user);
+                setIsLoggedIn(true)
+            }
+        }
+
+        checkLoggedIn();
+    }, []);
+
 
     const fields = [
         { label: 'Full Name', key: 'userName', icon: User },
@@ -27,6 +50,20 @@ function DashboardProfile() {
         { label: 'Date of Birth', key: 'dob', icon: Calendar, type: 'date' },
         { label: 'Address', key: 'address', icon: MapPin },
         { label: 'Emergency Contact', key: 'emergencyContact', icon: Phone },
+    ]
+
+    const mockUserDetails = [
+        { label: 'Height (cm)', value: user?.height, color: 'text-cyan-500' },
+        { label: 'Weight (kg)', value: user?.weight, color: 'text-violet-500' },
+        { label: 'Blood Group', value: user?.bloodGroup, color: 'text-rose-500' },
+        { label: 'Gender', value: user?.gender, color: 'text-amber-500' },
+    ]
+
+    const userDetails = [
+        { label: 'Height (cm)', value: loggedInUser?.height, color: 'text-cyan-500' },
+        { label: 'Weight (kg)', value: loggedInUser?.weight, color: 'text-violet-500' },
+        { label: 'Blood Group', value: loggedInUser?.bloodGroup, color: 'text-rose-500' },
+        { label: 'Gender', value: loggedInUser?.gender, color: 'text-amber-500' },
     ]
 
     const [showForm, setShowForm] = useState(false);
@@ -63,7 +100,7 @@ function DashboardProfile() {
     }
 
 
-    const initials = user?.userName?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
+    const initials = isLoggedIn ? loggedInUser.userName?.split(' ').map(n => n[0]).join('').slice(0, 3).toUpperCase() : 'AS'
 
     return (
         <div className="space-y-6 max-w-5xl ">
@@ -250,17 +287,17 @@ function DashboardProfile() {
                     {initials}
                 </div>
                 <div>
-                    <h2 className="font-ss text-xl  text-white">{user?.name}</h2>
-                    <p className="text-white/40 text-sm mt-1">{user?.email}</p>
+                    <h2 className="font-ss text-xl  text-white">{isLoggedIn ? loggedInUser.userName : user.userName}</h2>
+                    <p className="text-white/40 text-sm mt-1">{isLoggedIn ? loggedInUser?.email : user.email}</p>
                     <div className="flex flex-wrap items-center gap-3 mt-3">
                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                            <Droplets className="w-3 h-3" /> {user?.bloodGroup}
+                            <Droplets className="w-3 h-3" /> {isLoggedIn ? loggedInUser?.bloodGroup : user.bloodGroup}
                         </span>
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{user?.gender}</span>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{isLoggedIn ? loggedInUser?.gender : user.gender}</span>
 
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{user?.height}</span>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{isLoggedIn ? loggedInUser?.height : user.height} cm</span>
 
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{user?.weight}</span>
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{isLoggedIn ? loggedInUser?.weight : user.weight} kg</span>
                     </div>
                 </div>
             </div>
@@ -275,7 +312,7 @@ function DashboardProfile() {
                                 <label className="block text-xs text-white/40 mb-1.5 font-medium uppercase tracking-wide">{f.label}</label>
                                 <div className="flex items-center gap-2.5 text-sm text-white">
                                     <f.icon className="w-4 h-4 text-white/30 shrink-0" />
-                                    <span>{user?.[f.key] || '—'}</span>
+                                    <span>{isLoggedIn ? loggedInUser?.[f.key] || '—' : user?.[f.key] || '—'}</span>
                                 </div>
                             </div>
                         ))}
@@ -288,17 +325,28 @@ function DashboardProfile() {
                     <div className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5">
                         <h2 className="text-xl font-semibold text-white mb-4">Health Vitals</h2>
                         <div className="grid grid-cols-2 gap-3">
-                            {[
-                                { label: 'Height', value: user?.height, color: 'text-cyan-500' },
-                                { label: 'Weight', value: user?.weight, color: 'text-violet-500' },
-                                { label: 'Blood Group', value: user?.bloodGroup, color: 'text-rose-500' },
-                                { label: 'Gender', value: user?.gender, color: 'text-amber-500' },
-                            ].map(v => (
-                                <div key={v.label} className="bg-white/3 rounded-xl p-3.5 border border-white/5">
-                                    <p className="text-xs text-white/40 mb-1">{v.label}</p>
-                                    <p className={` font-bold text-lg ${v.color}`}>{v.value}</p>
-                                </div>
-                            ))}
+                            {
+                                (loggedInUser.userName) ? (
+
+                                    userDetails.map(v => (
+                                        <div key={v.label} className="bg-white/3 rounded-xl p-3.5 border border-white/5">
+                                            <p className="text-xs text-white/40 mb-1">{v.label}</p>
+                                            <p className={` font-bold text-lg ${v.color}`}>{v.value}</p>
+                                        </div>
+                                    ))
+
+                                ) : (
+
+                                    mockUserDetails.map(v => (
+                                        <div key={v.label} className="bg-white/3 rounded-xl p-3.5 border border-white/5">
+                                            <p className="text-xs text-white/40 mb-1">{v.label}</p>
+                                            <p className={` font-bold text-lg ${v.color}`}>{v.value}</p>
+                                        </div>
+                                    ))
+
+                                )
+                            }
+
                         </div>
                     </div>
 
@@ -309,29 +357,50 @@ function DashboardProfile() {
                             <h2 className="text-xl font-semibold text-white">Allergies</h2>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                            {user?.allergies?.map(a => (
-                                <span key={a} className="inline-flex items-center gap-1.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-500 border border-amber-500/20 py-1 px-3 ">
-                                    {a}
-                                </span>
-                            ))}
+                            {
+                                isLoggedIn ? (
+                                    loggedInUser?.allergies?.map(a => (
+                                        <span key={a} className="inline-flex items-center gap-1.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-500 border border-amber-500/20 py-1 px-3 ">
+                                            {a}
+                                        </span>
+                                    ))
+                                ) : (
+                                    user?.allergies?.map(a => (
+                                        <span key={a} className="inline-flex items-center gap-1.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-500 border border-amber-500/20 py-1 px-3 ">
+                                            {a}
+                                        </span>
+                                    ))
+                                )
+                            }
                         </div>
                     </div>
 
-                    {/* Conditions */}
+                    {/* Chronic Conditions */}
                     <div className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5">
                         <div className="flex items-center gap-2 mb-4">
                             <Heart className="w-4 h-4 text-rose-500" />
                             <h2 className="text-xl font-semibold text-white">Chronic Conditions</h2>
                         </div>
                         <div className="flex flex-wrap gap-2">
-                            {user?.conditions?.map(c => (
-                                <span key={c} className="inline-flex items-center gap-1.5 rounded-full text-xs font-medium bg-rose-500/10 text-rose-500 border border-rose-500/20 py-1 px-3">
-                                    {c}
-                                </span>
-                            ))}
 
+                            {
+                                isLoggedIn ? (
+                                    loggedInUser?.chronicConditions?.map(c => (
+                                        <span key={c} className="inline-flex items-center gap-1.5 rounded-full text-xs font-medium bg-rose-500/10 text-rose-500 border border-rose-500/20 py-1 px-3">
+                                            {c}
+                                        </span>
+                                    ))
+                                ) : (
+                                    user?.chronicConditions?.map(c => (
+                                        <span key={c} className="inline-flex items-center gap-1.5 rounded-full text-xs font-medium bg-rose-500/10 text-rose-500 border border-rose-500/20 py-1 px-3">
+                                            {c}
+                                        </span>
+                                    ))
+                                )
+                            }
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>

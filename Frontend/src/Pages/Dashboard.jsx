@@ -105,7 +105,7 @@ function Dashboard() {
                             </Link>
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white truncate">  {loggedInUser.userName ? loggedInUser.userName : "Arjun"}</p>
+                            <p className="text-sm font-medium text-white truncate">  {loggedInUser.userName ? loggedInUser.userName.split(' ')[0] : "Arjun"}</p>
                             <p className="text-xs text-white/40 truncate">{"B+"} · {"Male"}</p>
                         </div>
                         <button onClick={handleLogout} title="Logout" className="text-white/30 hover:text-rose-400 transition-colors">
