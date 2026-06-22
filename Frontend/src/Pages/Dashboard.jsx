@@ -53,8 +53,7 @@ function Dashboard() {
                 }
             );
 
-            window.location.reload();
-            navigate('/')
+            navigate('/login')
         } catch (error) {
             console.log(error);
         }
@@ -74,7 +73,7 @@ function Dashboard() {
                         <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
                             <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
                         </div>
-                        <span className="font-logo text-xl font-bold text-white">MediLocker</span>
+                        <Link to='/' className="font-logo text-xl font-bold text-white">MediLocker</Link>
                     </div>
                     <button className="lg:hidden text-white/40 hover:text-white" onClick={() => setSidebarOpen(false)}>
                         <X className="w-5 h-5" />

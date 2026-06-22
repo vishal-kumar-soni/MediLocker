@@ -8,6 +8,7 @@ import Footer from '../Components/Footer.jsx'
 import features from '../Components/assets/features.js'
 import heroPhoto from '../Components/assets/hero-2.png'
 import axios from 'axios'
+import profileImage from '../Components/assets/profile.jpg'
 
 
 const trustPoints = [
@@ -27,6 +28,7 @@ const stats = [
 function Home() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loggedInUser, setLoggedInUser] = useState({})
 
     useEffect(() => {
         async function checkLoggedIn() {
@@ -37,6 +39,8 @@ function Home() {
                 })
 
             if (response.data.success) {
+                const user = response.data.user;
+                setLoggedInUser(user);
                 setIsLoggedIn(true);
             } else {
                 setIsLoggedIn(false);
@@ -82,7 +86,7 @@ function Home() {
                         <Link to="/login"
                             onClick={handleLogOut}
 
-                            className=" bg-red-600 hover:bg-red-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Logout
+                            className=" bg-red-600 hover:bg-red-500 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-red-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Logout
                         </Link>
                     ) : (
                         <Link to="/login"
@@ -92,8 +96,13 @@ function Home() {
                         </Link>
                     )}
 
-
                     <Link to="/body_organs" className=" bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-95; text-sm sm:px-5 sm:py-2.5">Human Organs</Link>
+
+                    <div className="w-9 h-9 rounded-full  bg-white  flex items-center justify-center text-sm font-bold text-white">
+                        <Link to={isLoggedIn?'/dashboard/profile':'/login'}>
+                            <img src={loggedInUser.profileImage ? loggedInUser.profileImage : profileImage} alt="profile Image" className='rounded-full' />
+                        </Link>
+                    </div>
                 </div>
             </nav>
 
@@ -103,7 +112,7 @@ function Home() {
                 <div className="pointer-events-none absolute -top-40 left-1/3 h-[520px] w-[520px] rounded-full bg-cyan-500/10 blur-[120px]" />
                 <div className="pointer-events-none absolute top-40 right-0 h-[420px] w-[420px] rounded-full bg-indigo-500/10 blur-[120px]" />
 
-                <section className="relative mx-auto max-w-7xl px-6 pt-12 pb-16 lg:px-10 lg:pt-16">
+                <section className="relative mx-auto max-w-7xl px-6 pt-8 pb-16 lg:px-10 lg:pt-12">
                     <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-2 lg:gap-10">
 
                         {/* Left column */}
@@ -157,7 +166,7 @@ function Home() {
                                     <img
                                         src={heroPhoto}
                                         alt="Patients reviewing medical records with doctors on MediLocker"
-                                        className="h-[300px] w-full object-cover sm:h-[360px] lg:h-[420px]"
+                                        className="h-[360px] w-full object-cover sm:h-[320px] lg:h-[380px]"
                                     />
                                 </div>
 

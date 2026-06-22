@@ -136,18 +136,24 @@ function DashboardHome() {
                         <Link to="/dashboard/documents" className="text-cyan-400 text-xs hover:text-cyan-300">View all</Link>
                     </div>
                     <div className="space-y-2 ">
-                        {allDocument.map(document => (
-                            <div key={document._id} className=" bg-white/3 border border-white/5 hover:border-white/30 transition-colors flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 mb-4  cursor-pointer group">
-                                <div className="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
-                                    <FileText className="w-4 h-4 text-cyan-400" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-sm text-white truncate">{document.name}</p>
-                                    <p className="text-xs text-white/30">{document.createdAt.split("T")[0]} · {document.size}</p>
-                                </div>
-                                <span className="p-2 rounded-xl bg-white/5 text-white/40 text-xs shrink-0">{document.format}</span>
+                        {allDocument.length === 0 ? (
+                            <div className="text-white/50 text-center py-4">
+                                No any document found
                             </div>
-                        ))}
+                        ) : (
+                            allDocument.map(document => (
+                                <div key={document._id} className=" bg-white/3 border border-white/5 hover:border-white/30 transition-colors flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 mb-4  cursor-pointer group">
+                                    <div className="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
+                                        <FileText className="w-4 h-4 text-cyan-400" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm text-white truncate">{document.name}</p>
+                                        <p className="text-xs text-white/30">{document.createdAt.split("T")[0]} · {document.size}</p>
+                                    </div>
+                                    <span className="p-2 rounded-xl bg-white/5 text-white/40 text-xs shrink-0">{document.format}</span>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
 
@@ -158,19 +164,26 @@ function DashboardHome() {
                         <Link to="/dashboard/medications" className="text-cyan-400 text-xs hover:text-cyan-300">View all</Link>
                     </div>
                     <div className="space-y-2">
-                        {/* {medications.filter(a => a.id <= 4).map(med => ( */}
-                        {medications.map(med => (
-                            <div key={med._id} className=" bg-white/3 border border-white/5 hover:border-white/30  mb-4 flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 transition-colors cursor-pointer">
-                                <div className="w-9 h-9 rounded-xl bg-violet-500/10 flex items-center justify-center shrink-0">
-                                    <Pill className="w-4 h-4 text-violet-400" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-sm text-white capitalize font-medium mb-1">{med.name} <span className="text-white/90 font-normal">. {med.dose}</span></p>
-                                    <p className="text-xs text-white/50">For - {med.PrescribedFor} · {med.time}</p>
-                                </div>
-                                <span className="p-2 rounded-xl bg-white/5 text-white/40 text-xs shrink-0">Active</span>
+
+                        {medications.length === 0 ? (
+                            <div className="text-white/50 text-center py-4">
+                                No any medication found
                             </div>
-                        ))}
+                        ) : (
+                            // medications.filter(a => a.id <= 4).map(med => ( 
+                            medications.map(med => (
+                                <div key={med._id} className=" bg-white/3 border border-white/5 hover:border-white/30  mb-4 flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 transition-colors cursor-pointer">
+                                    <div className="w-9 h-9 rounded-xl bg-violet-500/10 flex items-center justify-center shrink-0">
+                                        <Pill className="w-4 h-4 text-violet-400" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm text-white capitalize font-medium mb-1">{med.name} <span className="text-white/90 font-normal">. {med.dose}</span></p>
+                                        <p className="text-xs text-white/50">For - {med.PrescribedFor} · {med.time}</p>
+                                    </div>
+                                    <span className="p-2 rounded-xl bg-white/5 text-white/40 text-xs shrink-0">Active</span>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
             </div>
@@ -183,23 +196,29 @@ function DashboardHome() {
                         <Link to="/dashboard/appointments" className="text-cyan-400 text-xs hover:text-cyan-300">View all</Link>
                     </div>
                     <div className="space-y-3">
-                        {appointments.map(apt => (
-                            <div key={apt._id} className="p-3.5 rounded-xl bg-white/3 border border-white/5 hover:border-white/10 transition-colors">
-                                <div className="flex items-start gap-3">
-                                    <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center shrink-0">
-                                        <Calendar className="w-4 h-4 text-amber-500" />
-                                    </div>
-                                    <div className="min-w-0">
-                                        <p className="text-sm font-medium text-white truncate">{apt.doctor}</p>
-                                        <p className="text-xs text-white/40">{apt.specialty}</p>
-                                        <div className="flex items-center gap-1 mt-1.5 text-xs text-white/30">
-                                            <Clock className="w-3 h-3" />
-                                            {apt.date.split('T')[0]} · {apt.time}
+                        {appointments.length === 0 ? (
+                            <div className="text-white/50 text-center py-4">
+                                No any appointment found
+                            </div>
+                        ) : (
+                            appointments.map(apt => (
+                                <div key={apt._id} className="p-3.5 rounded-xl bg-white/3 border border-white/5 hover:border-white/10 transition-colors">
+                                    <div className="flex items-start gap-3">
+                                        <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center shrink-0">
+                                            <Calendar className="w-4 h-4 text-amber-500" />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="text-sm font-medium text-white truncate">{apt.doctor}</p>
+                                            <p className="text-xs text-white/40">{apt.specialty}</p>
+                                            <div className="flex items-center gap-1 mt-1.5 text-xs text-white/30">
+                                                <Clock className="w-3 h-3" />
+                                                {apt.date.split('T')[0]} · {apt.time}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </div>
             </div>
