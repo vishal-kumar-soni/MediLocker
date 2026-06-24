@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { User, Phone, Plus, MapPin, UserRoundPen, Calendar, Droplets, Edit3, Save, X, AlertTriangle, Heart } from 'lucide-react'
 import upload from './assets/profile.jpg'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 
 function DashboardProfile() {
 
-    const [loggedInUser, setLoggedInUser] = useState({})
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const navigate = useNavigate()
 
     const user = {
         userName: "Arjun Sharma",
@@ -24,6 +24,13 @@ function DashboardProfile() {
         profileImage: ''
     }
 
+    const [loggedInUser, setLoggedInUser] = useState({})
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [showForm, setShowForm] = useState(false);
+    const [image, setImage] = useState(false);
+    const [form, setForm] = useState(user);
+
+
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
@@ -36,6 +43,7 @@ function DashboardProfile() {
                 const user = response.data.user;
                 setLoggedInUser(user);
                 setIsLoggedIn(true)
+                setForm(user)
             }
         }
 
@@ -66,10 +74,6 @@ function DashboardProfile() {
         { label: 'Gender', value: loggedInUser?.gender, color: 'text-amber-500' },
     ]
 
-    const [showForm, setShowForm] = useState(false);
-    const [image, setImage] = useState(false);
-    const [form, setForm] = useState(user)
-
     const handleUpload = (e) => {
         setImage(e.target.files[0]);
     };
@@ -91,14 +95,30 @@ function DashboardProfile() {
         });
     };
 
-    const setProfileHandler = (e) => {
+    const { profileImage, userName, phone, height, weight, allergies, chronicConditions, address } = form
+
+    const setProfileHandler = async (e) => {
         e.preventDefault()
 
-        setShowForm(false)
+        try {
 
-        console.log(form)
+            const response = await axios.post(
+                `http://localhost:5000/api/user/updateuser`,
+                { profileImage, userName, phone, height, weight, allergies, chronicConditions, address },
+                { withCredentials: true }
+            );
+
+
+            if (response.data.success) {
+                alert("✅ " + response.data.message);
+                setShowForm(false)
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
     }
-
 
     const initials = isLoggedIn ? loggedInUser.userName?.split(' ').map(n => n[0]).join('').slice(0, 3).toUpperCase() : 'AS'
 
@@ -178,10 +198,7 @@ function DashboardProfile() {
                                         className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
                                     />
                                 </div>
-
                             </div>
-
-
 
                             <div className="grid grid-cols-2 gap-4">
                                 {/* Height */}
@@ -195,7 +212,7 @@ function DashboardProfile() {
                                         value={form.height}
                                         onChange={handleChange}
                                         min="30"
-                                        max="300"
+                                        max="250"
                                         placeholder='172cm'
                                         required
                                         className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
@@ -213,7 +230,7 @@ function DashboardProfile() {
                                         value={form.weight}
                                         onChange={handleChange}
                                         min="1"
-                                        max="500"
+                                        max="200"
                                         placeholder='65kg'
                                         required
                                         className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
@@ -400,7 +417,7 @@ function DashboardProfile() {
                             }
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

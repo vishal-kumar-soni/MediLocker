@@ -306,7 +306,7 @@ function DashboardHome() {
                         <div className="space-y-2 ">
                             {MockDocuments.filter((i) => i.id <= 4).map((document) => (
                                 <div
-                                    key={document._id}
+                                    key={document.id}
                                     className=" bg-white/3 border border-white/5 hover:border-white/30 transition-colors flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 mb-4  cursor-pointer group"
                                 >
                                     <div className="w-9 h-9 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
@@ -347,7 +347,7 @@ function DashboardHome() {
                                     .filter((i) => i.id <= 4)
                                     .map((med) => (
                                         <div
-                                            key={med._id}
+                                            key={med.id}
                                             className=" bg-white/3 border border-white/5 hover:border-white/30  mb-4 flex items-center gap-3 p-3 rounded-xl hover:bg-white/3 transition-colors cursor-pointer"
                                         >
                                             <div className="w-9 h-9 rounded-xl bg-violet-500/10 flex items-center justify-center shrink-0">
@@ -437,7 +437,7 @@ function DashboardHome() {
                             {
                                 mockAppointments.filter(i => i.id <= 4).map((apt) => (
                                     <div
-                                        key={apt._id}
+                                        key={apt.id}
                                         className="p-3.5 rounded-xl bg-white/3 border border-white/5 hover:border-white/10 transition-colors"
                                     >
                                         <div className="flex items-start gap-3">
