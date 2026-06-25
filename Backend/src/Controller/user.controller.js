@@ -159,13 +159,13 @@ const getMe = async (req, res) => {
 
 // Function to Edit a user
 const editUser = async (req, res) => {
-    const { profileImage, userName, phone, height, weight, allergies, chronicConditions, address } = req.body;
+    const { profilePic, userName, phone, height, weight, allergies, chronicConditions, address } = req.body;
 
-    try {
+    // try {
         const user = req.user;
 
         const updateUser = await UserModel.findOneAndUpdate({ _id: user._id }, {
-            profileImage,
+            profileImage:profilePic,
             userName,
             phone,
             height,
@@ -185,13 +185,13 @@ const editUser = async (req, res) => {
             user: updatedUser
         })
 
-    } catch (error) {
-        return res.status(500).json({
-            error: error.message,
-            success: false,
-            message: "Something went wrong while updating user",
-        })
-    }
+    // } catch (error) {
+    //     return res.status(500).json({
+    //         error: error.message,
+    //         success: false,
+    //         message: "Something went wrong while updating user",
+    //     })
+    // }
 }
 
 // Function to logout a user

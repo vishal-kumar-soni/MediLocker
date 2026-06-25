@@ -27,8 +27,8 @@ function DashboardProfile() {
     const [loggedInUser, setLoggedInUser] = useState({})
     const [loading, setLoading] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [image, setImage] = useState(false)
     const [showForm, setShowForm] = useState(false);
-    const [image, setImage] = useState(false);
     const [form, setForm] = useState(user);
 
 
@@ -103,13 +103,31 @@ function DashboardProfile() {
         e.preventDefault()
 
         try {
+            if (image) {
+
+                // Upload image
+                const formData = new FormData();
+                formData.append("profileImage", image);
+
+                const uploadImageResponse = await axios.post(
+                    `http://localhost:5000/api/file/upload/profileImage`,
+                    formData
+                );
+
+                const responseData = uploadImageResponse.data;
+
+                var profilePic = responseData.image_url;
+                if (!responseData.success) {
+                    alert("Image upload failed");
+                    return;
+                }
+            }
 
             const response = await axios.post(
                 `http://localhost:5000/api/user/updateuser`,
-                { profileImage, userName, phone, height, weight, allergies, chronicConditions, address },
+                { profilePic, userName, phone, height, weight, allergies, chronicConditions, address },
                 { withCredentials: true }
             );
-
 
             if (response.data.success) {
                 alert("✅ " + response.data.message);
@@ -163,7 +181,7 @@ function DashboardProfile() {
                                     <label htmlFor="file-input">
                                         <img
                                             id="objectPicture-image"
-                                            src={image ? URL.createObjectURL(image) : upload}
+                                            src={image ? URL.createObjectURL(image) : loggedInUser?.profileImage || upload}
                                             className="w-[80px] h-[58px] cursor-pointer"
                                             alt="upload"
                                         />
@@ -172,7 +190,7 @@ function DashboardProfile() {
                                     <input
                                         onChange={handleUpload}
                                         type="file"
-                                        name="image"
+                                        name="profileImage"
                                         id="file-input"
                                         hidden
                                     />
