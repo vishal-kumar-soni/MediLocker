@@ -99,7 +99,7 @@ function Dashboard() {
                 {/* User card */}
                 <div className="p-3 border-t border-white/5">
                     <div className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-3.5 flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full  bg-cyan-500  flex items-center justify-center text-sm font-bold text-white shrink-0">
+                        <div className="w-10 h-10 rounded-full overflow-hidden   bg-cyan-500  flex items-center justify-center text-sm font-bold text-white shrink-0">
                             <Link to='/dashboard/profile'>
                                 <img src={loggedInUser.profileImage ? loggedInUser.profileImage : profileImage} alt="profile Image" className='rounded-full' />
                             </Link>
@@ -127,7 +127,7 @@ function Dashboard() {
                             <Bell className="w-4 h-4" />
                             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-cyan-500 rounded-full" />
                         </button>
-                        <div className="w-9 h-9 rounded-full  bg-white  flex items-center justify-center text-sm font-bold text-white">
+                        <div className="w-9 h-9 rounded-full overflow-hidden  bg-white  flex items-center justify-center text-sm font-bold text-white">
                             <Link to='/dashboard/profile'>
                                 <img src={loggedInUser.profileImage ? loggedInUser.profileImage : profileImage} alt="profile Image" className='rounded-full' />
                             </Link>

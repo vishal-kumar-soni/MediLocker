@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { User, Phone, Plus, MapPin, UserRoundPen, Calendar, Droplets, Edit3, Save, X, AlertTriangle, Heart } from 'lucide-react'
+import { User, Phone, Plus, MapPin, UserRoundPen, Calendar, Droplets, Edit3, Save, X, AlertTriangle, Heart, Loader2 } from 'lucide-react'
 import upload from './assets/profile.jpg'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -26,7 +26,8 @@ function DashboardProfile() {
 
     const [loggedInUser, setLoggedInUser] = useState({})
     const [loading, setLoading] = useState(true)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [image, setImage] = useState(false)
     const [showForm, setShowForm] = useState(false);
     const [form, setForm] = useState(user);
@@ -100,6 +101,7 @@ function DashboardProfile() {
     const { profileImage, userName, phone, height, weight, allergies, chronicConditions, address } = form
 
     const setProfileHandler = async (e) => {
+        setLoadingSubmit(true)
         e.preventDefault()
 
         try {
@@ -130,6 +132,7 @@ function DashboardProfile() {
             );
 
             if (response.data.success) {
+        setLoadingSubmit(false)
                 alert("✅ " + response.data.message);
                 setShowForm(false)
                 window.location.reload();
@@ -320,7 +323,8 @@ function DashboardProfile() {
 
                                     <button
                                         type="submit"
-                                        className="flex-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Edit Profile
+                                        className="flex gap-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Edit Profile
+                                        {loadingSubmit ? <><Loader2 className="w-4 h-4 mt-1 animate-spin" /> </> : ''}
                                     </button>
                                 </div>
                             </form>
