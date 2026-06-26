@@ -26,18 +26,24 @@ function DashboardHome() {
 
             if (response.data.success) {
                 const user = response.data.user;
+                setIsLoggedIn(true);
                 setLoading(false)
                 setLoggedInUser(user);
-                setIsLoggedIn(true);
                 setAllDocument(response.data.user.documents);
                 setMedications(response.data.user.medications);
                 setAppointments(response.data.user.appointments);
-            } else {
-                setIsLoggedIn(false);
             }
         }
 
         checkLoggedIn();
+    }, []);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
     }, []);
 
     const firstName = loggedInUser.userName ? loggedInUser.userName : "Arjun";

@@ -53,6 +53,15 @@ function DashboardProfile() {
         checkLoggedIn();
     }, []);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+
 
     const fields = [
         { label: 'Full Name', key: 'userName', icon: User },
@@ -101,7 +110,8 @@ function DashboardProfile() {
     const { profileImage, userName, phone, height, weight, allergies, chronicConditions, address } = form
 
     const setProfileHandler = async (e) => {
-        setLoadingSubmit(true)
+
+        (!isLoggedIn)?setLoadingSubmit(false):setLoadingSubmit(true)
         e.preventDefault()
 
         try {
@@ -130,13 +140,13 @@ function DashboardProfile() {
                 { profilePic, userName, phone, height, weight, allergies, chronicConditions, address },
                 { withCredentials: true }
             );
-
+            
             if (response.data.success) {
-        setLoadingSubmit(false)
                 alert("✅ " + response.data.message);
+                setLoadingSubmit(false)
                 setShowForm(false)
                 window.location.reload();
-            }
+            } 
         } catch (error) {
             console.log(error);
             alert(error.response?.data?.message || error.message);
@@ -172,7 +182,7 @@ function DashboardProfile() {
                     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                         <div className=" bg-[#17202b] backdrop-blur-md border border-white/8 rounded-2xl p-7 w-full max-w-md animate-in">
                             <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-lg font-bold text-white">New Appointment</h2>
+                                <h2 className="text-xl font-bold text-white">Update your Profile</h2>
                                 <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white"><X className="w-5 h-5" /></button>
                             </div>
 
@@ -180,13 +190,13 @@ function DashboardProfile() {
                             <form onSubmit={setProfileHandler} className="space-y-4">
 
                                 {/* Profile image */}
-                                <div id="objectPicture" className="w-[70px] h-[60px] flex items-baseline justify-center rounded-sm border-2 border-gray-400 cursor-pointer  mb-5">
+                                <div id="objectPicture" className={` ${!isLoggedIn?"hidden":' w-[70px] h-[60px] flex items-baseline justify-center rounded-sm border-2 border-gray-400 cursor-pointer  mb-5'}  `}>
                                     <label htmlFor="file-input">
                                         <img
                                             id="objectPicture-image"
                                             src={image ? URL.createObjectURL(image) : loggedInUser?.profileImage || upload}
-                                            className="w-[80px] h-[58px] cursor-pointer"
-                                            alt="upload"
+                                            className={` ${!isLoggedIn?'hidden':'w-[80px] h-[58px] cursor-pointer'}`}
+                                            alt="upload "
                                         />
                                     </label>
 
