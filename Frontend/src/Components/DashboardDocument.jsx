@@ -52,20 +52,20 @@ function DashboardDocument() {
         checkLoggedIn();
     }, []);
 
-    
-    
+
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
         }, 3000);
-        
+
         return () => clearTimeout(timer);
     }, []);
-    
-    
-    const addDocument = async  (e) => {
+
+
+    const addDocument = async (e) => {
         e.preventDefault()
-        
+
         setNewDocument(prev => [
             {
                 id: `apt_${Date.now()}`,
@@ -74,16 +74,16 @@ function DashboardDocument() {
             ...prev,
         ])
 
-                console.log(form)
-                console.log(loggedInUser._id)
+        console.log(form)
+        console.log(loggedInUser._id)
 
-        
+
         const { name, hospital, doctor, type, size, format, doc } = form
         const userId = loggedInUser._id
         try {
             const response = await axios.post(
                 'http://localhost:5000/api/medical/document',
-                {userId, name, hospital, doctor, type, size, format, doc },
+                { userId, name, hospital, doctor, type, size, format, doc },
                 {
                     withCredentials: true
                 })
@@ -108,6 +108,26 @@ function DashboardDocument() {
             format: '',
             doc: ''
         })
+    }
+
+    const handleDocumentDelete = async (documentId) => {
+        try {
+
+            const response = await axios.post(
+                "http://localhost:5000/api/medical/deletedocument",
+                { documentId },
+                {
+                    withCredentials: true
+                })
+            if(response.data.success){
+                alert("✅ " + response.data.message);
+                window.location.reload();
+            }
+        }
+        catch (error) {
+               console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
     }
 
     const filtered = docs.filter(d =>
@@ -315,7 +335,7 @@ function DashboardDocument() {
             {/* Documents grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filtered.map(doc => (
-                    <div key={doc.id} className=" bg-[#111b29] backdrop-blur-md border border-white/8 rounded-2xl p-5 group hover:border-white/15 transition-all">
+                    <div key={doc._id} className=" bg-[#111b29] backdrop-blur-md border border-white/8 rounded-2xl p-5 group hover:border-white/15 transition-all">
                         <div className="flex items-start gap-4">
                             <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:bg-cyan-500/20 transition-colors">
                                 <FileText className="w-5 h-5 text-cyan-400" />
@@ -337,7 +357,7 @@ function DashboardDocument() {
                             <button className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs text-white/50 hover:text-cyan-400 bg-white/3 hover:bg-cyan-500/10 rounded-lg transition-all">
                                 <Download className="w-3.5 h-3.5" /> Download
                             </button>
-                            <button className="px-3 py-2 text-xs text-white/30 hover:text-accent-rose bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
+                            <button onClick={()=>handleDocumentDelete(doc._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:text-accent-rose bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
                                 <Trash2 className="w-3.5 h-3.5" />
                             </button>
                         </div>

@@ -1,15 +1,17 @@
-import {Router} from 'express'
+import { Router } from 'express'
 const router = Router()
-import {medication} from '../Controller/medication.controller.js'
+import { medication } from '../Controller/medication.controller.js'
 import { appointment } from '../Controller/appointment.controller.js';
 import { addOrganHealth } from '../Controller/organHealth.controller.js';
 import { saveBloodValues } from '../Controller/bloodReport.controller.js';
-import {addDocument} from '../Controller/document.controller.js'
+import { addDocument, deleteDocument } from '../Controller/document.controller.js'
+import {isAuth} from '../Middleware/isAuth.middleware.js'
 
-router.post("/medication", medication);
-router.post('/appointment', appointment);
-router.post('/organHealth', addOrganHealth)
-router.post('/bloodReport', saveBloodValues)
-router.post('/document', addDocument)
+router.post("/medication", isAuth, medication);
+router.post('/appointment', isAuth, appointment);
+router.post('/organHealth', isAuth, addOrganHealth)
+router.post('/bloodReport', isAuth, saveBloodValues)
+router.post('/document',isAuth, addDocument)
+router.post('/deletedocument', deleteDocument)
 
-export default router
+export default router;

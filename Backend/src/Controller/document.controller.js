@@ -36,7 +36,37 @@ const addDocument = async (req, res) => {
             success: false,
             message: error.message,
         });
+    };
+}
+
+//Function to Delete a Document
+// Function to Delete a Document
+const deleteDocument = async (req, res) => {
+    const { documentId } = req.body;
+
+    try {
+        const deletedDocument = await DocumentModel.findByIdAndDelete(documentId);
+
+        if (!deletedDocument) {
+            return res.status(404).json({
+                success: false,
+                message: "Document not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Document deleted successfully",
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
     }
 };
 
-export { addDocument }
+
+
+export { addDocument, deleteDocument }
