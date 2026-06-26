@@ -3,6 +3,7 @@ import { Upload, Search, Filter, FileText, Download, Eye, Trash2, Tag, X, CheckC
 import clsx from 'clsx'
 import MockAllDocuments from './assets/AllDocument'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 const docTypes = ['All', 'Lab Report', 'Radiology', 'Prescription', 'Cardiology', 'Orthopedic']
@@ -41,6 +42,11 @@ function DashboardDocument() {
             setUploaded(false);
         }, 3000);
     }
+
+    const handleDownload = (url) => {
+        const downloadUrl = url.replace("/upload/", "/upload/fl_attachment/");
+        window.open(downloadUrl, "_blank");
+    };
 
     useEffect(() => {
         async function checkLoggedIn() {
@@ -314,6 +320,7 @@ function DashboardDocument() {
                                         name='documentPDF'
                                         className="hidden"
                                         multiple accept=".pdf,.jpg,.png,.dicom"
+                                        required
                                         onChange={handleUploadDocument} />
                                 </label>
                             </div>
@@ -367,30 +374,30 @@ function DashboardDocument() {
 
             {/* Documents grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {filtered.map(doc => (
-                    <div key={doc._id} className=" bg-[#111b29] backdrop-blur-md border border-white/8 rounded-2xl p-5 group hover:border-white/15 transition-all">
+                {filtered.map(document => (
+                    <div key={document._id} className=" bg-[#111b29] backdrop-blur-md border border-white/8 rounded-2xl p-5 group hover:border-white/15 transition-all">
                         <div className="flex items-start gap-4">
                             <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:bg-cyan-500/20 transition-colors">
                                 <FileText className="w-5 h-5 text-cyan-400" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="font-medium text-white text-sm  mb-1 truncate">{doc.name}</p>
-                                <p className="text-xs text-white/40">{doc.hospital} · {doc.doctor}</p>
+                                <p className="font-medium text-white text-sm  mb-1 truncate">{document.name}</p>
+                                <p className="text-xs text-white/40">{document.hospital} · {document.doctor}</p>
                                 <div className="flex items-center gap-2 mt-2.5 flex-wrap">
-                                    <span className={clsx(' inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border', typeColors[doc.type] || 'bg-white/5 text-white/40')}>{doc.type}</span>
-                                    <span className="text-xs text-white/25">{doc.date}</span>
-                                    <span className="text-xs text-white/25">{doc.size}</span>
+                                    <span className={clsx(' inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border', typeColors[document.type] || 'bg-white/5 text-white/40')}>{document.type}</span>
+                                    <span className="text-xs text-white/25">{document.date}</span>
+                                    <span className="text-xs text-white/25">{document.size}</span>
                                 </div>
                             </div>
                         </div>
                         <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-white/5">
-                            <button className="flex-1 flex items-center cursor-pointer justify-center gap-1.5 py-2 text-xs text-white/50 hover:text-white bg-white/3 hover:bg-white/8 rounded-lg transition-all">
+                            <Link to={document.doc} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center cursor-pointer justify-center gap-1.5 py-2 text-xs text-white/50 hover:text-white bg-white/3 hover:bg-white/8 rounded-lg transition-all">
                                 <Eye className="w-3.5 h-3.5" /> View
-                            </button>
-                            <button className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs text-white/50 hover:text-cyan-400 bg-white/3 hover:bg-cyan-500/10 rounded-lg transition-all">
+                            </Link>
+                            <button onClick={() => handleDownload(document.doc)} className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs text-white/50 hover:text-cyan-400 bg-white/3 hover:bg-cyan-500/10 rounded-lg transition-all">
                                 <Download className="w-3.5 h-3.5" /> Download
                             </button>
-                            <button onClick={() => handleDocumentDelete(doc._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:text-accent-rose bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
+                            <button onClick={() => handleDocumentDelete(document._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:text-accent-rose bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
                                 <Trash2 className="w-3.5 h-3.5" />
                             </button>
                         </div>
