@@ -3,7 +3,7 @@ import { UserModel } from "../Models/user.model.js";
 
 const addDocument = async (req, res) => {
     try {
-        const { userId, name, hospital, doctor, type, size, format, doc,
+        const { userId, name, hospital, doctor, type, size, format, documentUrl,
         } = req.body;
 
         const newDocument = await DocumentModel.create({
@@ -14,7 +14,7 @@ const addDocument = async (req, res) => {
             type,
             size,
             format,
-            doc,
+            doc:documentUrl,
         });
 
         await UserModel.findByIdAndUpdate(
@@ -39,7 +39,6 @@ const addDocument = async (req, res) => {
     };
 }
 
-//Function to Delete a Document
 // Function to Delete a Document
 const deleteDocument = async (req, res) => {
     const { documentId } = req.body;

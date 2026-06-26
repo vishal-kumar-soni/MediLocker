@@ -29,7 +29,18 @@ function DashboardDocument() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState({})
     const [loading, setLoading] = useState(true)
+    const [pdf, setPdf] = useState(false)
 
+
+    const handleUploadDocument = (e) => {
+
+        setPdf(e.target.files?.[0]);
+        setUploaded(true);
+
+        setTimeout(() => {
+            setUploaded(false);
+        }, 3000);
+    }
 
     useEffect(() => {
         async function checkLoggedIn() {
@@ -74,16 +85,34 @@ function DashboardDocument() {
             ...prev,
         ])
 
-        console.log(form)
-        console.log(loggedInUser._id)
-
-
-        const { name, hospital, doctor, type, size, format, doc } = form
+        const { name, hospital, doctor, type, size, format } = form
         const userId = loggedInUser._id
+
         try {
+
+            if (pdf) {
+
+                // Upload medical document
+                const formData = new FormData();
+                formData.append("documentPDF", pdf);
+
+                const uploadDocumentResponse = await axios.post(
+                    `http://localhost:5000/api/file/upload/document`,
+                    formData
+                );
+
+                var documentUrl = uploadDocumentResponse.data.image_url;
+                console.log(documentUrl)
+
+                if (!uploadDocumentResponse.data.success) {
+                    alert("Image upload failed");
+                    return;
+                }
+            }
+
             const response = await axios.post(
                 'http://localhost:5000/api/medical/document',
-                { userId, name, hospital, doctor, type, size, format, doc },
+                { userId, name, hospital, doctor, type, size, format, documentUrl },
                 {
                     withCredentials: true
                 })
@@ -119,13 +148,13 @@ function DashboardDocument() {
                 {
                     withCredentials: true
                 })
-            if(response.data.success){
+            if (response.data.success) {
                 alert("✅ " + response.data.message);
                 window.location.reload();
             }
         }
         catch (error) {
-               console.log(error);
+            console.log(error);
             alert(error.response?.data?.message || error.message);
         }
     }
@@ -280,10 +309,14 @@ function DashboardDocument() {
                                 <label className=" border-dashed border border-gray-600 hover:border-gray-300 mt-2 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-95 text-sm flex items-center justify-center gap-2 cursor-pointer">
                                     <Upload className="w-4 h-4" />
                                     Upload Document
-                                    <input type="file" className="hidden" multiple accept=".pdf,.jpg,.png,.dicom" onChange={(e) => { setUploaded(true); setForm(p => ({ ...p, doc: e.target.value })); setTimeout(() => setUploaded(false), 3000) }} />
+                                    <input
+                                        type="file"
+                                        name='documentPDF'
+                                        className="hidden"
+                                        multiple accept=".pdf,.jpg,.png,.dicom"
+                                        onChange={handleUploadDocument} />
                                 </label>
                             </div>
-
 
                             <div className="flex gap-3 pt-4">
                                 <button
@@ -351,13 +384,13 @@ function DashboardDocument() {
                             </div>
                         </div>
                         <div className="flex items-center gap-2 mt-4 pt-3.5 border-t border-white/5">
-                            <button className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs text-white/50 hover:text-white bg-white/3 hover:bg-white/8 rounded-lg transition-all">
+                            <button className="flex-1 flex items-center cursor-pointer justify-center gap-1.5 py-2 text-xs text-white/50 hover:text-white bg-white/3 hover:bg-white/8 rounded-lg transition-all">
                                 <Eye className="w-3.5 h-3.5" /> View
                             </button>
                             <button className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs text-white/50 hover:text-cyan-400 bg-white/3 hover:bg-cyan-500/10 rounded-lg transition-all">
                                 <Download className="w-3.5 h-3.5" /> Download
                             </button>
-                            <button onClick={()=>handleDocumentDelete(doc._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:text-accent-rose bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
+                            <button onClick={() => handleDocumentDelete(doc._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:text-accent-rose bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
                                 <Trash2 className="w-3.5 h-3.5" />
                             </button>
                         </div>

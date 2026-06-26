@@ -12,7 +12,7 @@ route.post(
 
 route.post(
     '/upload/document',
-    upload.single('document'),
+    upload.single('documentPDF'),
     uploadDocument
 )
 
