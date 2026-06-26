@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Upload, Search, Filter, FileText, Download, Eye, Trash2, Tag, X, CheckCircle2 } from 'lucide-react'
 import clsx from 'clsx'
-import AllDocuments from './assets/AllDocument'
+import MockAllDocuments from './assets/AllDocument'
+import axios from 'axios'
 
 
 const docTypes = ['All', 'Lab Report', 'Radiology', 'Prescription', 'Cardiology', 'Orthopedic']
@@ -19,16 +20,52 @@ function DashboardDocument() {
 
     const [filter, setFilter] = useState('All')
     const [search, setSearch] = useState('')
+    const [docs, setDocs] = useState(MockAllDocuments)
+    const [newDocument, setNewDocument] = useState(MockAllDocuments)
     const [dragOver, setDragOver] = useState(false)
     const [uploaded, setUploaded] = useState(false)
-    const [docs, setDocs] = useState(AllDocuments)
-    const [newDocument, setNewDocument] = useState(AllDocuments)
     const [showForm, setShowForm] = useState(false)
     const [form, setForm] = useState({ name: '', hospital: '', doctor: '', type: '', size: '', format: '', doc: '' })
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [loggedInUser, setLoggedInUser] = useState({})
+    const [loading, setLoading] = useState(true)
 
-    const addDocument = (e) => {
+
+    useEffect(() => {
+        async function checkLoggedIn() {
+            const response = await axios.get(
+                'http://localhost:5000/api/user/getme',
+                {
+                    withCredentials: true
+                })
+
+            if (response.data.success) {
+                const user = response.data.user;
+                setLoading(false)
+                setLoggedInUser(user);
+                setIsLoggedIn(true)
+                setDocs(user.documents)
+                setNewDocument(user.documents)
+            }
+        }
+
+        checkLoggedIn();
+    }, []);
+
+    
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+        
+        return () => clearTimeout(timer);
+    }, []);
+    
+    
+    const addDocument = async  (e) => {
         e.preventDefault()
-
+        
         setNewDocument(prev => [
             {
                 id: `apt_${Date.now()}`,
@@ -36,6 +73,29 @@ function DashboardDocument() {
             },
             ...prev,
         ])
+
+                console.log(form)
+                console.log(loggedInUser._id)
+
+        
+        const { name, hospital, doctor, type, size, format, doc } = form
+        const userId = loggedInUser._id
+        try {
+            const response = await axios.post(
+                'http://localhost:5000/api/medical/document',
+                {userId, name, hospital, doctor, type, size, format, doc },
+                {
+                    withCredentials: true
+                })
+
+            if (response.data.success) {
+                alert("✅ " + response.data.message);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
 
         setShowForm(false)
 
@@ -48,7 +108,6 @@ function DashboardDocument() {
             format: '',
             doc: ''
         })
-        console.log(form)
     }
 
     const filtered = docs.filter(d =>
@@ -63,7 +122,14 @@ function DashboardDocument() {
         setTimeout(() => setUploaded(false), 3000)
         setForm(p => ({ ...p, doc: e.target.value }))
     }
-
+    if (loading) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+                <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-gray-400 text-sm">Loading your Documents...</p>
+            </div>
+        )
+    }
 
     return (
         <div className="space-y-6">
