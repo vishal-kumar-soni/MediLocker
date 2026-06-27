@@ -13,8 +13,8 @@ function AppointmentsPage() {
     const [loading, setLoading] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState({})
-    const [form, setForm] = useState({ doctor: '', specialty: '', hospital: '', date: '', time: '', type: '' })
-    
+    const [form, setForm] = useState({ doctor: '', specialty: '', hospital: '', date: '', time: '', type: '', status:'' })
+
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
@@ -22,30 +22,30 @@ function AppointmentsPage() {
                 {
                     withCredentials: true
                 })
-                
-                if (response.data.success) {
-                    const user = response.data.user;
-                    setLoading(false)
-                    setLoggedInUser(user);
-                    setIsLoggedIn(true)
-                    setAppointment(user.appointments)
-                }
+
+            if (response.data.success) {
+                const user = response.data.user;
+                setLoading(false)
+                setLoggedInUser(user);
+                setIsLoggedIn(true)
+                setAppointment(user.appointments)
             }
-            checkLoggedIn();
-        }, []);
-        
-        useEffect(() => {
-            const timer = setTimeout(() => {
-                setLoading(false);
-            }, 3000);
-            
-            return () => clearTimeout(timer);
-        }, []);
+        }
+        checkLoggedIn();
+    }, []);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
 
     const filtered = filter === 'all' ? Appointment : Appointment.filter(a => a.status === filter)
 
-    const addAppointment = (e) => {
+    const addAppointment = async (e) => {
         e.preventDefault()
 
         setNewAppointment(prev => [
@@ -57,6 +57,28 @@ function AppointmentsPage() {
             ...prev,
         ])
 
+        let currStatus = (Date.now() > new Date(form.date).getTime()) ? "completed" : 'upcoming'
+        const { doctor, specialty, hospital, date, time, type } = form
+        const userId = loggedInUser._id
+
+        try {
+            const response = await axios.post(
+                'http://localhost:5000/api/medical/appointment',
+                { userId, doctor, specialty, hospital, date, time, type, currStatus },
+                {
+                    withCredentials: true
+                }
+            )
+
+            if (response.data.success) {
+                alert("✅ " + response.data.message);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
+
         setShowForm(false)
 
         setForm({
@@ -65,7 +87,8 @@ function AppointmentsPage() {
             hospital: '',
             date: '',
             time: '',
-            type: ''
+            type: '',
+            status:'',
         })
     }
 
@@ -76,7 +99,7 @@ function AppointmentsPage() {
 
         let upcomingCount = 0;
         let completedCount = 0;
-        newAppointment.forEach((item) => {
+        Appointment.forEach((item) => {
 
             if (item.status == "upcoming") {
                 upcomingCount++;
@@ -89,7 +112,7 @@ function AppointmentsPage() {
         setCountUpcoming(upcomingCount);
         setCountCompleted(completedCount);
 
-    }, [newAppointment]);
+    }, [Appointment]);
 
 
 
@@ -127,10 +150,12 @@ function AppointmentsPage() {
                                         <label className="block text-xs text-white/40 mb-1.5">Doctor Name</label>
                                         <input
                                             value={form.doctor}
+                                            name='doctor'
                                             onChange={e => setForm(p => ({
                                                 ...p,
                                                 doctor: e.target.value
                                             }))}
+                                            name='doctor'
                                             className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
                                             placeholder="Dr. Name"
                                             required
@@ -140,6 +165,7 @@ function AppointmentsPage() {
                                         <label className="block text-xs text-white/40 mb-1.5">Specialty</label>
                                         <input
                                             value={form.specialty}
+                                            name='speciality'
                                             onChange={e => setForm(p => ({ ...p, specialty: e.target.value }))}
                                             className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
                                             placeholder="Cardiologist"
@@ -151,6 +177,7 @@ function AppointmentsPage() {
                                     <label className="block text-xs text-white/40 mb-1.5">Hospital / Clinic</label>
                                     <input
                                         value={form.hospital}
+                                        name='hospital'
                                         onChange={e => setForm(p => ({ ...p, hospital: e.target.value }))}
                                         className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm "
                                         placeholder="Hospital name"
@@ -163,6 +190,7 @@ function AppointmentsPage() {
                                         <input
                                             type="date"
                                             value={form.date}
+                                            name='date'
                                             onChange={e => setForm(p => ({ ...p, date: e.target.value }))}
 
                                             className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
@@ -174,6 +202,7 @@ function AppointmentsPage() {
                                         <input
                                             type="time"
                                             value={form.time}
+                                            name='time'
                                             onChange={e => setForm(p => ({ ...p, time: e.target.value }))}
                                             className=" w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm "
                                             required
@@ -184,6 +213,7 @@ function AppointmentsPage() {
                                     <label className="block text-xs text-white/40 mb-1.5">Visit Type</label>
                                     <input
                                         value={form.type}
+                                        name='type'
                                         onChange={e => setForm(p => ({ ...p, type: e.target.value }))}
                                         className=" w-full  bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm "
                                         placeholder="e.g. Follow-up, Routine Checkup"

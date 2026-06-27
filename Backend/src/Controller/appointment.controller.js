@@ -4,17 +4,9 @@ import { UserModel } from "../Models/user.model.js";
 
 const appointment = async (req, res) => {
 
-    const { userId, doctor, speciality, hospital, date, time, type } = req.body;
+    const { userId, doctor, speciality, hospital, date, time, type, currStatus } = req.body;
 
     try {
-
-        // Validation
-        if (!userId || !doctor || !speciality || !hospital || !date || !time ) {
-            return res.status(400).json({
-                success: false,
-                message: "All input fields are required",
-            });
-        }
 
         // Create Appointment
         const createdAppointment = await appointmentModel.create({
@@ -24,7 +16,8 @@ const appointment = async (req, res) => {
             hospital,
             date,
             time,
-            type
+            type,
+            status:currStatus
         });
 
         // Push appointment id into user model
