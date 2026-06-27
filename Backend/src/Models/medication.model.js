@@ -16,6 +16,8 @@ const medicationSchema = new mongoose.Schema(
 
         time: String,
 
+        startDate:String,
+
         PrescribedFor: String,
 
     },

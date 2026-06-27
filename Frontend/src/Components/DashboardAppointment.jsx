@@ -272,7 +272,7 @@ function AppointmentsPage() {
                 <div className="space-y-3">
                     {filtered.map(apt => {
                         return (
-                            <div key={apt._id} className=' bg-[#1a222d]        backdrop-blur-md border-white/8 rounded-2xl p-5 border hover:border-white/15 transition-all'>
+                            <div key={apt._id || apt.id} className=' bg-[#1a222d]        backdrop-blur-md border-white/8 rounded-2xl p-5 border hover:border-white/15 transition-all'>
                                 <div className="flex items-start gap-4 flex-wrap">
                                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center bg-amber-500/10  shrink-0 ${(apt.status == "upcoming") ? " bg-amber-500/10  " : " bg-cyan-500/10 "}`}>
                                         <Stethoscope className={` w-5 h-5 ${(apt.status == "upcoming") ? " text-amber-500  " : " text-cyan-500 "}  `} />
@@ -297,7 +297,7 @@ function AppointmentsPage() {
                                         <div className='flex justify-between'>
                                             {apt.type && <div className="mt-2"><span className=" inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium  bg-white/5 text-white/30">{apt.type}</span></div>}
 
-                                            <button onClick={() => handleAppointmentDelete(apt._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:bg-white/8 hover:text-white/60 bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
+                                            <button onClick={() => handleAppointmentDelete(apt._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:bg-red-500/8 hover:text-red-500/60 bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
                                                 <Trash2 className="w-3.5 h-3.5" />
                                             </button>
 

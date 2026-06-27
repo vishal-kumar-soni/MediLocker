@@ -375,7 +375,7 @@ function DashboardDocument() {
                 {/* Documents grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {filtered.map(document => (
-                        <div key={document._id} className=" bg-[#111b29] backdrop-blur-md border border-white/8 rounded-2xl p-5 group hover:border-white/15 transition-all">
+                        <div key={document._id || document.id} className=" bg-[#111b29] backdrop-blur-md border border-white/8 rounded-2xl p-5 group hover:border-white/15 transition-all">
                             <div className="flex items-start gap-4">
                                 <div className="w-11 h-11 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0 group-hover:bg-cyan-500/20 transition-colors">
                                     <FileText className="w-5 h-5 text-cyan-400" />

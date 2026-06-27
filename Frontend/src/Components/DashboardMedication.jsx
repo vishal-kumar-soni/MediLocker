@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Pill, Clock, Plus, CheckCircle2, Calendar, X, ToggleLeft, ToggleRight } from 'lucide-react'
+import { Pill, Clock, Plus, CheckCircle2, Calendar, X, ToggleLeft, Trash2, ToggleRight } from 'lucide-react'
 import clsx from 'clsx'
 import mockMedications from './assets/Medications'
 import axios from 'axios'
@@ -19,7 +19,7 @@ function DashboardMedication() {
     const [showForm, setShowForm] = useState(false)
     const [loading, setLoading] = useState(true)
     const [loggedInUser, setLoggedInUser] = useState({})
-    const [form, setForm] = useState({ name: '', dose: '', frequency: '', time: '', for: '', startDate: '' })
+    const [form, setForm] = useState({ name: '', dose: '', time: '', PrescribedFor: '', startDate: '' })
     const [todayChecked, setTodayChecked] = useState({})
 
     const toggleToday = (id) => {
@@ -38,22 +38,69 @@ function DashboardMedication() {
                 const user = response.data.user;
                 setLoading(false)
                 setLoggedInUser(user);
-                // setAppointment(user.appointments)
+                setMeds(user.medications)
             }
         }
         checkLoggedIn();
     }, []);
 
 
-    const addMed = (e) => {
+    const addMed = async (e) => {
         e.preventDefault()
-        setMeds(prev => [{ id: `med_${Date.now()}`, ...form, active: true }, ...prev])
+        setMeds(prev => [
+            {
+                id: `med_${Date.now()}`,
+                ...form,
+                active: true
+            },
+            ...prev
+        ])
 
 
+        const { name, dose, time, PrescribedFor, startDate } = form
+        const userId = loggedInUser._id
 
+        try {
+            const response = await axios.post(
+                'http://localhost:5000/api/medical/medication',
+                { userId, name, dose, time, PrescribedFor, startDate },
+                {
+                    withCredentials: true
+                }
+            )
+
+            if (response.data.success) {
+                alert("✅ " + response.data.message);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
 
         setShowForm(false)
-        setForm({ name: '', dose: '', frequency: '', time: '', PrescribedFor: '', startDate: '' })
+        setForm({ name: '', dose: '', time: '', PrescribedFor: '', startDate: '' })
+    }
+
+    const handleMedicationDelete = async (medicationId) => {
+
+        console.log(medicationId)
+        try {
+            const response = await axios.post(
+                "http://localhost:5000/api/medical/deletemedication",
+                { medicationId },
+                {
+                    withCredentials: true
+                })
+            if (response.data.success) {
+                alert("✅ " + response.data.message);
+                window.location.reload();
+            }
+        }
+        catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
     }
 
     const totalMeds = meds.length
@@ -92,6 +139,7 @@ function DashboardMedication() {
                                         <label className="block text-xs text-white/40 mb-1.5">Medication Name</label>
                                         <input
                                             value={form.name}
+                                            name='name'
                                             onChange={e => setForm(p => ({ ...p, name: e.target.value }))} className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
                                             placeholder="Amlodipine"
                                             required
@@ -101,6 +149,7 @@ function DashboardMedication() {
                                         <label className="block text-xs text-white/40 mb-1.5">Dosage</label>
                                         <input
                                             value={form.dose}
+                                            name='dose'
                                             onChange={e => setForm(p => ({ ...p, dose: e.target.value }))} className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm "
                                             placeholder="5mg"
                                             required
@@ -112,6 +161,7 @@ function DashboardMedication() {
                                     <label className="block text-xs text-white/40 mb-1.5">Prescribed For</label>
                                     <input
                                         value={form.PrescribedFor}
+                                        name='Prescribed'
                                         onChange={e => setForm(p => ({ ...p, PrescribedFor: e.target.value }))}
                                         className="w-full bg-[#192638]  border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm "
                                         placeholder="Hypertension"
@@ -123,6 +173,7 @@ function DashboardMedication() {
                                     <label className="block text-xs text-white/40 mb-1.5">Time</label>
                                     <input
                                         value={form.time}
+                                        name='time'
                                         onChange={e => setForm(p => ({ ...p, time: e.target.value }))}
                                         className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm "
                                         placeholder="Morning"
@@ -134,6 +185,7 @@ function DashboardMedication() {
                                     <label className="block text-xs text-white/40 mb-1.5">Start Date</label>
                                     <input
                                         type="date"
+                                        name='startDate'
                                         value={form.startDate}
                                         onChange={e => setForm(p => ({ ...p, startDate: e.target.value }))} className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 
                                     focus:ring-cyan-500/20 text-sm "
@@ -161,7 +213,7 @@ function DashboardMedication() {
                     <h2 className="text-xl font-semibold text-white mb-4">Today's Doses</h2>
                     <div className="space-y-2">
                         {meds.map(med => (
-                            <div key={med.id} className={` p-3.5 rounded-xl border transition-all' ${(todayChecked[med.id]) ? "bg-cyan-500/5 border-cyan-500/20" : "bg-white/3 border-white/5"}`}>
+                            <div key={med._id || med.id} className={` p-3.5 rounded-xl border transition-all' ${(todayChecked[med.id]) ? "bg-cyan-500/5 border-cyan-500/20" : "bg-white/3 border-white/5"}`}>
                                 <div className={`flex items-center gap-4`}>
                                     <button
                                         onClick={() => toggleToday(med.id)}
@@ -169,18 +221,22 @@ function DashboardMedication() {
                                         {todayChecked[med.id] && <CheckCircle2 className="w-4 h-4 text-white" />}
                                     </button>
                                     <div className="flex-1 min-w-0">
-                                        <p className={`text-sm font-medium transition-all ${todayChecked[med.id] ? 'text-white/40 line-through' : "text-white "} `}>
+                                        <p className={`text-sm font-medium transition-all capitalize ${todayChecked[med.id] ? 'text-white/40 line-through' : "text-white "} `}>
                                             {med.name} · {med.dose}
                                         </p>
-                                        <p className="text-xs text-white/30">{med.for}</p>
+                                        <p className="text-xs text-white/50 mt-2">Start From - {med.startDate}</p>
                                     </div>
-                                    <span className={clsx(' inline-flex items-center gap-1.5  py-1 rounded-full text-xs font-medium  px-2.5', timeColors[med.time] || 'text-white/40 bg-white/5')}>
+                                    <span className=' inline-flex items-center gap-1.5  py-1 rounded-full text-xs font-medium  px-2.5 text-cyan-500 bg-cyan-500/10'>
                                         <Clock className="w-3 h-3" />{med.time}
                                     </span>
                                 </div>
 
-                                <div>
+                                <div className='flex justify-between'>
                                     <p className='text-gray-500 text-[12px] pt-1 sm:text-[13px]  font-semibold pl-10'> For - {med.PrescribedFor}</p>
+
+                                    <button onClick={() => handleMedicationDelete(med._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:bg-red-500/8 hover:text-red-500/60 bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
+                                        <Trash2 className="w-3.5 h-3.5" />
+                                    </button>
                                 </div>
 
                             </div>

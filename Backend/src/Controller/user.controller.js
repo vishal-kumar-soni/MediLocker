@@ -133,7 +133,6 @@ const register = async (req, res) => {
 // Function to get user
 const getMe = async (req, res) => {
     try {
-
         const user = req.user
 
         const thisUser = await UserModel.findById(user._id)
