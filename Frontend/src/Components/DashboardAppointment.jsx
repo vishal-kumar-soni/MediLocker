@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Calendar, Clock, MapPin, Plus, CheckCircle2, Stethoscope, X } from 'lucide-react'
+import { Calendar, Clock, MapPin, Plus, CheckCircle2, Stethoscope, X, Trash2 } from 'lucide-react'
 import axios from 'axios'
 import mockAppointments from './assets/Appointments.js'
 
@@ -13,7 +13,7 @@ function AppointmentsPage() {
     const [loading, setLoading] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState({})
-    const [form, setForm] = useState({ doctor: '', specialty: '', hospital: '', date: '', time: '', type: '', status:'' })
+    const [form, setForm] = useState({ doctor: '', specialty: '', hospital: '', date: '', time: '', type: '', status: '' })
 
     useEffect(() => {
         async function checkLoggedIn() {
@@ -88,9 +88,30 @@ function AppointmentsPage() {
             date: '',
             time: '',
             type: '',
-            status:'',
+            status: '',
         })
     }
+
+    const handleAppointmentDelete = async (appointmentId) => {
+        try {
+
+            const response = await axios.post(
+                "http://localhost:5000/api/medical/deletedappointment",
+                { appointmentId },
+                {
+                    withCredentials: true
+                })
+            if (response.data.success) {
+                alert("✅ " + response.data.message);
+                window.location.reload();
+            }
+        }
+        catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
+    }
+
 
     const [countUpcoming, setCountUpcoming] = useState(0);
     const [countCompleted, setCountCompleted] = useState(0);
@@ -275,7 +296,15 @@ function AppointmentsPage() {
                                             <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" />{apt.time}</span>
                                             <span className="flex items-center gap-1.5"><MapPin className="w-3 h-3" />{apt.hospital}</span>
                                         </div>
-                                        {apt.type && <div className="mt-2"><span className=" inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium  bg-white/5 text-white/30">{apt.type}</span></div>}
+
+                                        <div className='flex justify-between'>
+                                            {apt.type && <div className="mt-2"><span className=" inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium  bg-white/5 text-white/30">{apt.type}</span></div>}
+
+                                            <button onClick={() => handleAppointmentDelete(apt._id)} className="px-3 py-2 text-xs text-white/30 cursor-pointer hover:bg-white/8 hover:text-white/60 bg-white/3 hover:bg-accent-rose/10 rounded-lg transition-all">
+                                                <Trash2 className="w-3.5 h-3.5" />
+                                            </button>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>

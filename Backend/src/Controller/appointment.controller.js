@@ -1,4 +1,4 @@
-import {appointmentModel} from "../Models/appointment.model.js";
+import { appointmentModel } from "../Models/appointment.model.js";
 import { UserModel } from "../Models/user.model.js";
 
 
@@ -17,7 +17,7 @@ const appointment = async (req, res) => {
             date,
             time,
             type,
-            status:currStatus
+            status: currStatus
         });
 
         // Push appointment id into user model
@@ -47,4 +47,31 @@ const appointment = async (req, res) => {
     }
 };
 
-export { appointment }
+// Function to Delete a Document
+const deleteAppointment = async (req, res) => {
+    const { appointmentId } = req.body;
+
+    try {
+        const deleteAppointment = await appointmentModel.findByIdAndDelete(appointmentId);
+
+        if (!deleteAppointment) {
+            return res.status(404).json({
+                success: false,
+                message: "Appointment not found",
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Appointment deleted successfully",
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+export { appointment, deleteAppointment }
