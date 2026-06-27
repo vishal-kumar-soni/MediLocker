@@ -11,7 +11,6 @@ function AppointmentsPage() {
     const [showForm, setShowForm] = useState(false)
     const [newAppointment, setNewAppointment] = useState(mockAppointments)
     const [loading, setLoading] = useState(true)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState({})
     const [form, setForm] = useState({ doctor: '', specialty: '', hospital: '', date: '', time: '', type: '', status: '' })
 
@@ -27,7 +26,6 @@ function AppointmentsPage() {
                 const user = response.data.user;
                 setLoading(false)
                 setLoggedInUser(user);
-                setIsLoggedIn(true)
                 setAppointment(user.appointments)
             }
         }
@@ -111,7 +109,6 @@ function AppointmentsPage() {
             alert(error.response?.data?.message || error.message);
         }
     }
-
 
     const [countUpcoming, setCountUpcoming] = useState(0);
     const [countCompleted, setCountCompleted] = useState(0);
