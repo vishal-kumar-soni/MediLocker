@@ -1,10 +1,12 @@
 import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Heart, Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Heart, Eye, EyeOff, Loader2, WatchIcon } from 'lucide-react'
 import logo from '../assets/Logo.png'
 import axios from 'axios'
 import { UserContext } from '../Context/UserContext'
-import { } from 'react'
+import BloodComponents from '../Components/assets/BloodComponents'
+import InitialBloodData from '../Components/assets/InitailComponent'
+
 
 
 
@@ -17,6 +19,7 @@ function RegisterPage() {
 
   const [step, setStep] = useState(1)
   const [showPass, setShowPass] = useState(false)
+  const [blood, setBlood] = useState(InitialBloodData)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
     userName: '', email: '', password: '', phone: '', dob: '', gender: 'Male', bloodGroup: 'B+',
@@ -45,9 +48,25 @@ function RegisterPage() {
       const response = await axios.post(
         `http://localhost:5000/api/user/signup`,
         { userName, email, password, dob, phone, gender, bloodGroup },
-        { withCredentials: true }
+        {
+          withCredentials: true
+        }
       );
 
+      const userId = response.data.user._id
+      const {  hemoglobin, rbc, wbc, platelets, hematocrit, glucose, cholesterol, triglycerides } = blood
+      try {
+        const bloodResponse = await axios.post(
+          'http://localhost:5000/api/medical/bloodReport',
+          { userId, hemoglobin, rbc, wbc, platelets, hematocrit, glucose, cholesterol, triglycerides },
+          {
+            withCredentials: true
+          },
+        )
+      } catch (error) {
+        console.log(error);
+        alert(error.bloodResponse?.data?.message || error.message);
+      }
 
       if (response.data.success) {
 
@@ -62,6 +81,8 @@ function RegisterPage() {
     finally {
       setLoading(false)
     }
+
+
   }
 
   return (

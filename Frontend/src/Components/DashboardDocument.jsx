@@ -27,7 +27,6 @@ function DashboardDocument() {
     const [uploaded, setUploaded] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [form, setForm] = useState({ name: '', hospital: '', doctor: '', type: '', size: '', format: '', doc: '' })
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState({})
     const [loading, setLoading] = useState(true)
     const [pdf, setPdf] = useState(false)
@@ -60,7 +59,6 @@ function DashboardDocument() {
                 const user = response.data.user;
                 setLoading(false)
                 setLoggedInUser(user);
-                setIsLoggedIn(true)
                 setDocs(user.documents)
                 setNewDocument(user.documents)
             }
@@ -179,7 +177,7 @@ function DashboardDocument() {
     }
     if (loading) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+            <div className="flex flex-col items-center justify-center min-h-screen  pb-50  gap-4">
                 <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
                 <p className="text-gray-400 text-sm">Loading your Documents...</p>
             </div>

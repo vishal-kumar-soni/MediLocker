@@ -49,4 +49,29 @@ const saveBloodValues = async (req, res) => {
     }
 };
 
-export { saveBloodValues }
+const updateBloodReport = async (req, res)=>{
+
+    const { userId, name, value } = req.body;
+
+    try {
+
+        const user = await UserModel.findById({ _id: userId })
+
+        const blood = await BloodModel.findOneAndUpdate({userId:user._id},{name:value})
+
+        return res.status(200).json({
+            success: true,
+            message: "User profile updated successfully",
+            user: updatedUser
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            error: error.message,
+            success: false,
+            message: "Something went wrong while updating user",
+        })
+    }
+}
+
+export { saveBloodValues, updateBloodReport }

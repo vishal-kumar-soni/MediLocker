@@ -5,7 +5,7 @@ import kidney from './kidney.png'
 import brain from './brain.png'
 import bones from './bones.png'
 
-const organHealth = [
+const MockorganHealth = [
     {
         name: "Heart",
         image: heart,
@@ -32,4 +32,4 @@ const organHealth = [
     },
 ]
 
-export default organHealth
+export default MockorganHealth

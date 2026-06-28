@@ -3,6 +3,8 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGri
 import clsx from "clsx";
 import { useState, useEffect } from "react";
 import BloodComponents from "./assets/BloodComponents";
+import axios from "axios";
+import InitialBloodData from '../Components/assets/InitailComponent'
 
 const labels = {
     hemoglobin: "Hemoglobin",
@@ -32,13 +34,71 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 function DashboardBloodReport() {
-    const [bloodData, setBloodData] = useState(BloodComponents);
 
+    const [bloodData, setBloodData] = useState(BloodComponents);
+    const [userBloodDetails, setUserBloodDetails] = useState(InitialBloodData);
+    const [loggedInUser, setLoggedInUser] = useState({})
     const [countNormal, setCountNormal] = useState(0);
     const [countWarning, setCountWarning] = useState(0);
     const [countCritical, setCountCritical] = useState(0);
-
     const [editing, setEditing] = useState(null);
+
+
+    useEffect(() => {
+
+        async function checkLoggedIn() {
+
+            try {
+
+                const response = await axios.get(
+                    "http://localhost:5000/api/user/getme",
+                    {
+                        withCredentials: true,
+                    }
+                );
+
+                if (response.data.success) {
+
+                    const user = response.data.user;
+                    setUserBloodDetails(user.bloodRecords)
+
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        checkLoggedIn();
+    }, []);
+
+    useEffect(() => {
+        // console.log(userBloodDetails)
+        // console.log(userBloodDetails[0])
+        // console.log(bloodData)
+
+        if (!userBloodDetails?.length) return;
+
+        const report = userBloodDetails[0];
+
+        const updatedBloodData = bloodData.map((item) => {
+            for (const key in report) {
+                if (item.name === key) {
+                    return {
+                        ...item,
+                        value: report[key]
+                    };
+                }
+            }
+
+            return item;
+        });
+
+        setBloodData(updatedBloodData);
+    }, [userBloodDetails])
+
+    // console.log("user details---------",userBloodDetails)
+
+    // console.log(bloodData)
+    // console.log(bloodDetails)
 
     useEffect(() => {
         let normalCount = 0;
