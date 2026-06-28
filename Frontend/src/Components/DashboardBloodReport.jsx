@@ -1,4 +1,4 @@
-import { Droplets, TrendingUp, TrendingDown, Minus, Info } from "lucide-react";
+import { Droplets, TrendingUp, TrendingDown, Plus, Minus, X, Info } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line } from "recharts";
 import clsx from "clsx";
 import { useState, useEffect } from "react";
@@ -38,6 +38,7 @@ function DashboardBloodReport() {
     const [bloodData, setBloodData] = useState(BloodComponents);
     const [userBloodDetails, setUserBloodDetails] = useState(InitialBloodData);
     const [loggedInUser, setLoggedInUser] = useState({})
+    const [showForm, setShowForm] = useState(false)
     const [countNormal, setCountNormal] = useState(0);
     const [countWarning, setCountWarning] = useState(0);
     const [countCritical, setCountCritical] = useState(0);
@@ -60,6 +61,7 @@ function DashboardBloodReport() {
                 if (response.data.success) {
 
                     const user = response.data.user;
+                    setLoggedInUser(user)
                     setUserBloodDetails(user.bloodRecords)
 
                 }
@@ -71,9 +73,6 @@ function DashboardBloodReport() {
     }, []);
 
     useEffect(() => {
-        // console.log(userBloodDetails)
-        // console.log(userBloodDetails[0])
-        // console.log(bloodData)
 
         if (!userBloodDetails?.length) return;
 
@@ -95,10 +94,34 @@ function DashboardBloodReport() {
         setBloodData(updatedBloodData);
     }, [userBloodDetails])
 
-    // console.log("user details---------",userBloodDetails)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    // console.log(bloodData)
-    // console.log(bloodDetails)
+        try {
+
+            for (const blood of bloodData) {
+
+                await axios.post(
+                    "http://localhost:5000/api/medical/updateblood",
+                    {
+                        userId: loggedInUser._id,
+                        name: blood.name,
+                        value: blood.value
+                    },
+                    {
+                        withCredentials: true
+                    }
+                );
+            }
+
+            alert("✅ Blood report updated successfully.");
+            setShowForm(false);
+
+        } catch (error) {
+            console.log(error);
+            alert("Failed to update blood report.");
+        }
+    };
 
     useEffect(() => {
         let normalCount = 0;
@@ -117,10 +140,73 @@ function DashboardBloodReport() {
 
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className=" text-2xl font-bold text-white">Blood Report</h1>
-                <p className="text-white/40 text-sm mt-1">Know all About your Blood</p>
+
+            <div className="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                    <h1 className=" text-2xl font-bold text-white">Blood Report</h1>
+                    <p className="text-white/40 text-sm mt-1">Know all About your Blood</p>
+                </div>
+                <button onClick={() => setShowForm(true)} className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm flex items-center gap-2">
+                    <Plus className="w-4 h-4" />Update Blood
+                </button>
             </div>
+
+            {showForm && (
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className=" bg-[#17202b] backdrop-blur-md border border-white/8 rounded-2xl p-7 w-full max-w-md animate-in">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-lg font-bold text-white">New Appointment</h2>
+                            <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white"><X className="w-5 h-5" /></button>
+                        </div>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4">
+                                {bloodData.map((blood, index) => (
+                                    <div key={blood.name}>
+                                        <label className="block text-xs text-white/40 mb-1.5">
+                                            {blood.name}
+                                        </label>
+
+                                        <input
+                                            type="number"
+                                            name={blood.name}
+                                            value={blood.value}
+                                            onChange={(e) => {
+                                                const updated = [...bloodData];
+
+                                                updated[index] = {
+                                                    ...updated[index],
+                                                    value: e.target.value,
+                                                };
+
+                                                setBloodData(updated);
+                                            }}
+                                            className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm py-2.5"
+                                            required
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="flex gap-3 pt-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowForm(false)}
+                                    className="flex-1 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-5 rounded-xl transition-all duration-200 active:scale-95 text-sm py-3"
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    className="flex-1 bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm"
+                                >
+                                    Update Blood Component
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
 
             {/* Summary banner */}
             <div className=" bg-[#1a222d] backdrop-blur-md border border-white/8 rounded-2xl p-5 ">
@@ -175,40 +261,12 @@ function DashboardBloodReport() {
                             </div>
                             {/* Value of the blood */}
                             <div className="flex items-baseline gap-1.5 mb-2">
-                                {editing === item.name ? (
-                                    <input
-                                        type="number"
-                                        value={item.value}
-                                        autoFocus
-                                        onChange={(e) => {
-                                            setBloodData((prev) =>
-                                                prev.map((bloodItem) =>
-                                                    bloodItem.name === item.name
-                                                        ? {
-                                                            ...bloodItem,
-                                                            value: Number(e.target.value),
-                                                        }
-                                                        : bloodItem,
-                                                ),
-                                            );
-                                        }}
-                                        onBlur={() => setEditing(null)}
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                setEditing(null);
-                                            }
-                                        }}
-                                        className="w-24 bg-[#111827] border border-cyan-500 rounded-lg px-2 py-1 text-cyan-400 font-bold outline-none"
-                                    />
-                                ) : (
                                     <span
-                                        onClick={() => setEditing(item.name)}
-                                        className={`${isNormal ? "text-cyan-500/80" : "text-orange-500"
-                                            } text-2xl font-bold cursor-pointer hover:opacity-80`}
+                                        className={`${isNormal ? "text-cyan-500/80" : "text-orange-500"} text-2xl font-bold cursor-pointer hover:opacity-80`}
                                     >
                                         {item.value}
                                     </span>
-                                )}
+                                
 
                                 <span className="text-xs text-white/30">{item.unit}</span>
                             </div>

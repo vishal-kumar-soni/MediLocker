@@ -49,27 +49,34 @@ const saveBloodValues = async (req, res) => {
     }
 };
 
-const updateBloodReport = async (req, res)=>{
+const updateBloodReport = async (req, res) => {
 
     const { userId, name, value } = req.body;
+    console.log(req.body)
 
     try {
 
         const user = await UserModel.findById({ _id: userId })
 
-        const blood = await BloodModel.findOneAndUpdate({userId:user._id},{name:value})
+        console.log("User:", user);
+
+        const blood = await BloodModel.findOneAndUpdate(
+            { userId: user._id },
+            { [name]: value }, // computed property name
+            { new: true }
+        );
 
         return res.status(200).json({
             success: true,
-            message: "User profile updated successfully",
-            user: updatedUser
+            message: "Blood Component updated successfully",
+            blood
         })
 
     } catch (error) {
         return res.status(500).json({
             error: error.message,
             success: false,
-            message: "Something went wrong while updating user",
+            message: "Something went wrong while updating blood component",
         })
     }
 }
