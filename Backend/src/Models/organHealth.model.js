@@ -44,7 +44,7 @@ const organHealthSchema = new mongoose.Schema(
             score: { type: String, default: "80" }
         },
 
-        stomach: {
+        bones: {
             status: { type: String, default: "Healthy" },
             lastCheck: { type: String, default: "" },
             note: { type: String, default: "" },

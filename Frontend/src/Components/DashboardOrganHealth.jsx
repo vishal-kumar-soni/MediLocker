@@ -20,9 +20,10 @@ function DashboardOrganHealth() {
             status: "Healthy",
             note: "",
             lastCheck: "",
+            score: 0,
         })),
     );
-    
+
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
@@ -38,23 +39,10 @@ function DashboardOrganHealth() {
                 setOrganHealth(user.organHealthRecords)
             }
         }
-        
+
         checkLoggedIn();
     }, []);
-    
-    console.log("Form data",formData)
-    console.log("Organ Health--",OrganHealth)
 
-    // OrganHealth.map((organ)=>{
-    //     MockorganHealth.map((mock)=>{
-    //         if(organ.name==mock.name){
-                
-    //             organ.image = mock.image
-    //         }
-    //     })
-    // })
-
-    
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
@@ -63,13 +51,45 @@ function DashboardOrganHealth() {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        if (!OrganHealth.length) return;
+
+        const health = OrganHealth[0];
+
+        setFormData((prev) =>
+            prev.map((item) => ({
+                ...item,
+                ...(health[item.name] || {})
+            }))
+        );
+    }, [OrganHealth]);
+
     const handleSubmit = async (e) => {
 
         e.preventDefault()
 
-        // axios.post("/api/organ-health", {
-        //   organs: formData
-        // })
+        try {
+
+            const response = await axios.post(
+                "http://localhost:5000/api/medical/updateOrganHealth",
+                {
+                    userId: loggedInUser._id,
+                    organs: formData,
+                },
+                {
+                    withCredentials: true,
+                }
+            );
+
+            if (response.data.success) {
+                alert(response.data.message);
+                setShowForm(false);
+            }
+
+        } catch (error) {
+            console.log(error);
+            alert(error.response?.data?.message || error.message);
+        }
 
         setShowForm(false);
     };
@@ -133,10 +153,7 @@ function DashboardOrganHealth() {
 
                             <div className="space-y-6">
                                 {formData.map((organ, index) => (
-                                    <div
-                                        key={organ.name}
-                                        className="border bg-[#151e29]  border-white/10 rounded-xl p-4"
-                                    >
+                                    <div key={organ.name} className="border bg-[#151e29]  border-white/10 rounded-xl p-4">
                                         <div className="flex items-center gap-3 mb-4">
                                             <img
                                                 src={organ.image}
@@ -144,7 +161,7 @@ function DashboardOrganHealth() {
                                                 className="w-12 h-12"
                                             />
 
-                                            <h3 className="text-lg font-semibold text-white">
+                                            <h3 className="text-lg font-semibold capitalize text-white">
                                                 {organ.name}
                                             </h3>
                                         </div>
@@ -181,20 +198,37 @@ function DashboardOrganHealth() {
                                             </div>
                                         </div>
 
+                                        <div>
+                                            <label className="block text-[14px] text-white/40 mb-1.5">Score</label>
+                                            <input
+                                                type="text"
+                                                value={organ.score}
+                                                onChange={(e) => {
+                                                    const updated = [...formData];
+                                                    updated[index].score = e.target.value;
+                                                    setFormData(updated);
+                                                }}
+                                                className="w-1/2 bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
+                                            />
+                                        </div>
+
                                         <div className="mt-5">
                                             <label className="block text-[14px] text-white/40 mb-1.5">Note</label>
                                             <textarea
                                                 placeholder="Enter note..."
                                                 value={organ.note}
+                                                maxLength={50}
                                                 onChange={(e) => {
                                                     const updated = [...formData];
                                                     updated[index].note = e.target.value;
                                                     setFormData(updated);
                                                 }}
-                                                className="w-full bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
-                                                rows={3}
+                                                className="w-full resize-none bg-[#192638] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 text-sm"
+                                                rows={2}
                                             />
-
+                                            <p className="text-right text-xs text-gray-400 mt-1">
+                                                {organ.note.length}/50
+                                            </p>
                                         </div>
                                     </div>
                                 ))}
@@ -258,6 +292,7 @@ function DashboardOrganHealth() {
                 {/* Organ cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {formData.map((organ) => {
+                        let scoreValue = organ.score 
                         const isHealthy = organ.status == "Healthy" ? true : false;
 
                         return (
@@ -280,12 +315,15 @@ function DashboardOrganHealth() {
                                             {organ.status}
                                         </span>
                                     </div>
-                                    <h3 className=" text-lg font-semibold text-white mb-1">
+                                    <h3 className=" text-lg font-semibold capitalize text-white mb-1">
                                         {organ.name}
                                     </h3>
-                                    <p className="text-sm text-white/40 leading-relaxed mb-4">
+                                    <div className={`${organ.note?'bg-[#2b434b]/50 px-2 py-1.5 overflow-hidden rounded-sm my-3':'hidden'}`}>
+                                        <p className="text-sm text-white/70 ">
                                         {organ.note}
                                     </p>
+                                    </div>
+                                    
                                     <div className="flex items-center gap-1.5 text-xs text-white/30">
                                         <Clock className="w-3 h-3" />
                                         Last check: {organ.lastCheck}
@@ -294,9 +332,9 @@ function DashboardOrganHealth() {
                                     {/* Status bar */}
                                     <div className="mt-4 h-1 rounded-full bg-white/5">
                                         <div
-                                            className={`h-full rounded-full', ${organ.status === "Healthy" ? "bg-cyan-500" : "bg-amber-500"}`}
+                                            className={`h-full rounded-full', ${Number(scoreValue) >= 50 ? "bg-cyan-500" : "bg-amber-500"}`}
                                             style={{
-                                                width: organ.status === "Healthy" ? "90%" : "55%",
+                                                width: `${Number(scoreValue)}%`,
                                             }}
                                         />
                                     </div>
