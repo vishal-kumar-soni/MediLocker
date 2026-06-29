@@ -7,27 +7,27 @@ import bones from './bones.png'
 
 const MockorganHealth = [
     {
-        name: "Heart",
+        name: "heart",
         image: heart,
     },
     {
-        name: "Lungs",
+        name: "lungs",
         image: lungs,
     },
     {
-        name: "Liver",
+        name: "liver",
         image: liver,
     },
     {
-        name: "Kidney",
+        name: "kidney",
         image: kidney,
     },
     {
-        name: "Brain",
+        name: "brain",
         image: brain,
     },
     {
-        name: "Bones",
+        name: "bones",
         image: bones,
     },
 ]

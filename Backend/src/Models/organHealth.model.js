@@ -11,42 +11,42 @@ const organHealthSchema = new mongoose.Schema(
 
         heart: {
             status: { type: String, default: "Healthy" },
-            date: { type: String, default: "" },
+            lastCheck: { type: String, default: "" },
             note: { type: String, default: "" },
             score: { type: String, default: "80" }
         },
 
         lungs: {
             status: { type: String, default: "Healthy" },
-            date: { type: String, default: "" },
+            lastCheck: { type: String, default: "" },
             note: { type: String, default: "" },
             score: { type: String, default: "80" }
         },
 
         liver: {
             status: { type: String, default: "Healthy" },
-            date: { type: String, default: "" },
+            lastCheck: { type: String, default: "" },
             note: { type: String, default: "" },
             score: { type: String, default: "80" }
         },
 
         kidney: {
             status: { type: String, default: "Healthy" },
-            date: { type: String, default: "" },
+            lastCheck: { type: String, default: "" },
             note: { type: String, default: "" },
             score: { type: String, default: "80" }
         },
 
         brain: {
             status: { type: String, default: "Healthy" },
-            date: { type: String, default: "" },
+            lastCheck: { type: String, default: "" },
             note: { type: String, default: "" },
             score: { type: String, default: "80" }
         },
 
         stomach: {
             status: { type: String, default: "Healthy" },
-            date: { type: String, default: "" },
+            lastCheck: { type: String, default: "" },
             note: { type: String, default: "" },
             score: { type: String, default: "80" }
         },

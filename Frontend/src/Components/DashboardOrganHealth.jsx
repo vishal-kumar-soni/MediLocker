@@ -22,7 +22,6 @@ function DashboardOrganHealth() {
             lastCheck: "",
         })),
     );
-    console.log(formData)
     
     useEffect(() => {
         async function checkLoggedIn() {
@@ -39,18 +38,21 @@ function DashboardOrganHealth() {
                 setOrganHealth(user.organHealthRecords)
             }
         }
-
+        
         checkLoggedIn();
     }, []);
+    
+    console.log("Form data",formData)
+    console.log("Organ Health--",OrganHealth)
 
-    OrganHealth.map((organ)=>{
-        MockorganHealth.map((mock)=>{
-            if(organ.name==mock.name){
+    // OrganHealth.map((organ)=>{
+    //     MockorganHealth.map((mock)=>{
+    //         if(organ.name==mock.name){
                 
-                organ.image = mock.image
-            }
-        })
-    })
+    //             organ.image = mock.image
+    //         }
+    //     })
+    // })
 
     
     useEffect(() => {
