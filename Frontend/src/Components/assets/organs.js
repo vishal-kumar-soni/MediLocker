@@ -1,11 +1,16 @@
+import heart from './heart.png'
+import lungs from './lungs.png'
+import liver from './liver.png'
+import kidney from './kidney.png'
+import brain from './brain.png'
+import bones from './bones.png'
 
 
 let organs = [
     {
         name: "Heart",
         emoji: "❤️",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4CKReYVLH2lDi3dXloODeujSFpwybL7KDw&s",
+        image: heart,
         link: 'https://en.wikipedia.org/wiki/Heart',
         info: [
             "Pumps blood throughout the body",
@@ -17,9 +22,7 @@ let organs = [
     {
         name: "Lungs",
         emoji: "🫁",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGsot6ZMfstVZSm0v6CzNj1SpoFPO-7pZtGQ&s",
-        link: "https://en.wikipedia.org/wiki/Lung",
+        image: lungs, link: "https://en.wikipedia.org/wiki/Lung",
         info: [
             "Help in breathing process",
             "Exchange oxygen and carbon dioxide",
@@ -30,9 +33,7 @@ let organs = [
     {
         name: "Liver",
         emoji: "🧬",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUH1inM5onujKcsUSe5UxxFbX_LXypbqRA5A&s",
-        link: "https://en.wikipedia.org/wiki/Liver",
+        image: liver, link: "https://en.wikipedia.org/wiki/Liver",
         info: [
             "Detoxifies harmful substances",
             "Produces bile for digestion",
@@ -43,8 +44,7 @@ let organs = [
     {
         name: "Kidney",
         emoji: "🫘",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb4ky_J-TaUCWUtarqs2JzhGJTaV_qdahG3g&s",
+        image: kidney,
         link: "https://en.wikipedia.org/wiki/Kidney",
         info: [
             "Filters waste from blood",
@@ -56,8 +56,7 @@ let organs = [
     {
         name: "Brain",
         emoji: "🧠",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFJyoGn_wDVkC-zxGAlk-4IBJvC7FjXV8QFQ&s",
+        image: brain,
         link: "https://en.wikipedia.org/wiki/Brain",
         info: [
             "Controls body functions",
@@ -69,8 +68,7 @@ let organs = [
     {
         name: "Bones",
         emoji: "🦴",
-        image:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgWtPaWOIkWMcJ3HcIhXVK3qc31LMILZ7jTg&s",
+        image: bones,
         link: "https://en.wikipedia.org/wiki/Bones",
         info: [
             "Provide body structure",
