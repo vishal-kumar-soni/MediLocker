@@ -1,51 +1,31 @@
 import { OrganHealth } from "../Models/organHealth.model.js";
 import { UserModel } from "../Models/user.model.js";
 
-const addOrganHealth = async (req, res) => {
+const createOrganHealth = async (req, res) => {
     try {
-        const { userId, organs } = req.body;
+        const { userId } = req.body;
 
-        if (!userId || !organs) {
-            return res.status(400).json({
-                success: false,
-                message: "Missing required fields",
-            });
-        }
-
-        for (const organ of organs) {
-
-            const updatedOrgan = await OrganHealth.findOneAndUpdate(
-                {
-                    user: userId,
-                    name: organ.name,
-                },
-                {
-                    user: userId,
-                    name: organ.name,
-                    status: organ.status,
-                    note: organ.note,
-                    lastCheck: organ.lastCheck,
-                },
-                {
-                    returnDocument: "after",
-                    upsert: true,
-                }
-            );
-
-            await UserModel.findByIdAndUpdate(
-                userId,
-                {
-                    $addToSet: {
-                        organHealthRecords: updatedOrgan._id,
-                    },
-                }
-            );
-        }
-
-        return res.status(200).json({
-            success: true,
-            message: "Organ health updated successfully",
+        // Create Organ Health
+        const organHealth = await OrganHealth.create({
+            user: userId,
         });
+
+        // Save its reference in User
+        await UserModel.findByIdAndUpdate(
+            userId,
+            {
+                $push: {
+                    organHealthRecords: organHealth._id,
+                },
+            }
+        );
+
+        return res.status(201).json({
+            success: true,
+            message: "Organ Health created successfully.",
+            organHealth,
+        });
+
     } catch (error) {
         return res.status(500).json({
             success: false,
@@ -54,4 +34,4 @@ const addOrganHealth = async (req, res) => {
     }
 };
 
-export { addOrganHealth };
+export { createOrganHealth };

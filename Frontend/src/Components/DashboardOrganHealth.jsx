@@ -22,7 +22,7 @@ function DashboardOrganHealth() {
             lastCheck: "",
         })),
     );
-    // console.log(formData)
+    console.log(formData)
     
     useEffect(() => {
         async function checkLoggedIn() {

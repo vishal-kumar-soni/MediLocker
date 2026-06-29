@@ -53,8 +53,9 @@ function RegisterPage() {
         }
       );
 
+      // Creating Blood Report for newly registered user
       const userId = response.data.user._id
-      const {  hemoglobin, rbc, wbc, platelets, hematocrit, glucose, cholesterol, triglycerides } = blood
+      const { hemoglobin, rbc, wbc, platelets, hematocrit, glucose, cholesterol, triglycerides } = blood
       try {
         const bloodResponse = await axios.post(
           'http://localhost:5000/api/medical/bloodReport',
@@ -66,6 +67,22 @@ function RegisterPage() {
       } catch (error) {
         console.log(error);
         alert(error.bloodResponse?.data?.message || error.message);
+      }
+
+      // Creating organ Health for newly registered user
+      if (response) {
+        try {
+          const organResponse = await axios.post(
+            'http://localhost:5000/api/medical/organHealth',
+            { userId },
+            {
+              withCredentials: true
+            },
+          )
+        } catch (error) {
+          console.log(error);
+          alert(error.organResponse?.data?.message || error.message);
+        }
       }
 
       if (response.data.success) {
@@ -81,7 +98,6 @@ function RegisterPage() {
     finally {
       setLoading(false)
     }
-
 
   }
 

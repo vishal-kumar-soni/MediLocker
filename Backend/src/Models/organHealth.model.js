@@ -6,40 +6,52 @@ const organHealthSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true,
+            unique: true,
         },
 
-        name: {
-            type: String,
-            required: true,
-            enum: [
-                "Heart",
-                "Lungs",
-                "Liver",
-                "Kidney",
-                "Brain",
-                "Bones",
-            ],
+        heart: {
+            status: { type: String, default: "Healthy" },
+            date: { type: String, default: "" },
+            note: { type: String, default: "" },
+            score: { type: String, default: "80" }
         },
 
-        status: {
-            type: String,
-            enum: ["Healthy", "Need Attention"],
-            default: "Healthy",
+        lungs: {
+            status: { type: String, default: "Healthy" },
+            date: { type: String, default: "" },
+            note: { type: String, default: "" },
+            score: { type: String, default: "80" }
         },
 
-        note: {
-            type: String,
-            trim: true,
-            default: "",
+        liver: {
+            status: { type: String, default: "Healthy" },
+            date: { type: String, default: "" },
+            note: { type: String, default: "" },
+            score: { type: String, default: "80" }
         },
 
-        lastCheck: {
-            type: Date,
+        kidney: {
+            status: { type: String, default: "Healthy" },
+            date: { type: String, default: "" },
+            note: { type: String, default: "" },
+            score: { type: String, default: "80" }
+        },
+
+        brain: {
+            status: { type: String, default: "Healthy" },
+            date: { type: String, default: "" },
+            note: { type: String, default: "" },
+            score: { type: String, default: "80" }
+        },
+
+        stomach: {
+            status: { type: String, default: "Healthy" },
+            date: { type: String, default: "" },
+            note: { type: String, default: "" },
+            score: { type: String, default: "80" }
         },
     },
-    {
-        timestamps: true,
-    }
+    { timestamps: true }
 );
 
 export const OrganHealth = mongoose.model("OrganHealth", organHealthSchema);
