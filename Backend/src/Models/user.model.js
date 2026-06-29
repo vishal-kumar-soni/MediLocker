@@ -30,7 +30,7 @@ const userSchema = new Schema(
 
         dob: {
             required: true,
-            type: Date,
+            type: String,
         },
 
         gender: {

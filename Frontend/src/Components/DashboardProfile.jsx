@@ -356,9 +356,9 @@ function DashboardProfile() {
                             </span>
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{isLoggedIn ? loggedInUser?.gender : user.gender}</span>
 
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{isLoggedIn ? loggedInUser?.height : user.height} cm</span>
+                            <span className={` ${loggedInUser.height?'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50 ':'hidden'}`}>{isLoggedIn ? loggedInUser?.height : user.height} cm</span>
 
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{isLoggedIn ? loggedInUser?.weight : user.weight} kg</span>
+                            <span className={` ${loggedInUser.weight?'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50 ':'hidden'}`}>{isLoggedIn ? loggedInUser?.weight : user.weight} kg</span>
                         </div>
                     </div>
                 </div>
