@@ -166,7 +166,7 @@ function DashboardOrganHealth() {
                                             </h3>
                                         </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
                                             <div>
                                                 <label className="block text-[14px] text-white/40 mb-1.5">Status</label>
                                                 <select
@@ -201,7 +201,7 @@ function DashboardOrganHealth() {
                                         <div>
                                             <label className="block text-[14px] text-white/40 mb-1.5">Score</label>
                                             <input
-                                                type="text"
+                                                type="number"
                                                 value={organ.score}
                                                 onChange={(e) => {
                                                     const updated = [...formData];

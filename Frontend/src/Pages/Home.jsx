@@ -98,7 +98,7 @@ function Home() {
 
                     <Link to="/body_organs" className=" bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-95; text-sm sm:px-5 sm:py-2.5">Human Organs</Link>
 
-                    <div className="w-9 h-9 rounded-full  bg-white  flex items-center justify-center text-sm font-bold text-white">
+                    <div className="w-9 h-9 rounded-full    flex items-center justify-center text-sm font-bold text-white">
                         <Link to={isLoggedIn?'/dashboard/profile':'/login'}>
                             <img src={loggedInUser.profileImage ? loggedInUser.profileImage : profileImage} alt="profile Image" className='rounded-full' />
                         </Link>
@@ -129,9 +129,7 @@ function Home() {
                             </h1>
 
                             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
-                                Store all your medical reports safely in one place. Access them
-                                anytime, anywhere with your unique Patient ID. Secure OTP
-                                verification ensures your health data stays protected.
+                               Securely manage all your medical reports, prescriptions, and health records in one place. Access your information anytime, anywhere with complete privacy and protection.
                             </p>
 
                             <div className="mt-8 flex flex-wrap gap-x-10 gap-y-5">
@@ -148,11 +146,11 @@ function Home() {
                             </div>
 
                             <div className="mt-9 flex flex-wrap gap-4">
-                                <Link to='/register' className="inline-flex items-center gap-2 rounded-xl  bg-cyan-400  px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 transition-transform hover:scale-[1.02] active:scale-[0.99]">
-                                    <UserPlus className="h-5 w-5" />
-                                    Create Free Account
+                                <Link to={ isLoggedIn? '/dashboard':'/register'} className="inline-flex items-center gap-2 rounded-xl  bg-cyan-400  px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-cyan-500/20 transition-transform hover:scale-[1.02] active:scale-[0.99]">
+                                  {isLoggedIn?<ChevronRight className="h-5 w-5" />:<UserPlus className="h-5 w-5" />}  
+                                   {isLoggedIn?'Your Dashboard':'Create Free Account'} 
                                 </Link>
-                                <Link to='/dashboard' className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/40 px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-slate-800/60">
+                                <Link to='/dashboard' className={` ${!isLoggedIn? 'inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/40 px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-slate-800/60':'hidden'} `}>
                                     <PlayCircle className="h-5 w-5" />
                                     Demo Login
                                 </Link>

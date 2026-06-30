@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Heart, Eye, EyeOff, Loader2, WatchIcon } from 'lucide-react'
+import { Heart, Eye, EyeOff, Loader2, WatchIcon, ChevronLeft } from 'lucide-react'
 import logo from '../assets/Logo.png'
 import axios from 'axios'
 import { UserContext } from '../Context/UserContext'
@@ -111,10 +111,19 @@ function RegisterPage() {
             <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
               <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
             </div>
-            <span className="font-logo text-xl font-bold text-white">MediLocker</span>
+            <span className="font-logo text-xl font-bold text-white">
+              Medi<span className="text-cyan-300">Locker</span>
+            </span>
           </Link>
           <h1 className="font-separated text-2xl font-bold text-white mb-2">Create your account</h1>
-          <p className="text-white/40 text-sm">Step {step} of 2 — {step === 1 ? 'Account Info' : 'Health Profile'}</p>
+          <div className="flex text-white/40 text-sm">
+            <Link to='/' title='Back to Home' className='bg-[#252f3f] p-0.5 rounded-lg'>
+              <ChevronLeft className="h-5 w-5 text-white" />
+            </Link>
+            <div className='ml-25 sm:ml-30'>
+              Step {step} of 2 — {step === 1 ? 'Account Info' : 'Health Profile'}
+            </div>
+          </div> 
         </div>
 
         <div className="flex gap-2 mb-6">
@@ -156,7 +165,7 @@ function RegisterPage() {
                   type="tel"
                   value={form.phone}
                   name='phone'
-                  onChange={handleChange} placeholder="+91 98765 43210"
+                  onChange={handleChange} placeholder="98765 43210"
                   className="w-full bg-[#1b2335] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20"
                   required
                 />

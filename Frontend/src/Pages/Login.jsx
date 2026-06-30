@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Heart, Eye, EyeOff, Loader2, X } from 'lucide-react'
+import { Heart, Eye, EyeOff, Loader2, X ,ChevronLeft} from 'lucide-react'
 import logo from '../assets/Logo.png'
 import axios from 'axios'
 import { UserContext } from '../Context/UserContext'
@@ -10,7 +10,7 @@ function LoginPage() {
 
     const navigate = useNavigate()
 
-    const {token, setToken} = useContext(UserContext)
+    const { token, setToken } = useContext(UserContext)
     const [form, setForm] = useState({ email: '', password: '' })
     const [showPass, setShowPass] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -46,7 +46,7 @@ function LoginPage() {
             console.log(error);
             alert(error.response?.data?.message || error.message);
         }
-        finally{
+        finally {
             setLoading(false)
         }
     }
@@ -64,7 +64,17 @@ function LoginPage() {
                         <span className="font-logo text-xl  text-white">MediLocker</span>
                     </Link>
                     <h1 className="font-separated text-2xl font-bold text-white mb-2">Welcome back</h1>
-                    <p className="text-white/40 text-sm">Sign in to access your health records</p>
+
+                    <div className="flex text-white/40 text-sm">
+                        <Link to='/' title='Back to Home' className='bg-[#252f3f] p-0.5 rounded-lg'>
+                            <ChevronLeft className="h-5 w-5 text-white" />
+                        </Link>
+                        <div className='ml-15 sm:ml-22'>
+                            Sign in to access your health records
+                        </div>
+                    </div>
+
+                    <div className="text-white/40 text-sm"></div>
                 </div>
 
                 {/* Login Box */}

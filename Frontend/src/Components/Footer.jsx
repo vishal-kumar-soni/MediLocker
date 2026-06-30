@@ -12,7 +12,9 @@ export default function Footer() {
                         <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
                            <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
                         </div>
-                        <span className="font-logo text-xl font-bold text-white">MediVault</span>
+                        <span className="font-logo text-xl font-bold text-white">
+                            Medi<span className="text-cyan-300">Locker</span>
+                        </span>
                     </div>
 
                     <p className="mt-3 text-sm text-gray-400">
