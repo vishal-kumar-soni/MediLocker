@@ -117,7 +117,7 @@ function RegisterPage() {
           </Link>
           <h1 className="font-separated text-2xl font-bold text-white mb-2">Create your account</h1>
           <div className="flex text-white/40 text-sm">
-            <Link to='/' title='Back to Home' className='bg-[#252f3f] p-0.5 rounded-lg'>
+            <Link to='/' title='Back to Home' className='hover:bg-[#2ec47e] p-0.5 rounded-lg transition-all'>
               <ChevronLeft className="h-5 w-5 text-white" />
             </Link>
             <div className='ml-25 sm:ml-30'>

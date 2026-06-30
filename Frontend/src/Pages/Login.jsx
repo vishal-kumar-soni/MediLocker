@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Heart, Eye, EyeOff, Loader2, X ,ChevronLeft} from 'lucide-react'
+import { Heart, Eye, EyeOff, Loader2, X, ChevronLeft } from 'lucide-react'
 import logo from '../assets/Logo.png'
 import axios from 'axios'
 import { UserContext } from '../Context/UserContext'
@@ -61,12 +61,14 @@ function LoginPage() {
                         <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center">
                             <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
                         </div>
-                        <span className="font-logo text-xl  text-white">MediLocker</span>
+                        <span className="font-logo text-xl font-bold text-white">
+                            Medi<span className="text-cyan-300">Locker</span>
+                        </span>
                     </Link>
                     <h1 className="font-separated text-2xl font-bold text-white mb-2">Welcome back</h1>
 
                     <div className="flex text-white/40 text-sm">
-                        <Link to='/' title='Back to Home' className='bg-[#252f3f] p-0.5 rounded-lg'>
+                        <Link to='/' title='Back to Home' className='hover:bg-[#2ec47e] p-0.5 rounded-lg'>
                             <ChevronLeft className="h-5 w-5 text-white" />
                         </Link>
                         <div className='ml-15 sm:ml-22'>

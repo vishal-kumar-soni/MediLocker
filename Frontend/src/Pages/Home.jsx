@@ -92,11 +92,11 @@ function Home() {
                         <Link to="/login"
                             onClick={window.scrollTo(0, 0)}
 
-                            className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Sign in
+                            className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Login
                         </Link>
                     )}
 
-                    <Link to="/body_organs" className=" bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-95; text-sm sm:px-5 sm:py-2.5">Human Organs</Link>
+                    <Link to="/body_organs" className="hidden sm:block bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-95 text-sm sm:px-5 sm:py-2.5">Human Organs</Link>
 
                     <div className="w-9 h-9 rounded-full    flex items-center justify-center text-sm font-bold text-white">
                         <Link to={isLoggedIn?'/dashboard/profile':'/login'}>
@@ -201,14 +201,14 @@ function Home() {
                     </div>
 
                     {/* Stats bar */}
-                    <div className="relative z-10 mt-16 grid grid-cols-2 gap-8 rounded-2xl border border-slate-800  transition-all duration-300 bg-slate-900/40 px-8 py-8 sm:grid-cols-4 hover:border-cyan-500/40 sm:gap-6">
+                    <div className="relative z-10 mt-16 grid grid-cols-2 gap-8 rounded-2xl border border-slate-800  transition-all duration-300 bg-slate-800/40 px-5 py-5 sm:grid-cols-4 hover:border-cyan-500/40 sm:gap-6">
                         {stats.map(({ icon: Icon, value, label }) => (
-                            <div key={label} className="flex items-center gap-4">
-                                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-700 bg-slate-800/60 text-sky-400">
+                            <div key={label} className="flex bg-slate-900/70 items-center gap-4 border border-white/10 p-5 rounded-2xl ">
+                                <span className="flex h-12 w-12  shrink-0 items-center justify-center rounded-full border border-slate-700 bg-slate-900/60 text-sky-400">
                                     <Icon className="h-5 w-5" strokeWidth={1.8} />
                                 </span>
                                 <div className="leading-tight">
-                                    <p className="text-2xl font-extrabold text-white">{value}</p>
+                                    <p className="text-md sm:text-2xl font-extrabold text-white">{value}</p>
                                     <p className="text-sm text-slate-400">{label}</p>
                                 </div>
                             </div>
