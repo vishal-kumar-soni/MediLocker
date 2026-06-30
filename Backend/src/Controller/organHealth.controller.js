@@ -62,7 +62,7 @@ const updateOrganHealth = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Organ health updated successfully.",
+            message: "✅ Organ health updated successfully.",
             organHealth,
         });
 

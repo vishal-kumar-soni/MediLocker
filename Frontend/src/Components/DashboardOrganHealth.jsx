@@ -184,7 +184,7 @@ function DashboardOrganHealth() {
                                             </div>
 
                                             <div>
-                                                <label className="block text-[14px] text-white/40 mb-1.5">Dosage</label>
+                                                <label className="block text-[14px] text-white/40 mb-1.5">Last Check</label>
                                                 <input
                                                     type="date"
                                                     value={organ.lastCheck}
@@ -326,7 +326,7 @@ function DashboardOrganHealth() {
                                     
                                     <div className="flex items-center gap-1.5 text-xs text-white/30">
                                         <Clock className="w-3 h-3" />
-                                        Last check: {organ.lastCheck}
+                                        Last check : {organ.lastCheck}
                                     </div>
 
                                     {/* Status bar */}

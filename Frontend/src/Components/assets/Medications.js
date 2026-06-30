@@ -10,7 +10,7 @@ const mockMedications = [
     },
     {
         id: 2,
-        name: "Vitamin D3 ",
+        name: "Vitamin D3",
         dose: "60000 IU",
         PrescribedFor: "Vitamin D deficiency",
         time: "Sunday",

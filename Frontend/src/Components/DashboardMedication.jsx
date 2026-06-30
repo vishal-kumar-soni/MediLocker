@@ -19,11 +19,12 @@ function DashboardMedication() {
     const [showForm, setShowForm] = useState(false)
     const [loading, setLoading] = useState(true)
     const [loggedInUser, setLoggedInUser] = useState({})
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [form, setForm] = useState({ name: '', dose: '', time: '', PrescribedFor: '', startDate: '' })
     const [todayChecked, setTodayChecked] = useState({})
 
-    const toggleToday = (id) => {
-        setTodayChecked(prev => ({ ...prev, [id]: !prev[id] }))
+    const toggleToday = (_id) => {
+        setTodayChecked(prev => ({ ...prev, [_id]: !prev[_id] }))
     }
 
     useEffect(() => {
@@ -38,10 +39,19 @@ function DashboardMedication() {
                 const user = response.data.user;
                 setLoading(false)
                 setLoggedInUser(user);
+                setIsLoggedIn(true)
                 setMeds(user.medications)
             }
         }
         checkLoggedIn();
+    }, []);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
     }, []);
 
 
@@ -70,7 +80,7 @@ function DashboardMedication() {
             )
 
             if (response.data.success) {
-                alert("✅ " + response.data.message);
+                alert(response.data.message);
                 window.location.reload();
             }
         } catch (error) {
@@ -93,7 +103,7 @@ function DashboardMedication() {
                     withCredentials: true
                 })
             if (response.data.success) {
-                alert("✅ " + response.data.message);
+                alert(response.data.message);
                 window.location.reload();
             }
         }
@@ -213,15 +223,15 @@ function DashboardMedication() {
                     <h2 className="text-xl font-semibold text-white mb-4">Today's Doses</h2>
                     <div className="space-y-2">
                         {meds.map(med => (
-                            <div key={med._id || med.id} className={` p-3.5 rounded-xl border transition-all' ${(todayChecked[med.id]) ? "bg-cyan-500/5 border-cyan-500/20" : "bg-white/3 border-white/5"}`}>
+                            <div key={med._id || med.id} className={` p-3.5 rounded-xl border transition-all' ${(todayChecked[med._id]) ? "bg-cyan-500/5 border-cyan-500/20" : "bg-white/3 border-white/5"}`}>
                                 <div className={`flex items-center gap-4`}>
                                     <button
-                                        onClick={() => toggleToday(med.id)}
-                                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all shrink-0' ${todayChecked[med.id] ? "border-cyan-500 bg-cyan-500" : "border-white/20 hover:border-cyan-500"}`}>
-                                        {todayChecked[med.id] && <CheckCircle2 className="w-4 h-4 text-white" />}
+                                        onClick={isLoggedIn ?() => toggleToday(med._id):undefined}
+                                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all shrink-0' ${todayChecked[med._id] ? "border-cyan-500 bg-cyan-500" : "border-white/20 hover:border-cyan-500"}`}>
+                                        {todayChecked[med._id] && <CheckCircle2 className="w-4 h-4 text-white" />}
                                     </button>
                                     <div className="flex-1 min-w-0">
-                                        <p className={`text-sm font-medium transition-all capitalize ${todayChecked[med.id] ? 'text-white/40 line-through' : "text-white "} `}>
+                                        <p className={`text-sm font-medium transition-all capitalize ${todayChecked[med._id] ? 'text-white/40 line-through' : "text-white "} `}>
                                             {med.name} · {med.dose}
                                         </p>
                                         <p className="text-xs text-white/50 mt-2">Start From - {med.startDate}</p>

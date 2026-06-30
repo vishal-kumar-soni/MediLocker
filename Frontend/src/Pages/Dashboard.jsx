@@ -73,7 +73,9 @@ function Dashboard() {
                         <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
                             <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
                         </div>
-                        <Link to='/' className="font-logo text-xl font-bold text-white">MediLocker</Link>
+                        <Link to='/' className="font-logo text-xl font-bold text-white">
+                        Medi<span className="text-cyan-300">Locker</span>
+                        </Link>
                     </div>
                     <button className="lg:hidden text-white/40 hover:text-white" onClick={() => setSidebarOpen(false)}>
                         <X className="w-5 h-5" />
@@ -127,7 +129,7 @@ function Dashboard() {
                             <Bell className="w-4 h-4" />
                             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-cyan-500 rounded-full" />
                         </button>
-                        <div className="w-9 h-9 rounded-full overflow-hidden  bg-white  flex items-center justify-center text-sm font-bold text-white">
+                        <div className="w-9 h-9 rounded-full overflow-hidden  flex items-center justify-center text-sm font-bold text-white">
                             <Link to='/dashboard/profile'>
                                 <img src={loggedInUser.profileImage ? loggedInUser.profileImage : profileImage} alt="profile Image" className='rounded-full' />
                             </Link>

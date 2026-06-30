@@ -337,9 +337,8 @@ function DashboardBloodReport() {
                 <div className="flex items-start gap-3 px-4 py-3.5 rounded-xl bg-amber-500/5 border border-amber-500/10 text-sm">
                     <Info className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                     <p className="text-white/50">
-                        Triglycerides are slightly elevated (145 mg/dL , recommended &lt;150
-                        mg/dL). Consider reducing saturated fats. Consult your doctor at next
-                        visit.
+                        {countNormal} blood components are normal while {countWarning} need your attention,
+                        Improve your diet and do Exercise to keep it healthy.
                     </p>
                 </div>
             </div>
