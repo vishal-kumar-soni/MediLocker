@@ -5,7 +5,6 @@ import { UserModel } from "../Models/user.model.js";
 const medication = async (req, res) => {
 
     const { userId, name, dose, PrescribedFor, time, startDate } = req.body;
-    console.log(startDate)
 
     try {
 

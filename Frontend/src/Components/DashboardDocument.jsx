@@ -202,7 +202,7 @@ function DashboardDocument() {
 
                 {/* Form to create a document */}
                 {showForm && (
-                    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="fixed  h-full inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                         <div className=" bg-[#17202b] backdrop-blur-md border border-white/8 rounded-2xl p-7 w-full max-w-md animate-in">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-lg font-bold text-white">New Document</h2>
@@ -304,9 +304,9 @@ function DashboardDocument() {
                                     onDragOver={e => { e.preventDefault(); setDragOver(true) }}
                                     onDragLeave={() => setDragOver(false)}
                                     onDrop={handleDrop}
-                                    className={` border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-200 cursor-pointer ${(dragOver) ? 'border-cyan-500 bg-cyan-500/5' : 'border-white/10'} hover:border-white/20 `}
+                                    className={` border-2 border-dashed rounded-2xl px-10 py-5 text-center transition-all duration-200 cursor-pointer ${(dragOver) ? 'border-cyan-500 bg-cyan-500/5' : 'border-white/10'} hover:border-white/20 `}
                                 >
-                                    <Upload className={`w-8 h-8 mx-auto mb-3 transition-colors ${(dragOver) ? 'text-cyan-400' : 'text-white/20'} `} />
+                                    <Upload className={`w-6 h-6 mx-auto mb-3 transition-colors ${(dragOver) ? 'text-cyan-400' : 'text-white/20'} `} />
                                     <p className="text-white/50 text-sm">Drag & drop files here, or <span className="text-cyan-400">browse</span></p>
                                     <p className="text-white/25 text-xs mt-1">PDF, DICOM, JPG, PNG — max 100MB</p>
 

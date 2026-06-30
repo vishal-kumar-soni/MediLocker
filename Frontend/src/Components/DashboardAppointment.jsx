@@ -156,7 +156,7 @@ function AppointmentsPage() {
 
                 {/*form to create an appointment */}
                 {showForm && (
-                    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="fixed h-full inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                         <div className=" bg-[#17202b] backdrop-blur-md border border-white/8 rounded-2xl p-7 w-full max-w-md animate-in">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-lg font-bold text-white">New Appointment</h2>
