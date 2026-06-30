@@ -17,6 +17,8 @@ function DashboardHome() {
     const [allDocument, setAllDocument] = useState([]);
     const [medications, setMedications] = useState([]);
     const [appointments, setAppointments] = useState([]);
+    const [bloodData, setBloodData] = useState([]);
+    const [organHealth, setOrganHealth] = useState([]);
 
     useEffect(() => {
         async function checkLoggedIn() {
@@ -32,6 +34,8 @@ function DashboardHome() {
                 setAllDocument(response.data.user.documents);
                 setMedications(response.data.user.medications);
                 setAppointments(response.data.user.appointments);
+                setBloodData(response.data.user.bloodRecords)
+                setOrganHealth(response.data.user.organHealthRecords)
             }
         }
 
@@ -45,6 +49,43 @@ function DashboardHome() {
 
         return () => clearTimeout(timer);
     }, []);
+
+    // Function to calculate the health score
+    const calculateHealthScore = () => {
+        let score = 100;
+  
+
+        // Blood Report (40 marks)
+        if (bloodData.length > 0) {
+            bloodData.forEach((item) => {
+                if (item.value === 0 || item.value === "") {
+                    score -= 5;
+                }
+            });
+        }
+
+        // Organ Health (30 marks)
+        if (organHealth.length > 0) {
+            const organs = ["heart", "lungs", "liver", "kidney", "brain", "bones"];
+
+            organs.forEach((organ) => {
+                score -= (100 - Number(organHealth[0][organ].score)) / 20;
+            });
+        }
+
+        // Documents (10 marks)
+        if (allDocument.length === 0) score -= 10;
+
+        // Medications (10 marks)
+        if (medications.length === 0) score -= 10;
+
+        // Appointments (10 marks)
+        if (appointments.length === 0) score -= 10;
+
+        return Math.max(0, Math.round(score));
+    };
+
+    const overallHealthScore = calculateHealthScore();
 
     const firstName = loggedInUser.userName ? loggedInUser.userName : "Arjun";
     const hour = new Date().getHours();
@@ -84,7 +125,7 @@ function DashboardHome() {
                             <p className="text-white/50 text-sm mb-1">Overall Health Score</p>
                             <div className="flex items-baseline gap-2">
                                 <span className="text-cyan-500 text-5xl font-bold gradient-text">
-                                    82
+                                    {overallHealthScore}
                                 </span>
                                 <span className="text-white/40 text-lg">/100</span>
                             </div>
@@ -108,7 +149,7 @@ function DashboardHome() {
                     <div className="mt-4 h-1.5 bg-white/5 rounded-full overflow-hidden">
                         <div
                             className="h-full  bg-cyan-500  rounded-full transition-all duration-1000"
-                            style={{ width: `${82}%` }}
+                            style={{ width: `${overallHealthScore}%` }}
                         />
                     </div>
                 </div>
@@ -171,7 +212,7 @@ function DashboardHome() {
                                 <Activity className={`text-cyan-400 rounded-2xl p-0 `} />
                             </div>
                             <div className="font-display text-2xl font-bold text-white mb-0.5">
-                                82%
+                                {overallHealthScore}%
                             </div>
                             <div className="text-xs text-white/40 capitalize">Health Score</div>
                             <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/50 mt-2 transition-colors" />
