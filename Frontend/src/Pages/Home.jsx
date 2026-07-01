@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/Logo.png'
 import {
     Plus, Lock, CheckCircle2, ChevronRight, Star, ShieldCheck, Globe2, FileText, UserPlus, PlayCircle, Building2, Users, Camera,
@@ -27,6 +27,7 @@ const stats = [
 
 
 function Home() {
+    const navigate = useNavigate()
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [loggedInUser, setLoggedInUser] = useState({})
@@ -55,14 +56,14 @@ function Home() {
     const handleLogOut = async () => {
         try {
             await axios.post(
-                ` ${BACKEND_URL}/api/user/logout`,
+                `${BACKEND_URL}/api/user/logout`,
                 {},
                 {
                     withCredentials: true,
                 }
             );
 
-            window.location.reload();
+            navigate('/login')
         } catch (error) {
             console.log(error);
         }
@@ -91,7 +92,7 @@ function Home() {
                         </Link>
                     ) : (
                         <Link to="/login"
-                            onClick={window.scrollTo(0, 0)}
+                            onClick={()=>window.scrollTo(0, 0)}
 
                             className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Login
                         </Link>
