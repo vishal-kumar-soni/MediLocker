@@ -31,7 +31,7 @@ function DashboardMedication() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                ` ${BACKEND_URL}/api/user/getme`,
+                `${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })

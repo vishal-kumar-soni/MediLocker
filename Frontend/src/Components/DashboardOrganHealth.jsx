@@ -28,7 +28,7 @@ function DashboardOrganHealth() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `${BACKEND_URL}/api/user/getm`,
+                `${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -293,7 +293,7 @@ function DashboardOrganHealth() {
                 {/* Organ cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {formData.map((organ) => {
-                        let scoreValue = organ.score 
+                        let scoreValue = organ.score
                         const isHealthy = organ.status == "Healthy" ? true : false;
 
                         return (
@@ -319,12 +319,12 @@ function DashboardOrganHealth() {
                                     <h3 className=" text-lg font-semibold capitalize text-white mb-1">
                                         {organ.name}
                                     </h3>
-                                    <div className={`${organ.note?'bg-[#2b434b]/50 px-2 py-1.5 overflow-hidden rounded-sm my-3':'hidden'}`}>
+                                    <div className={`${organ.note ? 'bg-[#2b434b]/50 px-2 py-1.5 overflow-hidden rounded-sm my-3' : 'hidden'}`}>
                                         <p className="text-sm text-white/70 ">
-                                        {organ.note}
-                                    </p>
+                                            {organ.note}
+                                        </p>
                                     </div>
-                                    
+
                                     <div className="flex items-center gap-1.5 text-xs text-white/30">
                                         <Clock className="w-3 h-3" />
                                         Last check : {organ.lastCheck}

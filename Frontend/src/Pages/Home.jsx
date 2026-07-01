@@ -80,7 +80,7 @@ function Home() {
 
     if (loading) {
         return (
-            <div className="bg-[#0d1117] flex flex-col items-center justify-center  pb-50  min-h-screen gap-4">
+            <div className="bg-[#0d1117] flex flex-col items-center justify-center min-h-screen gap-4">
                 <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
                 <p className="text-gray-400 text-sm">Loading....</p>
             </div>
@@ -106,7 +106,7 @@ function Home() {
                         <Link to="/login"
                             onClick={handleLogOut}
 
-                            className=" bg-red-600 hover:bg-red-500 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-red-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Logout
+                            className=" bg-red-600 hover:bg-red-500 text-white font-medium px-3 py-1.5 rounded-md transition-all duration-200 hover:shadow-lg hover:shadow-red-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5 md:rounded-xl">Logout
                         </Link>
                     ) : (
                         <Link to="/login"

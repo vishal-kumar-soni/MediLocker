@@ -174,7 +174,7 @@ function DashboardProfile() {
                         <p className="text-white/40 text-sm mt-1">Manage your personal and health information</p>
                     </div>
 
-                    <button onClick={() => setShowForm(true)} className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm flex items-center gap-2">
+                    <button onClick={() => setShowForm(true)} className=" bg-cyan-500 hover:bg-cyan-400 text-white font-[16px] md:font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm flex items-center gap-2">
                         <UserRoundPen className="w-4 h-4" /> Edit Profile
                     </button>
                 </div>
@@ -191,10 +191,9 @@ function DashboardProfile() {
                             <form onSubmit={setProfileHandler} className="space-y-4">
 
                                 {/* Profile image */}
-                                <div id="objectPicture" className={` ${!isLoggedIn?"hidden":' w-[70px] h-[60px] flex items-baseline justify-center rounded-sm border-2 border-gray-400 cursor-pointer  mb-5'}  `}>
+                                <div id="objectPicture" className={` ${!isLoggedIn?"hidden":' w-[70px] h-[60px] flex items-baseline justify-center rounded-sm    cursor-pointer  mb-5'}  `}>
                                     <label htmlFor="file-input">
                                         <img
-                                            id="objectPicture-image"
                                             src={image ? URL.createObjectURL(image) : loggedInUser?.profileImage || upload}
                                             className={` ${!isLoggedIn?'hidden':'w-[80px] h-[58px] cursor-pointer'}`}
                                             alt="upload "
@@ -334,7 +333,7 @@ function DashboardProfile() {
 
                                     <button
                                         type="submit"
-                                        className="flex gap-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Edit Profile
+                                        className="flex gap-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-3 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Edit Profile
                                         {loadingSubmit ? <><Loader2 className="w-4 h-4 mt-1 animate-spin" /> </> : ''}
                                     </button>
                                 </div>

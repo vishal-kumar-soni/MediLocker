@@ -351,7 +351,7 @@ function DashboardDocument() {
                             placeholder="Search documents..."
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-[#141f2e] border border-white/10 focus:border-primary-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-primary-500/20 pl-10 text-sm"
+                            className="w-full bg-[#141f2e] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-primary-500/20 pl-10 text-sm" 
                         />
                     </div>
 
