@@ -31,7 +31,7 @@ function LoginPage() {
             setError('')
 
             const response = await axios.post(
-                ` ${BACKEND_URL}/api/user/login`,
+                `${BACKEND_URL}/api/user/login`,
                 { email, password },
                 { withCredentials: true }
             );
