@@ -2,10 +2,10 @@ import { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Heart, Eye, EyeOff, Loader2, WatchIcon, ChevronLeft } from 'lucide-react'
 import logo from '../assets/Logo.png'
+import { UserContext } from '../Context/UserContext.jsx'
+import BloodComponents from '../Components/assets/BloodComponents.js'
+import InitialBloodData from '../Components/assets/InitailComponent.js'
 import axios from 'axios'
-import { UserContext } from '../Context/UserContext'
-import BloodComponents from '../Components/assets/BloodComponents'
-import InitialBloodData from '../Components/assets/InitailComponent'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 

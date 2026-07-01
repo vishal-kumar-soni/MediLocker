@@ -2,7 +2,7 @@ import { Activity, CheckCircle2, AlertTriangle, Clock, Plus, CircleCheck, } from
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import bodyImage from "../assets/body.png";
-import MockorganHealth from "./assets/organHealth";
+import MockorganHealth from "./assets/organHealth.js";
 import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 

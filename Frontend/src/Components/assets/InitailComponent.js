@@ -10,4 +10,4 @@ let InitialBloodData = {
     triglycerides: 0
 }
 
-export default InitialBloodData
+export default InitialBloodData;

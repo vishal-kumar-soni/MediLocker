@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Heart, Eye, EyeOff, Loader2, X, ChevronLeft } from 'lucide-react'
 import logo from '../assets/Logo.png'
 import axios from 'axios'
-import { UserContext } from '../Context/UserContext'
+import { UserContext } from '../Context/UserContext.jsx'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 

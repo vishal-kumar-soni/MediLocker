@@ -2,11 +2,11 @@ import {
     FileText, Calendar, Pill, Activity, TrendingUp, Clock, ChevronRight, Shield,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import mockAppointments from "./assets/Appointments";
+import mockAppointments from "./assets/Appointments.js";
 import MockDocuments from "./assets/AllDocument.js";
 import mockMedications from "./assets/Medications.js";
-import features from "./assets/features";
-import statCards from "./assets/statCards";
+import features from "./assets/features.js";
+import statCards from "./assets/statCards.js";
 import { useState, useEffect } from "react";
 import axios from "axios";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;

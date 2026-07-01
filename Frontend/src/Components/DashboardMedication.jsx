@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Pill, Clock, Plus, CheckCircle2, Calendar, X, ToggleLeft, Trash2, ToggleRight } from 'lucide-react'
 import clsx from 'clsx'
-import mockMedications from './assets/Medications'
+import mockMedications from './assets/Medications.js'
 import axios from 'axios'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 

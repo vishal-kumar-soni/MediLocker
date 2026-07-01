@@ -2,9 +2,9 @@ import { Droplets, TrendingUp, TrendingDown, Plus, Minus, X, Info } from "lucide
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, LineChart, Line } from "recharts";
 import clsx from "clsx";
 import { useState, useEffect } from "react";
-import BloodComponents from "./assets/BloodComponents";
+import BloodComponents from "./assets/BloodComponents.js";
 import axios from "axios";
-import InitialBloodData from '../Components/assets/InitailComponent'
+import InitialBloodData from '../Components/assets/InitailComponent.js'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
