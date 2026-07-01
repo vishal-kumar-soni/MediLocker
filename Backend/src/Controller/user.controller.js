@@ -42,8 +42,8 @@ const login = async (req, res) => {
 
         res.cookie('token', token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: true,
+            sameSite: "none",
             path: '/',
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         })
@@ -97,9 +97,9 @@ const register = async (req, res) => {
         )
 
         res.cookie('token', token, {
-            httpOnly: false,
-            secure: process.env.SECRET === 'production',
-            sameSite: "lax",
+           httpOnly: true,
+            secure: true,
+            sameSite: "none",
             path: '/',
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         })
