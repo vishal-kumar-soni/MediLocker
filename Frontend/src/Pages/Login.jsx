@@ -4,6 +4,7 @@ import { Heart, Eye, EyeOff, Loader2, X, ChevronLeft } from 'lucide-react'
 import logo from '../assets/Logo.png'
 import axios from 'axios'
 import { UserContext } from '../Context/UserContext'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 function LoginPage() {
@@ -30,7 +31,7 @@ function LoginPage() {
             setError('')
 
             const response = await axios.post(
-                `http://localhost:5000/api/user/login`,
+                ` ${BACKEND_URL}/api/user/login`,
                 { email, password },
                 { withCredentials: true }
             );

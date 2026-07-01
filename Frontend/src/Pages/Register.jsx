@@ -6,7 +6,7 @@ import axios from 'axios'
 import { UserContext } from '../Context/UserContext'
 import BloodComponents from '../Components/assets/BloodComponents'
 import InitialBloodData from '../Components/assets/InitailComponent'
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 
@@ -46,7 +46,7 @@ function RegisterPage() {
     try {
 
       const response = await axios.post(
-        `http://localhost:5000/api/user/signup`,
+        `${BACKEND_URL}/api/user/signup`,
         { userName, email, password, dob, phone, gender, bloodGroup },
         {
           withCredentials: true
@@ -58,7 +58,7 @@ function RegisterPage() {
       const { hemoglobin, rbc, wbc, platelets, hematocrit, glucose, cholesterol, triglycerides } = blood
       try {
         const bloodResponse = await axios.post(
-          'http://localhost:5000/api/medical/bloodReport',
+          `${BACKEND_URL}/api/medical/bloodReport`,
           { userId, hemoglobin, rbc, wbc, platelets, hematocrit, glucose, cholesterol, triglycerides },
           {
             withCredentials: true
@@ -73,7 +73,7 @@ function RegisterPage() {
       if (response) {
         try {
           const organResponse = await axios.post(
-            'http://localhost:5000/api/medical/organHealth',
+            `${BACKEND_URL}/api/medical/organHealth`,
             { userId },
             {
               withCredentials: true

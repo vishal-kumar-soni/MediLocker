@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import bodyImage from "../assets/body.png";
 import MockorganHealth from "./assets/organHealth";
 import axios from "axios";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 function DashboardOrganHealth() {
@@ -27,7 +28,7 @@ function DashboardOrganHealth() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                'http://localhost:5000/api/user/getme',
+                `${BACKEND_URL}/api/user/getm`,
                 {
                     withCredentials: true
                 })
@@ -71,7 +72,7 @@ function DashboardOrganHealth() {
         try {
 
             const response = await axios.post(
-                "http://localhost:5000/api/medical/updateOrganHealth",
+                `${BACKEND_URL}/api/medical/updateOrganHealth`,
                 {
                     userId: loggedInUser._id,
                     organs: formData,

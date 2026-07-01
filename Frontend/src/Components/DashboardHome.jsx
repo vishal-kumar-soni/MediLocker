@@ -9,6 +9,8 @@ import features from "./assets/features";
 import statCards from "./assets/statCards";
 import { useState, useEffect } from "react";
 import axios from "axios";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 function DashboardHome() {
     const [loggedInUser, setLoggedInUser] = useState({});
@@ -22,9 +24,12 @@ function DashboardHome() {
 
     useEffect(() => {
         async function checkLoggedIn() {
-            const response = await axios.get("http://localhost:5000/api/user/getme", {
-                withCredentials: true,
-            });
+            const response = await axios.get(
+                `${BACKEND_URL}/api/user/getme`,
+                {
+                    withCredentials: true,
+                }
+            );
 
             if (response.data.success) {
                 const user = response.data.user;
@@ -53,7 +58,7 @@ function DashboardHome() {
     // Function to calculate the health score
     const calculateHealthScore = () => {
         let score = 100;
-  
+
 
         // Blood Report (40 marks)
         if (bloodData.length > 0) {

@@ -3,6 +3,7 @@ import { Pill, Clock, Plus, CheckCircle2, Calendar, X, ToggleLeft, Trash2, Toggl
 import clsx from 'clsx'
 import mockMedications from './assets/Medications'
 import axios from 'axios'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 const timeColors = {
@@ -30,7 +31,7 @@ function DashboardMedication() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                'http://localhost:5000/api/user/getme',
+                ` ${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -72,7 +73,7 @@ function DashboardMedication() {
 
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/medical/medication',
+                `${BACKEND_URL}/api/medical/medication`,
                 { userId, name, dose, time, PrescribedFor, startDate },
                 {
                     withCredentials: true
@@ -97,7 +98,7 @@ function DashboardMedication() {
         console.log(medicationId)
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/medical/deletemedication",
+                `${BACKEND_URL}/api/medical/deletemedication`,
                 { medicationId },
                 {
                     withCredentials: true

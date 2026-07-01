@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Upload, Search, Filter, FileText, Download, Eye, Trash2, Tag, X, CheckCircle2 } from 'lucide-react'
 import clsx from 'clsx'
-import MockAllDocuments from './assets/AllDocument'
+import MockAllDocuments from './assets/AllDocument.js'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const docTypes = ['All', 'Lab Report', 'Radiology', 'Prescription', 'Cardiology', 'Orthopedic']
 
@@ -50,7 +50,7 @@ function DashboardDocument() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                'http://localhost:5000/api/user/getme',
+                `${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -101,7 +101,7 @@ function DashboardDocument() {
                 formData.append("documentPDF", pdf);
 
                 const uploadDocumentResponse = await axios.post(
-                    `http://localhost:5000/api/file/upload/document`,
+                    `${BACKEND_URL}/api/file/upload/document`,
                     formData
                 );
 
@@ -115,7 +115,7 @@ function DashboardDocument() {
             }
 
             const response = await axios.post(
-                'http://localhost:5000/api/medical/document',
+                `${BACKEND_URL}/api/medical/document`,
                 { userId, name, hospital, doctor, type, size, format, documentUrl },
                 {
                     withCredentials: true
@@ -147,7 +147,7 @@ function DashboardDocument() {
         try {
 
             const response = await axios.post(
-                "http://localhost:5000/api/medical/deletedocument",
+                `${BACKEND_URL}/api/medical/deletedocument`,
                 { documentId },
                 {
                     withCredentials: true

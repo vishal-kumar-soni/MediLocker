@@ -3,6 +3,7 @@ import { User, Phone, Plus, MapPin, UserRoundPen, Calendar, Droplets, Edit3, Sav
 import upload from './assets/profile.jpg'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 function DashboardProfile() {
@@ -36,7 +37,7 @@ function DashboardProfile() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                'http://localhost:5000/api/user/getme',
+                `${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -122,7 +123,7 @@ function DashboardProfile() {
                 formData.append("profileImage", image);
 
                 const uploadImageResponse = await axios.post(
-                    `http://localhost:5000/api/file/upload/profileImage`,
+                    `${BACKEND_URL}/api/file/upload/profileImage`,
                     formData
                 );
 
@@ -136,7 +137,7 @@ function DashboardProfile() {
             }
 
             const response = await axios.post(
-                `http://localhost:5000/api/user/updateuser`,
+                `${BACKEND_URL}/api/user/updateuser`,
                 { profilePic, userName, phone, height, weight, allergies, chronicConditions, address },
                 { withCredentials: true }
             );

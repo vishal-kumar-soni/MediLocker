@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Calendar, Clock, MapPin, Plus, CheckCircle2, Stethoscope, X, Trash2 } from 'lucide-react'
 import axios from 'axios'
 import mockAppointments from './assets/Appointments.js'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 function AppointmentsPage() {
@@ -17,7 +18,7 @@ function AppointmentsPage() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                'http://localhost:5000/api/user/getme',
+                `${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -61,7 +62,7 @@ function AppointmentsPage() {
 
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/medical/appointment',
+                `${BACKEND_URL}/api/medical/appointment`,
                 { userId, doctor, specialty, hospital, date, time, type, currStatus },
                 {
                     withCredentials: true
@@ -94,7 +95,7 @@ function AppointmentsPage() {
         try {
 
             const response = await axios.post(
-                "http://localhost:5000/api/medical/deletedappointment",
+                `${BACKEND_URL}/api/medical/deletedappointment`,
                 { appointmentId },
                 {
                     withCredentials: true

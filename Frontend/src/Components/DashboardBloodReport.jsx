@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import BloodComponents from "./assets/BloodComponents";
 import axios from "axios";
 import InitialBloodData from '../Components/assets/InitailComponent'
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 
 const labels = {
     hemoglobin: "Hemoglobin",
@@ -53,7 +55,7 @@ function DashboardBloodReport() {
             try {
 
                 const response = await axios.get(
-                    "http://localhost:5000/api/user/getme",
+                    `${BACKEND_URL}/api/user/getme`,
                     {
                         withCredentials: true,
                     }
@@ -113,7 +115,7 @@ function DashboardBloodReport() {
             for (const blood of bloodData) {
 
                 await axios.post(
-                    "http://localhost:5000/api/medical/updateblood",
+                    `${BACKEND_URL}/api/medical/updateblood`,
                     {
                         userId: loggedInUser._id,
                         name: blood.name,
