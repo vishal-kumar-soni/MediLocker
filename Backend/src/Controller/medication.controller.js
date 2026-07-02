@@ -49,7 +49,6 @@ const medication = async (req, res) => {
 const deleteMedication = async (req, res) => {
     const { medicationId } = req.body;
 
-    console.log("done")
     try {
         const deletedMedication = await medicationModel.findByIdAndDelete(medicationId);
 

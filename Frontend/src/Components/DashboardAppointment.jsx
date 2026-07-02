@@ -18,7 +18,7 @@ function AppointmentsPage() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `${BACKEND_URL}/api/user/getme`,
+                `http://localhost:5000/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -62,7 +62,7 @@ function AppointmentsPage() {
 
         try {
             const response = await axios.post(
-                `${BACKEND_URL}/api/medical/appointment`,
+                `http://localhost:5000/api/medical/appointment`,
                 { userId, doctor, specialty, hospital, date, time, type, currStatus },
                 {
                     withCredentials: true
@@ -95,7 +95,7 @@ function AppointmentsPage() {
         try {
 
             const response = await axios.post(
-                `${BACKEND_URL}/api/medical/deletedappointment`,
+                `http://localhost:5000/api/medical/deletedappointment`,
                 { appointmentId },
                 {
                     withCredentials: true

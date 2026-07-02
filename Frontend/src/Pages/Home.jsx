@@ -36,7 +36,7 @@ function Home() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `${BACKEND_URL}/api/user/getme`,
+                `http://localhost:5000/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -65,7 +65,7 @@ function Home() {
     const handleLogOut = async () => {
         try {
             await axios.post(
-                `${BACKEND_URL}/api/user/logout`,
+                `http://localhost:5000/api/user/logout`,
                 {},
                 {
                     withCredentials: true,
@@ -112,13 +112,13 @@ function Home() {
                         <Link to="/login"
                             onClick={() => window.scrollTo(0, 0)}
 
-                            className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-3 py-1.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Login
+                            className=" bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-3 py-1.5 rounded-md md:rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm sm:px-5 sm:py-2.5">Login
                         </Link>
                     )}
 
                     <Link to="/body_organs" className="hidden sm:block bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-3 py-1.5 rounded-xl transition-all duration-200 active:scale-95 text-sm sm:px-5 sm:py-2.5">Human Organs</Link>
 
-                    <div className="w-9 h-9 rounded-full    flex items-center justify-center text-sm font-bold text-white">
+                    <div className="w-9 h-9 rounded-full  overflow-hidden  flex items-center justify-center text-sm font-bold text-white">
                         <Link to={isLoggedIn ? '/dashboard/profile' : '/login'}>
                             <img src={loggedInUser.profileImage ? loggedInUser.profileImage : profileImage} alt="profile Image" className='rounded-full' />
                         </Link>

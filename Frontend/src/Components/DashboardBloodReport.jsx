@@ -55,7 +55,7 @@ function DashboardBloodReport() {
             try {
 
                 const response = await axios.get(
-                    `${BACKEND_URL}/api/user/getme`,
+                    `http://localhost:5000/api/user/getme`,
                     {
                         withCredentials: true,
                     }
@@ -115,7 +115,7 @@ function DashboardBloodReport() {
             for (const blood of bloodData) {
 
                 await axios.post(
-                    `${BACKEND_URL}/api/medical/updateblood`,
+                    `http://localhost:5000/api/medical/updateblood`,
                     {
                         userId: loggedInUser._id,
                         name: blood.name,

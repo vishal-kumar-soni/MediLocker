@@ -50,7 +50,7 @@ function DashboardDocument() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `${BACKEND_URL}/api/user/getme`,
+                `http://localhost:5000/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -101,7 +101,7 @@ function DashboardDocument() {
                 formData.append("documentPDF", pdf);
 
                 const uploadDocumentResponse = await axios.post(
-                    `${BACKEND_URL}/api/file/upload/document`,
+                    `http://localhost:5000/api/file/upload/document`,
                     formData
                 );
 
@@ -115,7 +115,7 @@ function DashboardDocument() {
             }
 
             const response = await axios.post(
-                `${BACKEND_URL}/api/medical/document`,
+                `http://localhost:5000/api/medical/document`,
                 { userId, name, hospital, doctor, type, size, format, documentUrl },
                 {
                     withCredentials: true
@@ -147,7 +147,7 @@ function DashboardDocument() {
         try {
 
             const response = await axios.post(
-                `${BACKEND_URL}/api/medical/deletedocument`,
+                `http://localhost:5000/api/medical/deletedocument`,
                 { documentId },
                 {
                     withCredentials: true
@@ -351,7 +351,7 @@ function DashboardDocument() {
                             placeholder="Search documents..."
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-[#141f2e] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-primary-500/20 pl-10 text-sm" 
+                            className="w-full bg-[#141f2e] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 pl-10 text-sm" 
                         />
                     </div>
 

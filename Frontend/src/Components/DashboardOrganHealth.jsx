@@ -27,8 +27,9 @@ function DashboardOrganHealth() {
 
     useEffect(() => {
         async function checkLoggedIn() {
-            const response = await axios.get(
-                `${BACKEND_URL}/api/user/getme`,
+            try {
+                   const response = await axios.get(
+                `http://localhost:5000/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -39,6 +40,11 @@ function DashboardOrganHealth() {
                 setLoggedInUser(user);
                 setOrganHealth(user.organHealthRecords)
             }
+            } catch (error) {
+                console.log(error)
+                alert(error?.message)
+            }
+         
         }
 
         checkLoggedIn();
@@ -72,7 +78,7 @@ function DashboardOrganHealth() {
         try {
 
             const response = await axios.post(
-                `${BACKEND_URL}/api/medical/updateOrganHealth`,
+                `http://localhost:5000/api/medical/updateOrganHealth`,
                 {
                     userId: loggedInUser._id,
                     organs: formData,

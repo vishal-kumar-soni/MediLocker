@@ -25,7 +25,7 @@ function DashboardHome() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `${BACKEND_URL}/api/user/getme`,
+                `http://localhost:5000/api/user/getme`,
                 {
                     withCredentials: true,
                 }

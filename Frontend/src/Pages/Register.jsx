@@ -46,7 +46,7 @@ function RegisterPage() {
     try {
 
       const response = await axios.post(
-        `${BACKEND_URL}/api/user/signup`,
+        `http://localhost:5000/api/user/signup`,
         { userName, email, password, dob, phone, gender, bloodGroup },
         {
           withCredentials: true
@@ -58,7 +58,7 @@ function RegisterPage() {
       const { hemoglobin, rbc, wbc, platelets, hematocrit, glucose, cholesterol, triglycerides } = blood
       try {
         const bloodResponse = await axios.post(
-          `${BACKEND_URL}/api/medical/bloodReport`,
+          `http://localhost:5000/api/medical/bloodReport`,
           { userId, hemoglobin, rbc, wbc, platelets, hematocrit, glucose, cholesterol, triglycerides },
           {
             withCredentials: true
@@ -73,7 +73,7 @@ function RegisterPage() {
       if (response) {
         try {
           const organResponse = await axios.post(
-            `${BACKEND_URL}/api/medical/organHealth`,
+            `http://localhost:5000/api/medical/organHealth`,
             { userId },
             {
               withCredentials: true

@@ -25,11 +25,12 @@ function Dashboard() {
     const navigate = useNavigate()
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [loggedInUser, setLoggedInUser] = useState({})
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `${BACKEND_URL}/api/user/getme`,
+                `http://localhost:5000/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -37,6 +38,7 @@ function Dashboard() {
             if (response.data.success) {
                 const user = response.data.user;
                 setLoggedInUser(user);
+                setIsLoggedIn(true)
             }
         }
 
@@ -47,7 +49,7 @@ function Dashboard() {
     const handleLogout = async () => {
         try {
             await axios.post(
-                `${BACKEND_URL}/api/user/logout`,
+                `http://localhost:5000/api/user/logout`,
                 {},
                 {
                     withCredentials: true,
@@ -75,7 +77,7 @@ function Dashboard() {
                             <img src={logo} alt="logo" className="w-[90%] h-[90%] " />
                         </div>
                         <Link to='/' className="font-logo text-xl font-bold text-white">
-                        Medi<span className="text-cyan-300">Locker</span>
+                            Medi<span className="text-cyan-300">Locker</span>
                         </Link>
                     </div>
                     <button className="lg:hidden text-white/40 hover:text-white" onClick={() => setSidebarOpen(false)}>
@@ -128,7 +130,9 @@ function Dashboard() {
                     <div className="flex  items-center gap-3 ml-auto">
                         <button className="relative w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 text-white/50 hover:text-white transition-all">
                             <Bell className="w-4 h-4" />
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-cyan-500 rounded-full" />
+                            {isLoggedIn ?
+                                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-cyan-500 rounded-full" /> : <span></span>
+                            }
                         </button>
                         <div className="w-9 h-9 rounded-full overflow-hidden  flex items-center justify-center text-sm font-bold text-white">
                             <Link to='/dashboard/profile'>

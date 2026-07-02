@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { User, Phone, Plus, MapPin, UserRoundPen, Calendar, Droplets, Edit3, Save, X, AlertTriangle, Heart, Loader2 } from 'lucide-react'
+import { User, Phone, MapPin, UserRoundPen, Calendar, Droplets, X, AlertTriangle, Heart, Loader2 } from 'lucide-react'
 import upload from './assets/profile.jpg'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -36,19 +36,25 @@ function DashboardProfile() {
 
     useEffect(() => {
         async function checkLoggedIn() {
-            const response = await axios.get(
-                `${BACKEND_URL}/api/user/getme`,
-                {
-                    withCredentials: true
-                })
+            try {
+                const response = await axios.get(
+                    `http://localhost:5000/api/user/getme`,
+                    {
+                        withCredentials: true
+                    })
 
-            if (response.data.success) {
-                const user = response.data.user;
-                setLoading(false)
-                setLoggedInUser(user);
-                setIsLoggedIn(true)
-                setForm(user)
+                if (response.data.success) {
+                    const user = response.data.user;
+                    setLoading(false)
+                    setLoggedInUser(user);
+                    setIsLoggedIn(true)
+                    setForm(user)
+                }
+            } catch (error) {
+                alert(error?.message)
+                console.log(error)
             }
+
         }
 
         checkLoggedIn();
@@ -112,7 +118,7 @@ function DashboardProfile() {
 
     const setProfileHandler = async (e) => {
 
-        (!isLoggedIn)?setLoadingSubmit(false):setLoadingSubmit(true)
+        (!isLoggedIn) ? setLoadingSubmit(false) : setLoadingSubmit(true)
         e.preventDefault()
 
         try {
@@ -123,8 +129,14 @@ function DashboardProfile() {
                 formData.append("profileImage", image);
 
                 const uploadImageResponse = await axios.post(
-                    `${BACKEND_URL}/api/file/upload/profileImage`,
-                    formData
+                    `http://localhost:5000/api/file/upload/profileImage`,
+                    formData,
+                    {
+                        withCredentials: true,
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
                 );
 
                 const responseData = uploadImageResponse.data;
@@ -136,18 +148,18 @@ function DashboardProfile() {
                 }
             }
 
-            const response = await axios.post(
-                `${BACKEND_URL}/api/user/updateuser`,
+            const response = await axios.put(
+                `http://localhost:5000/api/user/updateuser`,
                 { profilePic, userName, phone, height, weight, allergies, chronicConditions, address },
                 { withCredentials: true }
             );
-            
+
             if (response.data.success) {
                 alert("✅ " + response.data.message);
                 setLoadingSubmit(false)
                 setShowForm(false)
                 window.location.reload();
-            } 
+            }
         } catch (error) {
             console.log(error);
             alert(error.response?.data?.message || error.message);
@@ -174,7 +186,7 @@ function DashboardProfile() {
                         <p className="text-white/40 text-sm mt-1">Manage your personal and health information</p>
                     </div>
 
-                    <button onClick={() => setShowForm(true)} className=" bg-cyan-500 hover:bg-cyan-400 text-white font-[16px] md:font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm flex items-center gap-2">
+                    <button onClick={() => setShowForm(true)} className=" bg-cyan-500 hover:bg-cyan-400 text-white text-[12px] md:font-medium px-5 py-2.5 rounded-xl transition-all duration-200 cursor-pointer hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95  flex items-center gap-2">
                         <UserRoundPen className="w-4 h-4" /> Edit Profile
                     </button>
                 </div>
@@ -191,11 +203,11 @@ function DashboardProfile() {
                             <form onSubmit={setProfileHandler} className="space-y-4">
 
                                 {/* Profile image */}
-                                <div id="objectPicture" className={` ${!isLoggedIn?"hidden":' w-[70px] h-[60px] flex items-baseline justify-center rounded-sm    cursor-pointer  mb-5'}  `}>
+                                <div id="objectPicture" className={` ${!isLoggedIn ? "hidden" : ' w-[70px] h-[60px] flex items-baseline justify-center rounded-sm    cursor-pointer  mb-5'}  `}>
                                     <label htmlFor="file-input">
                                         <img
                                             src={image ? URL.createObjectURL(image) : loggedInUser?.profileImage || upload}
-                                            className={` ${!isLoggedIn?'hidden':'w-[80px] h-[58px] cursor-pointer'}`}
+                                            className={` ${!isLoggedIn ? 'hidden' : 'w-[80px] h-[65px] cursor-pointer'}`}
                                             alt="upload "
                                         />
                                     </label>
@@ -356,9 +368,9 @@ function DashboardProfile() {
                             </span>
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50">{isLoggedIn ? loggedInUser?.gender : user.gender}</span>
 
-                            <span className={` ${loggedInUser.height?'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50 ':'hidden'}`}>{isLoggedIn ? loggedInUser?.height : user.height} cm</span>
+                            <span className={` ${loggedInUser.height ? 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50 ' : 'hidden'}`}>{isLoggedIn ? loggedInUser?.height : user.height} cm</span>
 
-                            <span className={` ${loggedInUser.weight?'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50 ':'hidden'}`}>{isLoggedIn ? loggedInUser?.weight : user.weight} kg</span>
+                            <span className={` ${loggedInUser.weight ? 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 text-white/50 ' : 'hidden'}`}>{isLoggedIn ? loggedInUser?.weight : user.weight} kg</span>
                         </div>
                     </div>
                 </div>
