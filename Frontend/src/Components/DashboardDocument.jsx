@@ -43,6 +43,7 @@ function DashboardDocument() {
     }
 
     const handleDownload = (url) => {
+        console.log(url)
         const downloadUrl = url.replace("/upload/", "/upload/fl_attachment/");
         window.open(downloadUrl, "_blank");
     };
@@ -151,7 +152,8 @@ function DashboardDocument() {
                 { documentId },
                 {
                     withCredentials: true
-                })
+                }
+            )
             if (response.data.success) {
                 alert("✅ " + response.data.message);
                 window.location.reload();

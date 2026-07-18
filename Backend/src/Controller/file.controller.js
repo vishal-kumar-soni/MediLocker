@@ -17,7 +17,8 @@ const uploadProfileImage = async (req, res) => {
             localPath,
             {
                 resource_type: 'auto',
-                folder:"MediLocker/profilePictures"
+                folder:"MediLocker/profilePictures",
+                type: "upload"
             },
         )
 
@@ -62,7 +63,8 @@ const uploadDocument = async (req, res) => {
 
         const response = await cloudinary.uploader.upload(localPath, {
             resource_type: 'auto',
-            folder:'MediLocker/Documents'
+            folder:'MediLocker/Documents',
+            type: "upload"
         })
 
         console.log("The document is Successfully uploaded on cloudinary")
