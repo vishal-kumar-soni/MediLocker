@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Upload, Search, Filter, FileText, Download, Eye, Trash2, Tag, X, CheckCircle2 } from 'lucide-react'
+import { Upload, Search, Filter, FileText, Download, Eye, Trash2, Tag, X,Loader2, CheckCircle2 } from 'lucide-react'
 import clsx from 'clsx'
 import MockAllDocuments from './assets/AllDocument.js'
 import axios from 'axios'
@@ -28,7 +28,9 @@ function DashboardDocument() {
     const [showForm, setShowForm] = useState(false)
     const [form, setForm] = useState({ name: '', hospital: '', doctor: '', type: '', size: '', format: '', doc: '' })
     const [loggedInUser, setLoggedInUser] = useState({})
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [pdf, setPdf] = useState(false)
 
 
@@ -60,7 +62,9 @@ function DashboardDocument() {
                 const user = response.data.user;
                 setLoading(false)
                 setLoggedInUser(user);
+                setIsLoggedIn(true)
                 setDocs(user.documents)
+                setLoadingSubmit(false)
                 setNewDocument(user.documents)
             }
         }
@@ -80,6 +84,8 @@ function DashboardDocument() {
 
 
     const addDocument = async (e) => {
+        (!isLoggedIn) ? setLoadingSubmit(false) : setLoadingSubmit(true)
+
         e.preventDefault()
 
         setNewDocument(prev => [
@@ -332,9 +338,11 @@ function DashboardDocument() {
                                         className="flex-1  bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 hover:border-white/20 font-medium px-5  rounded-xl transition-all duration-200 active:scale-95 text-sm py-3">Cancel
                                     </button>
 
+
                                     <button
                                         type="submit"
-                                        className="flex-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Add Document
+                                        className="flex gap-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-3 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Add Document
+                                        {loadingSubmit ? <><Loader2 className="w-4 h-4 mt-0.5 animate-spin" /> </> : ''}
                                     </button>
                                 </div>
                             </form>
@@ -353,7 +361,7 @@ function DashboardDocument() {
                             placeholder="Search documents..."
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-[#141f2e] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 pl-10 text-sm" 
+                            className="w-full bg-[#141f2e] border border-white/10 focus:border-cyan-500/60 text-white placeholder:text-white/30 rounded-xl px-4 py-3 outline-none transition-all duration-200 focus:ring-2 focus:ring-cyan-500/20 pl-10 text-sm"
                         />
                     </div>
 

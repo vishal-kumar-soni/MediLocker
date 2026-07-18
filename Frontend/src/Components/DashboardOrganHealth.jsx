@@ -1,4 +1,4 @@
-import { Activity, CheckCircle2, AlertTriangle, Clock, Plus, CircleCheck, } from "lucide-react";
+import { Activity, CheckCircle2, AlertTriangle, Clock, Plus, Loader2, CircleCheck, } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import bodyImage from "../assets/body.png";
@@ -10,6 +10,8 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 function DashboardOrganHealth() {
     const [countHealthy, setCountHealthy] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
     const [loggedInUser, setLoggedInUser] = useState({});
     const [countAttention, setCountAttention] = useState(0);
     const [showForm, setShowForm] = useState(false);
@@ -28,23 +30,25 @@ function DashboardOrganHealth() {
     useEffect(() => {
         async function checkLoggedIn() {
             try {
-                   const response = await axios.get(
-                `http://localhost:5000/api/user/getme`,
-                {
-                    withCredentials: true
-                })
+                const response = await axios.get(
+                    `http://localhost:5000/api/user/getme`,
+                    {
+                        withCredentials: true
+                    })
 
-            if (response.data.success) {
-                const user = response.data.user;
-                setLoading(false)
-                setLoggedInUser(user);
-                setOrganHealth(user.organHealthRecords)
-            }
+                if (response.data.success) {
+                    const user = response.data.user;
+                    setLoading(false)
+                    setLoggedInUser(user);
+                    setLoadingSubmit(false)
+                    setIsLoggedIn(true)
+                    setOrganHealth(user.organHealthRecords)
+                }
             } catch (error) {
                 console.log(error)
                 alert(error?.message)
             }
-         
+
         }
 
         checkLoggedIn();
@@ -72,6 +76,7 @@ function DashboardOrganHealth() {
     }, [OrganHealth]);
 
     const handleSubmit = async (e) => {
+        (!isLoggedIn) ? setLoadingSubmit(false) : setLoadingSubmit(true)
 
         e.preventDefault()
 
@@ -250,7 +255,8 @@ function DashboardOrganHealth() {
                                     <button
                                         type="submit"
                                         onClick={handleSubmit}
-                                        className="flex-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium px-5 cursor-pointer rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm py-3">Save Organ Health Data
+                                        className="flex gap-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-3 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Save Organ Health Data
+                                        {loadingSubmit ? <><Loader2 className="w-4 h-4 mt-0.5 animate-spin" /> </> : ''}
                                     </button>
                                 </div>
                             </div>

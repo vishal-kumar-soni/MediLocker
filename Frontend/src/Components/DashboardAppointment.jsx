@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Calendar, Clock, MapPin, Plus, CheckCircle2, Stethoscope, X, Trash2 } from 'lucide-react'
+import { Calendar, Clock, MapPin, Plus, CheckCircle2, Stethoscope, Loader2, X, Trash2 } from 'lucide-react'
 import axios from 'axios'
 import mockAppointments from './assets/Appointments.js'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -10,6 +10,9 @@ function AppointmentsPage() {
     const [filter, setFilter] = useState('all')
     const [Appointment, setAppointment] = useState(mockAppointments)
     const [showForm, setShowForm] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
+
     const [newAppointment, setNewAppointment] = useState(mockAppointments)
     const [loading, setLoading] = useState(true)
     const [loggedInUser, setLoggedInUser] = useState({})
@@ -27,6 +30,8 @@ function AppointmentsPage() {
                 const user = response.data.user;
                 setLoading(false)
                 setLoggedInUser(user);
+                setLoadingSubmit(false)
+
                 setAppointment(user.appointments)
             }
         }
@@ -45,6 +50,8 @@ function AppointmentsPage() {
     const filtered = filter === 'all' ? Appointment : Appointment.filter(a => a.status === filter)
 
     const addAppointment = async (e) => {
+        (!isLoggedIn) ? setLoadingSubmit(false) : setLoadingSubmit(true)
+
         e.preventDefault()
 
         setNewAppointment(prev => [
@@ -248,7 +255,8 @@ function AppointmentsPage() {
 
                                     <button
                                         type="submit"
-                                        className="flex-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-2.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Book Appointment
+                                        className="flex gap-1  bg-cyan-500 hover:bg-cyan-400 text-white font-medium cursor-pointer px-5 py-3 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-cyan-500/20 active:scale-95 text-sm">Book Appointment
+                                        {loadingSubmit ? <><Loader2 className="w-4 h-4 mt-0.5 animate-spin" /> </> : ''}
                                     </button>
                                 </div>
                             </form>
