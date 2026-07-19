@@ -1,12 +1,20 @@
 import multer from "multer"
+import fs from 'fs'
+
+const uploadDir = "./src/upload";
+
+
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 // Multer middleware
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) { 
-        cb(null, './src/upload')
+    destination: function (req, file, cb) {
+        cb(null, uploadDir);
     },
     filename: function (req, file, cb) {
-        cb(null,Date.now() + '-' + file.originalname) 
+        cb(null, Date.now() + '-' + file.originalname)
     }
 })
 

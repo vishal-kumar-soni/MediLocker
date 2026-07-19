@@ -4,7 +4,14 @@ import fs from 'fs'
 // Function to upload profile images on cloudinary
 const uploadProfileImage = async (req, res) => {
     try {
+        console.log("=== Upload Started ===");
+
+        // Check what multer received
+        console.log("req.file:", req.file);
+
         const localPath = req.file?.path
+
+        console.log("Local Path:", localPath);
 
         if (!localPath) {
             return res.status(400).json({
@@ -17,7 +24,7 @@ const uploadProfileImage = async (req, res) => {
             localPath,
             {
                 resource_type: 'auto',
-                folder:"MediLocker/profilePictures",
+                folder: "MediLocker/profilePictures",
                 type: "upload"
             },
         )
@@ -63,7 +70,7 @@ const uploadDocument = async (req, res) => {
 
         const response = await cloudinary.uploader.upload(localPath, {
             resource_type: 'auto',
-            folder:'MediLocker/Documents',
+            folder: 'MediLocker/Documents',
             type: "upload"
         })
 
