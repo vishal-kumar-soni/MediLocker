@@ -31,7 +31,7 @@ function DashboardOrganHealth() {
         async function checkLoggedIn() {
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/api/user/getme`,
+                    `${BACKEND_URL}/api/user/getme`,
                     {
                         withCredentials: true
                     })
@@ -83,7 +83,7 @@ function DashboardOrganHealth() {
         try {
 
             const response = await axios.post(
-                `http://localhost:5000/api/medical/updateOrganHealth`,
+                `${BACKEND_URL}/api/medical/updateOrganHealth`,
                 {
                     userId: loggedInUser._id,
                     organs: formData,

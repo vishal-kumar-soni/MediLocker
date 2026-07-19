@@ -53,7 +53,7 @@ function DashboardDocument() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `http://localhost:5000/api/user/getme`,
+                `${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -108,7 +108,7 @@ function DashboardDocument() {
                 formData.append("documentPDF", pdf);
 
                 const uploadDocumentResponse = await axios.post(
-                    `http://localhost:5000/api/file/upload/document`,
+                    `${BACKEND_URL}/api/file/upload/document`,
                     formData
                 );
 
@@ -122,7 +122,7 @@ function DashboardDocument() {
             }
 
             const response = await axios.post(
-                `http://localhost:5000/api/medical/document`,
+                `${BACKEND_URL}/api/medical/document`,
                 { userId, name, hospital, doctor, type, size, format, documentUrl },
                 {
                     withCredentials: true
@@ -154,7 +154,7 @@ function DashboardDocument() {
         try {
 
             const response = await axios.post(
-                `http://localhost:5000/api/medical/deletedocument`,
+                `${BACKEND_URL}/api/medical/deletedocument`,
                 { documentId },
                 {
                     withCredentials: true

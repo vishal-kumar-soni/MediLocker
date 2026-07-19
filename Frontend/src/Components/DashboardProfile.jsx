@@ -38,7 +38,7 @@ function DashboardProfile() {
         async function checkLoggedIn() {
             try {
                 const response = await axios.get(
-                    `http://localhost:5000/api/user/getme`,
+                    `${BACKEND_URL}/api/user/getme`,
                     {
                         withCredentials: true
                     })
@@ -129,7 +129,7 @@ function DashboardProfile() {
                 formData.append("profileImage", image);
 
                 const uploadImageResponse = await axios.post(
-                    `http://localhost:5000/api/file/upload/profileImage`,
+                    `${BACKEND_URL}/api/file/upload/profileImage`,
                     formData,
                     {
                         withCredentials: true,
@@ -149,7 +149,7 @@ function DashboardProfile() {
             }
 
             const response = await axios.put(
-                `http://localhost:5000/api/user/updateuser`,
+                `${BACKEND_URL}/api/user/updateuser`,
                 { profilePic, userName, phone, height, weight, allergies, chronicConditions, address },
                 { withCredentials: true }
             );

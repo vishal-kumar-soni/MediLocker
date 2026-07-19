@@ -30,7 +30,7 @@ function Dashboard() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `http://localhost:5000/api/user/getme`,
+                `${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -49,7 +49,7 @@ function Dashboard() {
     const handleLogout = async () => {
         try {
             await axios.post(
-                `http://localhost:5000/api/user/logout`,
+                `${BACKEND_URL}/api/user/logout`,
                 {},
                 {
                     withCredentials: true,

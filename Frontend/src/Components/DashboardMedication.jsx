@@ -31,7 +31,7 @@ function DashboardMedication() {
     useEffect(() => {
         async function checkLoggedIn() {
             const response = await axios.get(
-                `http://localhost:5000/api/user/getme`,
+                `${BACKEND_URL}/api/user/getme`,
                 {
                     withCredentials: true
                 })
@@ -73,7 +73,7 @@ function DashboardMedication() {
 
         try {
             const response = await axios.post(
-                `http://localhost:5000/api/medical/medication`,
+                `${BACKEND_URL}/api/medical/medication`,
                 { userId, name, dose, time, PrescribedFor, startDate },
                 {
                     withCredentials: true
@@ -97,7 +97,7 @@ function DashboardMedication() {
 
         try {
             const response = await axios.post(
-                `http://localhost:5000/api/medical/deletemedication`,
+                `${BACKEND_URL}/api/medical/deletemedication`,
                 { medicationId },
                 {
                     withCredentials: true
