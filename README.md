@@ -180,25 +180,16 @@ MediLocker is fully responsive and optimized for:
 - 📱 Mobile
 - 📟 Tablet
 
----
-
-## 🌟 Future Improvements
-
-- User Authentication
-- Backend Integration
-- Cloud Storage
-- AI Health Assistant
-- Real-time Notifications
-- Dark/Light Theme Toggle
-
----
 
 ## 👨‍💻 Author
 
-### Vishal Kumar Soni
 
-- GitHub: https://github.com/vishalkumar2024
-- LinkedIn: https://www.linkedin.com/in/vishal-kumar-soni-/
+👨‍💻 Vishal Kumar Soni
+
+- GitHub: :https://github.com/vishal-kumar-soni
+- LinkedIn:https://www.linkedin.com/in/vishal-kumar-soni-/
+- Email: vkumarsoni30@gmail.com
+
 
 ---
 
