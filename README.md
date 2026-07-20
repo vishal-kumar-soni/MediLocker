@@ -52,51 +52,121 @@ The platform provides an elegant dashboard for monitoring health data, appointme
 
 ---
 
-## 🛠️ Tech Stack
 
-| Technology | Usage |
-|------------|-------|
-| React.js | Frontend Framework |
-| Tailwind CSS | Styling |
-| recharts | Charts |
-| Lucide React | Icons |
-| React Router DOM | Routing |
-| Vite | Development Environment |
+
+# 🛠️ Tech Stack
+
+## Frontend
+- React.js (Vite)
+- Tailwind CSS
+- GSAP
+- recharts
+- Lucide React
+- Swiper.js
+- React Icons
+- React Feather
+
+## Backend
+- Node.js
+- Express.js
+
+## Database
+- MongoDB
+
+## Cloud Services
+- Cloudinary
+
+
 
 ---
 
+# 📂 Project Structure
+
+```bash
+MediLocker/
+│
+├── Frontend/
+│   ├── src/
+│     ├── Components/
+│     ├── Pages/
+│     ├── assets/
+│     └── ...
+│
+├── Backend/
+|   ├──src
+│     ├── Controllers/
+│     ├── Routes/
+│     ├── Models/
+│     ├── Middleware/
+│     └── ...
+│
+└── README.md
+```
 
 
----
 
-## ⚙️ Installation
-
-Clone the repository:
+## 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/vishalkumar2024/MediLocker.git
 ```
 
-Move into project folder:
+---
+
+## 2️⃣ Navigate to Project Directory
 
 ```bash
 cd medilocker
 ```
-Move into project Frotnend Folder:
+
+---
+
+## 3️⃣ Install Frontend Dependencies
 
 ```bash
-cd Frotnend
-```
-
-Install dependencies:
-
-```bash
+cd Frontend
 npm install
 ```
 
-Run the development server:
+---
+
+## 4️⃣ Install Backend Dependencies
 
 ```bash
+cd Backend
+npm install
+```
+
+---
+
+# 🔑 Environment Variables
+
+Create a `.env` file inside the backend folder and add:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_secret_key
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+---
+
+# ▶️ Run the Project
+
+## Start Backend
+
+```bash
+cd Back-end
+npm run dev
+```
+
+## Start Frontend
+
+```bash
+cd Frontend
 npm run dev
 ```
 
