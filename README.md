@@ -59,11 +59,10 @@ The platform provides an elegant dashboard for monitoring health data, appointme
 ## Frontend
 - React.js (Vite)
 - Tailwind CSS
-- GSAP
 - recharts
 - Lucide React
 - Swiper.js
-- React Icons
+- Lucide React
 - React Feather
 
 ## Backend
