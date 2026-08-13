@@ -170,7 +170,7 @@ function DashboardProfile() {
 
                 setTimeout(() => {
                     window.location.reload();
-                }, 2500);
+                }, 2800);
                 // window.location.reload();
             }
         } catch (error) {
