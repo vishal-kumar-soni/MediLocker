@@ -32,6 +32,16 @@ function DashboardMedication() {
         });
     };
 
+    // Toasify function for success after deletion
+    const successNotifyDelete = (message) => {
+        toast.success(message, {
+            autoClose: 2000,
+            onClose: () => {
+                window.location.reload();
+            }
+        });
+    };
+
     // Toasify function for Error
     const errorNotify = (message) => {
         toast.error(message, {
@@ -120,7 +130,7 @@ function DashboardMedication() {
                     withCredentials: true
                 })
             if (response.data.success) {
-                successNotify(response.data.message);
+                successNotifyDelete(response.data.message);
             }
         }
         catch (error) {
