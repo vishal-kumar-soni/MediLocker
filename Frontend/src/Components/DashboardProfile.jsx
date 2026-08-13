@@ -12,7 +12,12 @@ function DashboardProfile() {
     const navigate = useNavigate()
 
     const successNotify = (message) => {
-        toast.success(message);
+        toast.success(message, {
+            autoClose: 2000,
+            onClose: () => {
+                window.location.reload();
+            }
+        });
     };
 
     const errorNotify = (message) => {
@@ -168,9 +173,9 @@ function DashboardProfile() {
                 setLoadingSubmit(false)
                 setShowForm(false)
 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2800);
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, 3000);
                 // window.location.reload();
             }
         } catch (error) {
