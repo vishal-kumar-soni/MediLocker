@@ -11,6 +11,7 @@ function DashboardProfile() {
 
     const navigate = useNavigate()
 
+    // Toasify function for success
     const successNotify = (message) => {
         toast.success(message, {
             autoClose: 2000,
@@ -20,8 +21,14 @@ function DashboardProfile() {
         });
     };
 
+    // Toasify function for Error
     const errorNotify = (message) => {
-        toast.error(message);
+        toast.error(message, {
+            autoClose: 2000,
+            onClose: () => {
+                window.location.reload();
+            }
+        });
     };
 
     const user = {
@@ -157,7 +164,7 @@ function DashboardProfile() {
 
                 var profilePic = responseData.image_url;
                 if (!responseData.success) {
-                    alert("Image upload failed");
+                    errorNotify("Image upload failed");
                     return;
                 }
             }
@@ -169,14 +176,10 @@ function DashboardProfile() {
             );
 
             if (response.data.success) {
-                successNotify("✅ " + response.data.message);
+                successNotify(response.data.message);
                 setLoadingSubmit(false)
                 setShowForm(false)
 
-                // setTimeout(() => {
-                //     window.location.reload();
-                // }, 3000);
-                // window.location.reload();
             }
         } catch (error) {
             console.log(error);
