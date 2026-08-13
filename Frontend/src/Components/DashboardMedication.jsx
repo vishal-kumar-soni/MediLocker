@@ -155,7 +155,7 @@ function DashboardMedication() {
                     pauseOnFocusLoss
                     draggable
                     theme="dark"
-                    transition={flip}
+                    transition={Flip}
                 />
 
                 <div className="space-y-5 ">
