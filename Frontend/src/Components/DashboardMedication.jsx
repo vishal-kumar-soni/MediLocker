@@ -28,10 +28,7 @@ function DashboardMedication() {
     // Toasify function for success
     const successNotify = (message) => {
         toast.success(message, {
-            autoClose: 2000,
-            onClose: () => {
-                window.location.reload();
-            }
+            autoClose: 2000
         });
     };
 
