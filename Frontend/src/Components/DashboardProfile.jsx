@@ -10,7 +10,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 function DashboardProfile() {
 
     const navigate = useNavigate()
-    
+
     const successNotify = (message) => {
         toast.success(message);
     };
@@ -127,8 +127,8 @@ function DashboardProfile() {
 
     const setProfileHandler = async (e) => {
 
-        (!isLoggedIn) ? setLoadingSubmit(false) : setLoadingSubmit(true)
         e.preventDefault()
+            (!isLoggedIn) ? setLoadingSubmit(false) : setLoadingSubmit(true)
 
         try {
             if (image) {
@@ -167,7 +167,11 @@ function DashboardProfile() {
                 successNotify("✅ " + response.data.message);
                 setLoadingSubmit(false)
                 setShowForm(false)
-                window.location.reload();
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                // window.location.reload();
             }
         } catch (error) {
             console.log(error);
