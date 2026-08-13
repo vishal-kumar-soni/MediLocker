@@ -127,8 +127,8 @@ function DashboardProfile() {
 
     const setProfileHandler = async (e) => {
 
+        (!isLoggedIn) ? setLoadingSubmit(false) : setLoadingSubmit(true)
         e.preventDefault()
-            (!isLoggedIn) ? setLoadingSubmit(false) : setLoadingSubmit(true)
 
         try {
             if (image) {
@@ -167,7 +167,7 @@ function DashboardProfile() {
                 successNotify("✅ " + response.data.message);
                 setLoadingSubmit(false)
                 setShowForm(false)
-                
+
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000);
