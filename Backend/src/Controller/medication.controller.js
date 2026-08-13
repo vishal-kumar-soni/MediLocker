@@ -31,7 +31,7 @@ const medication = async (req, res) => {
 
         return res.status(201).json({
             success: true,
-            message: "✅ Medication created successfully",
+            message: "Medication created successfully",
             medication: createdMedication,
         });
 
@@ -61,7 +61,7 @@ const deleteMedication = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: "✅ Medication deleted successfully",
+            message: "Medication deleted successfully",
         });
 
     } catch (error) {

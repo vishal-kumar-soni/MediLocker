@@ -48,16 +48,6 @@ function DashboardOrganHealth() {
         });
     };
 
-    // Toasify function for Warning
-    const warnNotify = (message) => {
-        toast.warn(message, {
-            autoClose: 2000,
-            onClose: () => {
-                window.location.reload();
-            }
-        });
-    };
-
 
     useEffect(() => {
         async function checkLoggedIn() {

@@ -66,6 +66,4 @@ const deleteDocument = async (req, res) => {
     }
 };
 
-
-
 export { addDocument, deleteDocument }
